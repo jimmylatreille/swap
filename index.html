@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GSAP Page Transition Demo — 50 Variants</title>
+  <meta name="description" content="50 Awwwards-level page transitions built with GSAP. Modular, interrupt-safe, fullscreen-ready. Zero frameworks.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <canvas id="noise-bg" class="noise-bg"></canvas>
+
+  <main class="app-shell">
+
+    <!-- ── Preview Stage ─────────────────────────────────── -->
+    <section id="preview-stage" class="preview-stage" aria-label="Transition preview">
+      <div class="transition-layer layer-bg"></div>
+      <div class="transition-layer layer-accent"></div>
+      <div class="transition-layer layer-overlay"></div>
+      <div class="transition-layer layer-mask"></div>
+
+      <div class="preview-content">
+        <p class="eyebrow">Page Transition Plugin Demo</p>
+        <h1 class="title">Full Screen, Page transition,<br>GSAP Timelines</h1>
+        <p class="copy">Every card triggers a unique transition with a consistent API: <code>play</code>, <code>reverse</code>, <code>kill</code>.</p>
+        <div class="preview-tags">
+          <span>Full Page</span>
+          <span>50 Variants</span>
+          <span>Zero Jank</span>
+          <span>A11y Aware</span>
+        </div>
+      </div>
+
+      <!-- Active transition label (bottom-left of stage) -->
+      <div class="transition-label" id="transition-label" aria-live="polite" aria-atomic="true">
+        <span class="tl-index" id="label-index">—</span>
+        <span class="tl-name"  id="label-name">Select a transition</span>
+        <div class="tl-controls">
+          <button id="tl-btn-play" class="tl-btn" disabled>Play</button>
+          <button id="tl-btn-rev" class="tl-btn" disabled>Reverse</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Right-Side Toggle Button ───────────────────────── -->
+    <button id="toggle-carousel-btn" class="menu-toggle-btn" aria-label="Select a transition" aria-expanded="false">
+      <span class="menu-toggle-text">Select a transition</span>
+      <div class="menu-toggle-indicator"></div>
+    </button>
+
+    <!-- ── Fullscreen Button (Top Right) ──────────────────── -->
+    <button class="fullscreen-btn" id="fullscreen-btn" type="button"
+            aria-label="Enter fullscreen" title="Toggle fullscreen">
+      <!-- expand icon -->
+      <svg class="fs-icon fs-expand" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 3 21 3 21 9"/>
+        <polyline points="9 21 3 21 3 15"/>
+        <line x1="21" y1="3" x2="14" y2="10"/>
+        <line x1="3"  y1="21" x2="10" y2="14"/>
+      </svg>
+      <!-- collapse icon -->
+      <svg class="fs-icon fs-collapse" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="4 14 10 14 10 20"/>
+        <polyline points="20 10 14 10 14 4"/>
+        <line x1="10" y1="14" x2="3"  y2="21"/>
+        <line x1="21" y1="3"  x2="14" y2="10"/>
+      </svg>
+    </button>
+
+    <!-- ── Horizontal Carousel Overlay ────────────────────── -->
+    <div id="carousel-overlay" class="carousel-overlay" aria-hidden="true">
+      <div class="carousel-backdrop" id="carousel-backdrop"></div>
+      <div class="carousel-content">
+        <header class="carousel-header">
+          <h2>Transition Library</h2>
+          <p>Select a transition to play, click the same card again to reverse.</p>
+        </header>
+        <div class="card-carousel-wrapper">
+          <div class="card-carousel" id="transition-grid" role="list" aria-label="Available transitions"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Documentation Button ──────────────────────────── -->
+  <button id="doc-btn" class="doc-btn" aria-label="Open documentation" title="Documentation">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <!-- file-stack icon -->
+      <path d="M16 2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
+      <path d="M4 6H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2"/>
+      <line x1="8" y1="8" x2="16" y2="8"/>
+      <line x1="8" y1="12" x2="16" y2="12"/>
+      <line x1="8" y1="16" x2="13" y2="16"/>
+    </svg>
+  </button>
+
+  <!-- ── Documentation Lightbox ────────────────────────── -->
+  <div id="doc-lightbox" class="doc-lightbox" role="dialog" aria-modal="true" aria-label="Documentation" aria-hidden="true">
+    <div class="doc-backdrop" id="doc-backdrop"></div>
+    <div class="doc-panel">
+
+      <div class="doc-panel-header">
+        <div class="doc-header-meta">
+          <span class="doc-badge">v2.0</span>
+          <h2 class="doc-title">GSAP Transition Engine</h2>
+          <p class="doc-subtitle">Complete plugin reference — 50 Awwwards-grade transitions</p>
+        </div>
+        <button class="doc-close" id="doc-close" aria-label="Close documentation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="doc-nav">
+        <button class="doc-nav-item is-active" data-section="overview">Overview</button>
+        <button class="doc-nav-item" data-section="api">API Reference</button>
+        <button class="doc-nav-item" data-section="transitions">Transitions</button>
+        <button class="doc-nav-item" data-section="layers">Layer System</button>
+        <button class="doc-nav-item" data-section="ui">UI Controls</button>
+      </nav>
+
+      <div class="doc-body">
+
+        <!-- ── OVERVIEW ─── -->
+        <section class="doc-section is-active" id="doc-overview">
+          <h3>What is this?</h3>
+          <p>A <strong>zero-dependency</strong> page transition engine built on <strong>GSAP 3.12.5</strong>. It renders <strong>50 unique full-viewport animations</strong> — each one a GPU-accelerated, bidirectionally-stable timeline that can be played, reversed, and killed at any point.</p>
+
+          <div class="doc-card-grid">
+            <div class="doc-stat-card">
+              <span class="doc-stat-num">50</span>
+              <span class="doc-stat-label">Transition Variants</span>
+            </div>
+            <div class="doc-stat-card">
+              <span class="doc-stat-num">4</span>
+              <span class="doc-stat-label">Rendering Layers</span>
+            </div>
+            <div class="doc-stat-card">
+              <span class="doc-stat-num">0</span>
+              <span class="doc-stat-label">Dependencies</span>
+            </div>
+            <div class="doc-stat-card">
+              <span class="doc-stat-num">GPU</span>
+              <span class="doc-stat-label">Accelerated (force3D)</span>
+            </div>
+          </div>
+
+          <h3>Quick Start</h3>
+          <p>Import the module and call <code>createTransition</code> with the stage container and an options object:</p>
+          <div class="doc-code-block">
+            <div class="doc-code-label">JavaScript</div>
+            <pre><code>import { createTransition } from "./js/transitions/create-transition.js";
+
+// 1. Create a controller for transition #12 (Scale Bloom)
+const ctrl = createTransition(document.querySelector("#stage"), { id: 12 });
+
+// 2. Play forward (covers screen → reveals new content)
+ctrl.play();
+
+// 3. Reverse (uncovers screen → returns to previous state)
+ctrl.reverse();
+
+// 4. Kill and clean up DOM nodes
+ctrl.kill();</code></pre>
+          </div>
+
+          <h3>How it Works</h3>
+          <p>Every transition follows the same <strong>3-phase cycle</strong>:</p>
+          <ol class="doc-list">
+            <li><strong>Cover:</strong> The transition layer(s) animate over the viewport, hiding the current content. This is the ideal moment to swap page DOM or route.</li>
+            <li><strong>Hold:</strong> The screen is fully covered. Content swap occurs invisibly. The text in this demo updates automatically during this phase.</li>
+            <li><strong>Reveal:</strong> The layer(s) exit the viewport, revealing the new content with a polished ease.</li>
+          </ol>
+        </section>
+
+        <!-- ── API ─── -->
+        <section class="doc-section" id="doc-api">
+          <h3>createTransition( container, options )</h3>
+          <p>The factory function. Creates and returns a transition controller object.</p>
+
+          <h4>Parameters</h4>
+          <table class="doc-table">
+            <thead><tr><th>Param</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>container</code></td><td>HTMLElement</td><td>Yes</td><td>The element that hosts the transition layers. Usually the full-screen preview stage.</td></tr>
+              <tr><td><code>options.id</code></td><td>Number</td><td>Yes</td><td>Transition index from 1–50. Selects the animation variant.</td></tr>
+            </tbody>
+          </table>
+
+          <h4>Return Value</h4>
+          <p>Returns an object with 3 methods:</p>
+          <table class="doc-table">
+            <thead><tr><th>Method</th><th>Signature</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>play()</code></td><td><code>() → void</code></td><td>Plays the timeline forward from the current playhead position. Covers the screen.</td></tr>
+              <tr><td><code>reverse()</code></td><td><code>() → void</code></td><td>Plays the timeline backward. Uncovers the screen. Safe to call at any time — even mid-play.</td></tr>
+              <tr><td><code>kill()</code></td><td><code>() → void</code></td><td>Kills the GSAP timeline and runs all cleanup callbacks to remove injected DOM nodes and reset all inline styles.</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Interrupt Safety</h3>
+          <p>Every transition is <strong>interrupt-safe</strong>. You can call <code>reverse()</code> mid-play and the animation will reverse smoothly from its current position. The engine uses GSAP's <code>gsap.timeline()</code> with a <code>paused: true</code> default, giving you full manual control of the playhead.</p>
+
+          <div class="doc-code-block">
+            <div class="doc-code-label">Interrupt Safe Example</div>
+            <pre><code>const ctrl = createTransition(stage, { id: 5 });
+ctrl.play();
+
+// You can call reverse() at ANY point — even 50ms after play()
+setTimeout(() => ctrl.reverse(), 500);</code></pre>
+          </div>
+
+          <h3>Memory Management</h3>
+          <p>Transitions that generate dynamic DOM (e.g. stripe overlays for "Blind Expand") register cleanup callbacks. When you call <code>kill()</code>, or when <code>createTransition()</code> is called again for a new transition, all old DOM nodes are garbage-collected automatically. This prevents memory leaks during rapid navigation.</p>
+        </section>
+
+        <!-- ── TRANSITIONS ─── -->
+        <section class="doc-section" id="doc-transitions">
+          <h3>All 50 Transition Variants</h3>
+          <p>Each variant has a unique visual signature. The <code>id</code> is what you pass to <code>createTransition</code>.</p>
+
+          <div class="doc-transition-grid">
+            <div class="doc-t-row doc-t-header">
+              <span>ID</span><span>Name</span><span>Technique</span>
+            </div>
+            <div class="doc-t-row"><span>01</span><span>Drift In</span><span>clip-path inset wipe + bg slide</span></div>
+            <div class="doc-t-row"><span>02</span><span>Rise Up</span><span>clip-path inset wipe from bottom</span></div>
+            <div class="doc-t-row"><span>03</span><span>Slide Left</span><span>translateX full-panel slide</span></div>
+            <div class="doc-t-row"><span>04</span><span>Drop Down</span><span>clip-path inset wipe from top</span></div>
+            <div class="doc-t-row"><span>05</span><span>Unshutter</span><span>scaleX shutter + opacity</span></div>
+            <div class="doc-t-row"><span>06</span><span>Iris Expand</span><span>clip-path circle expand</span></div>
+            <div class="doc-t-row"><span>07</span><span>Split Center</span><span>dual clip-path halves</span></div>
+            <div class="doc-t-row"><span>08</span><span>Blind Expand</span><span>8 vertical stripes stagger</span></div>
+            <div class="doc-t-row"><span>09</span><span>Flicker Wipe</span><span>clip-path inset with opacity flicker</span></div>
+            <div class="doc-t-row"><span>10</span><span>Pull Through</span><span>scaleX + yPercent combined</span></div>
+            <div class="doc-t-row"><span>11</span><span>Corner Iris</span><span>clip-path circle from corner</span></div>
+            <div class="doc-t-row"><span>12</span><span>Scale Bloom</span><span>clip-path circle + scale</span></div>
+            <div class="doc-t-row"><span>13</span><span>Poly Reveal</span><span>polygon clip-path morph</span></div>
+            <div class="doc-t-row"><span>14</span><span>Bottom Lift</span><span>yPercent full lift</span></div>
+            <div class="doc-t-row"><span>15</span><span>Curtain Down</span><span>yPercent from top</span></div>
+            <div class="doc-t-row"><span>16</span><span>Top-Right Iris</span><span>clip-path circle from top-right</span></div>
+            <div class="doc-t-row"><span>17</span><span>Overlay Wipe</span><span>xPercent full panel</span></div>
+            <div class="doc-t-row"><span>18</span><span>Top Slice</span><span>clip-path inset horizontal</span></div>
+            <div class="doc-t-row"><span>19</span><span>Scale Mask</span><span>scale + clip-path inset</span></div>
+            <div class="doc-t-row"><span>20</span><span>Flash Sweep</span><span>opacity flash + xPercent sweep</span></div>
+            <div class="doc-t-row"><span>21</span><span>Diagonal Slash</span><span>skewed polygon wipe</span></div>
+            <div class="doc-t-row"><span>22</span><span>Twin Curtain</span><span>dual yPercent curtains</span></div>
+            <div class="doc-t-row"><span>23</span><span>Ripple Burst</span><span>clip-path circle wave</span></div>
+            <div class="doc-t-row"><span>24</span><span>Page Curl</span><span>3D rotateY perspective</span></div>
+            <div class="doc-t-row"><span>25</span><span>Depth Push</span><span>translateZ + scale depth</span></div>
+            <div class="doc-t-row"><span>26</span><span>Cascade Drop</span><span>12-stripe yPercent cascade</span></div>
+            <div class="doc-t-row"><span>27</span><span>Glitch Slam</span><span>xPercent + opacity glitch steps</span></div>
+            <div class="doc-t-row"><span>28</span><span>Prism Slide</span><span>horizontal stripes stagger</span></div>
+            <div class="doc-t-row"><span>29</span><span>Elastic Gate</span><span>elastic scaleX dual gates</span></div>
+            <div class="doc-t-row"><span>30</span><span>Grand Finale</span><span>12-stripe alternating bounce</span></div>
+            <div class="doc-t-row"><span>31</span><span>Cinematic Bars</span><span>2 bars from top/bottom + blur</span></div>
+            <div class="doc-t-row"><span>32</span><span>Hexagon Expand</span><span>6-point polygon morph</span></div>
+            <div class="doc-t-row"><span>33</span><span>Venetian Blinds</span><span>14 stripes 3D rotationX flip</span></div>
+            <div class="doc-t-row"><span>34</span><span>Diagonal Stagger</span><span>6 rotated stripes xPercent stagger</span></div>
+            <div class="doc-t-row"><span>35</span><span>Cross Split</span><span>12-point cross polygon expand</span></div>
+            <div class="doc-t-row"><span>36</span><span>Shutter Twist</span><span>8 stripes skewX + yPercent</span></div>
+            <div class="doc-t-row"><span>37</span><span>Diamond Sweep</span><span>4-point diamond polygon wipe</span></div>
+            <div class="doc-t-row"><span>38</span><span>Accordion Fold</span><span>alternating-origin scaleY fold</span></div>
+            <div class="doc-t-row"><span>39</span><span>Center Pinch</span><span>inset clip-path horizontal pinch</span></div>
+            <div class="doc-t-row"><span>40</span><span>Orbital Sweep</span><span>rotationZ + scale spiral</span></div>
+            <div class="doc-t-row"><span>41</span><span>Glitch Slice</span><span>5 stripes xPercent steps() easing</span></div>
+            <div class="doc-t-row"><span>42</span><span>Triangle Unfold</span><span>polygon triangle morph</span></div>
+            <div class="doc-t-row"><span>43</span><span>Elastic Drop</span><span>inset clip-path bounce.out</span></div>
+            <div class="doc-t-row"><span>44</span><span>The Void</span><span>inset rotate + scale suck</span></div>
+            <div class="doc-t-row"><span>45</span><span>Double Door Sweep</span><span>2 panels xPercent → yPercent</span></div>
+            <div class="doc-t-row"><span>46</span><span>Ripple Offset</span><span>10 stripes center-stagger scaleY</span></div>
+            <div class="doc-t-row"><span>47</span><span>Skewed Blocks</span><span>6 stripes yPercent + skewY</span></div>
+            <div class="doc-t-row"><span>48</span><span>Iris Blink</span><span>circle blink + bounce reveal</span></div>
+            <div class="doc-t-row"><span>49</span><span>Sawtooth Wipe</span><span>9-point polygon jagged wipe</span></div>
+            <div class="doc-t-row"><span>50</span><span>The Masterpiece</span><span>3D bg push + 10-stripe shutter</span></div>
+          </div>
+        </section>
+
+        <!-- ── LAYERS ─── -->
+        <section class="doc-section" id="doc-layers">
+          <h3>The Layer System</h3>
+          <p>Each transition stage has <strong>4 stacked rendering layers</strong>. Understanding them lets you customise colours and effects without touching the animation code.</p>
+
+          <table class="doc-table">
+            <thead><tr><th>Layer Class</th><th>z-index</th><th>Role</th><th>CSS Variable</th></tr></thead>
+            <tbody>
+              <tr><td><code>.layer-bg</code></td><td>0</td><td>Base background. Always fills the stage. Most transitions animate the <em>background image</em> (scale, xPercent) behind this layer.</td><td><code>--bg</code></td></tr>
+              <tr><td><code>.layer-accent</code></td><td>1</td><td>A semi-transparent colour wash. Fades in via <code>accentFade()</code> to add colour depth and brand identity.</td><td><code>--primary-color</code></td></tr>
+              <tr><td><code>.layer-overlay</code></td><td>2</td><td>Solid colour used by specific full-cover transitions (e.g. Panel slides). Hidden by default.</td><td><code>--primary-color</code></td></tr>
+              <tr><td><code>.layer-mask</code></td><td>5</td><td>The primary clip-path animation layer. Most wipes and iris transitions animate <code>clip-path</code> on this element. Starts clipped to <code>inset(0 100% 0 0)</code> (hidden).</td><td><code>--bg</code></td></tr>
+            </tbody>
+          </table>
+
+          <h3>Customising Layer Colours</h3>
+          <p>All layer colours are driven by CSS custom properties in <code>:root</code>. Edit <code>css/main.css</code> to retheme the entire engine:</p>
+          <div class="doc-code-block">
+            <div class="doc-code-label">css/main.css</div>
+            <pre><code>:root {
+  --primary-color: #9CEC5B;  /* Accent / overlay colour  */
+  --bg:            #141414;  /* Background & mask colour  */
+  --accent:        #6b7dff;  /* UI accent (buttons, tags) */
+  --accent-2:      #ff5f92;  /* Secondary UI accent       */
+}</code></pre>
+          </div>
+
+          <h3>Dynamic Stripe DOM</h3>
+          <p>Transitions that use stripe overlays (e.g. T08, T26, T28, T33…) call the internal <code>makeStripes(container, count, color, direction)</code> factory. This injects a flex wrapper + N child stripe divs directly into the stage container. All of these are registered in the <code>cleanups[]</code> array and are automatically removed when <code>kill()</code> is called.</p>
+          <table class="doc-table">
+            <thead><tr><th>Param</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>container</code></td><td>HTMLElement</td><td>—</td><td>Parent to append the stripe wrapper into.</td></tr>
+              <tr><td><code>count</code></td><td>Number</td><td>—</td><td>Number of stripes to generate.</td></tr>
+              <tr><td><code>color</code></td><td>String</td><td><code>#030409</code></td><td>Background fill colour of each stripe.</td></tr>
+              <tr><td><code>direction</code></td><td>String</td><td><code>"row"</code></td><td><code>"row"</code> for vertical stripes, <code>"column"</code> for horizontal stripes.</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ── UI ─── -->
+        <section class="doc-section" id="doc-ui">
+          <h3>UI Controls</h3>
+
+          <h4>Select a Transition Button</h4>
+          <p>The circular button on the <strong>right side of the screen</strong> opens the transition carousel overlay. It shows all 50 transitions as scrollable cards.</p>
+          <ul class="doc-list">
+            <li>Click a card to select and immediately <strong>play</strong> that transition.</li>
+            <li>Click the same active card again to <strong>reverse</strong> the animation.</li>
+            <li>The overlay auto-closes after a selection.</li>
+            <li>Click the backdrop or press <kbd>Escape</kbd> to dismiss without selecting.</li>
+          </ul>
+
+          <h4>Transition Label (Bottom Left)</h4>
+          <p>Displays the currently selected transition ID and name with two control buttons:</p>
+          <table class="doc-table">
+            <thead><tr><th>Button</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td><kbd>Play</kbd></td><td>Re-triggers the selected transition forward from its current position.</td></tr>
+              <tr><td><kbd>Reverse</kbd></td><td>Plays the timeline backward from its current position. Interrupt-safe.</td></tr>
+            </tbody>
+          </table>
+
+          <h4>Fullscreen Button (Top Right)</h4>
+          <p>The four-arrow button toggles the browser's native Fullscreen API for the entire document. This is ideal for presentations or demos. Press <kbd>Escape</kbd> to exit fullscreen.</p>
+
+          <h4>Documentation Button (Bottom Right)</h4>
+          <p>The rounded button with the file-stack icon (this dialog). Click it to open this documentation lightbox. Press <kbd>Escape</kbd> or click the backdrop to close.</p>
+
+          <h3>Keyboard Shortcuts</h3>
+          <table class="doc-table">
+            <thead><tr><th>Key</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td><kbd>Escape</kbd></td><td>Closes the carousel overlay, documentation panel, or exits fullscreen — in that priority order.</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Content Swap Simulation</h3>
+          <p>When the transition layer fully covers the screen, the engine automatically swaps the headline text to simulate a real-world page load. On <code>play()</code>, the text changes to a "new page" state. On <code>reverse()</code>, it reverts. This is handled by a GSAP <code>tl.add()</code> callback inside <code>stdContent()</code> in <code>create-transition.js</code>.</p>
+        </section>
+
+      </div><!-- /.doc-body -->
+    </div><!-- /.doc-panel -->
+  </div><!-- /.doc-lightbox -->
+
+</main>
+
+  <!-- GSAP from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="js/noise.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
