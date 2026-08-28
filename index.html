@@ -372,9 +372,11 @@ setTimeout(() => ctrl.reverse(), 500);</code></pre>
 
 </main>
 
-  <!-- GSAP from CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <!-- Load dependencies in order. A local server is recommended for iframe previews. -->
+  <script src="js/gsap.js"></script>
   <script src="js/noise.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <script src="js/transitions/utils.js"></script>
+  <script src="js/transitions/create-transition.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

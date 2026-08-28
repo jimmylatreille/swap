@@ -2,7 +2,8 @@
  * main.js — Page Transition Demo Orchestrator
  */
 
-import { createTransition } from "./transitions/create-transition.js";
+const transitionEngineMain = window.PageTransitions;
+const transitionFactoryMain = transitionEngineMain && transitionEngineMain.createTransition;
 
 // ── Constants ────────────────────────────────────────────────
 const TOTAL = 50;
@@ -77,8 +78,20 @@ const docLightbox     = document.querySelector("#doc-lightbox");
 const docClose        = document.querySelector("#doc-close");
 const docBackdrop     = document.querySelector("#doc-backdrop");
 
-if (!grid || !previewStage || !tlBtnPlay || !tlBtnRev) {
-  throw new Error("Required nodes missing: check DOM IDs");
+const requiredNodes = {
+  createTransition: transitionFactoryMain,
+  grid,
+  previewStage,
+  tlBtnPlay,
+  tlBtnRev,
+};
+
+const missingNodes = Object.entries(requiredNodes)
+  .filter(([, node]) => !node)
+  .map(([name]) => name);
+
+if (missingNodes.length) {
+  console.error(`Required nodes missing: ${missingNodes.join(", ")}`);
 }
 
 // ── State ────────────────────────────────────────────────────
@@ -95,7 +108,7 @@ function buildCards() {
     const btn = document.createElement("button");
     btn.className = "card";
     btn.type      = "button";
-    btn.role      = "listitem";
+    btn.setAttribute("role", "listitem");
     btn.id        = `card-${i}`;
     btn.dataset.transition = `T${i}`;
     btn.setAttribute("aria-label", `Play transition ${i}: ${NAMES[i - 1]}`);
@@ -151,7 +164,7 @@ function runTransition(index, cardEl) {
 
   if (!isSame) {
     killActive();
-    activeCtrl      = createTransition(previewStage, { id: index });
+    activeCtrl      = transitionFactoryMain(previewStage, { id: index });
     activeIndex     = index;
     activeDirection = "play";
     activeCtrl.play();
@@ -159,7 +172,7 @@ function runTransition(index, cardEl) {
   }
 
   if (!activeCtrl) {
-    activeCtrl      = createTransition(previewStage, { id: index });
+    activeCtrl      = transitionFactoryMain(previewStage, { id: index });
     activeDirection = "play";
     activeCtrl.play();
     return;

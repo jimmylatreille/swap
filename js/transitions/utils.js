@@ -3,7 +3,7 @@
  */
 
 /** Returns true if the user prefers reduced motion */
-export function prefersReducedMotion() {
+function transitionUtilsPrefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
@@ -13,7 +13,7 @@ export function prefersReducedMotion() {
  * @param {Function} snapFn - Called on play() to set the final visual state
  * @param {Function} [resetFn] - Called on reverse() to reset to neutral state
  */
-export function createNoMotionController(snapFn, resetFn) {
+function transitionUtilsCreateNoMotionController(snapFn, resetFn) {
   return {
     play()    { snapFn?.(); },
     reverse() { resetFn?.(); },
@@ -27,7 +27,7 @@ export function createNoMotionController(snapFn, resetFn) {
  * Throws early if any critical node is absent.
  * @param {Element} container
  */
-export function collectNodes(container) {
+function transitionUtilsCollectNodes(container) {
   const nodes = {
     bg:           container.querySelector(".layer-bg"),
     accent:       container.querySelector(".layer-accent"),
@@ -52,7 +52,7 @@ export function collectNodes(container) {
  *
  * @param {ReturnType<collectNodes>} nodes
  */
-export function setBaseState(nodes) {
+function transitionUtilsSetBaseState(nodes) {
   const { bg, accent, overlay, mask, contentItems, tags } = nodes;
 
   // Kill any in-flight tweens first so set() values win immediately
@@ -94,3 +94,10 @@ export function setBaseState(nodes) {
     xPercent: 0, yPercent: 0,
   });
 }
+
+window.TransitionUtils = {
+  prefersReducedMotion: transitionUtilsPrefersReducedMotion,
+  createNoMotionController: transitionUtilsCreateNoMotionController,
+  collectNodes: transitionUtilsCollectNodes,
+  setBaseState: transitionUtilsSetBaseState,
+};

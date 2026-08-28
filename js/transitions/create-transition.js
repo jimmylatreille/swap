@@ -1,4 +1,4 @@
-import { prefersReducedMotion, collectNodes, setBaseState, createNoMotionController } from "./utils.js";
+const transitionEngineUtils = window.TransitionUtils;
 
 // ── Stripe helper ──────────────────────────────────────────────────────────
 function makeStripes(container, n, color = "#030409", direction = "row") {
@@ -536,13 +536,13 @@ function buildTimeline(id, nodes, container) {
 }
 
 // ── Public factory ─────────────────────────────────────────────────────────
-export function createTransition(container, options = {}) {
+function createTransition(container, options = {}) {
   const id    = options.id ?? 1;
-  const nodes = collectNodes(container);
-  setBaseState(nodes);
+  const nodes = transitionEngineUtils.collectNodes(container);
+  transitionEngineUtils.setBaseState(nodes);
 
-  if (prefersReducedMotion()) {
-    return createNoMotionController(
+  if (transitionEngineUtils.prefersReducedMotion()) {
+    return transitionEngineUtils.createNoMotionController(
       () => gsap.set(nodes.mask, { clipPath:"inset(0 0 0 0)", opacity:1 }),
       () => gsap.set(nodes.mask, { clipPath:"inset(0 100% 0 0)" })
     );
@@ -561,3 +561,5 @@ export function createTransition(container, options = {}) {
     get isPlaying() { return tl ? tl.isActive() : false; },
   };
 }
+
+window.PageTransitions = { createTransition };
