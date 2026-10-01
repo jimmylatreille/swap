@@ -18,22 +18,32 @@
 
 1. [Demo](#demo)
 2. [Features](#features)
-3. [Project Structure](#project-structure)
-4. [Quick Start](#quick-start)
-5. [API Reference](#api-reference)
-   - [createTransition()](#createtransition)
+3. [Requirements & Dependencies](#requirements--dependencies)
+4. [Project Structure](#project-structure)
+5. [Quick Start](#quick-start)
+6. [API Reference](#api-reference)
+   - [createTransition()](#createtransitioncontainer-options)
    - [Controller Methods](#controller-methods)
-6. [Transition Variants](#transition-variants)
-7. [The Layer System](#the-layer-system)
+   - [Behaviour Notes](#behaviour-notes)
+7. [Transition Variants](#transition-variants)
+8. [The Layer System](#the-layer-system)
    - [CSS Layers](#css-layers)
    - [Dynamic Stripe DOM](#dynamic-stripe-dom)
-8. [Customisation](#customisation)
+9. [Customisation](#customisation)
    - [Colours & Theming](#colours--theming)
    - [Adding New Transitions](#adding-new-transitions)
-9. [UI Controls](#ui-controls)
-10. [Keyboard Shortcuts](#keyboard-shortcuts)
-11. [Performance Notes](#performance-notes)
-12. [Browser Support](#browser-support)
+10. [Integration Example](#integration-example)
+11. [Accessibility](#accessibility)
+12. [UI Controls](#ui-controls)
+13. [Keyboard Shortcuts](#keyboard-shortcuts)
+14. [Performance Notes](#performance-notes)
+15. [Browser Support](#browser-support)
+16. [Deployment](#deployment)
+17. [Troubleshooting / FAQ](#troubleshooting--faq)
+18. [Contributing](#contributing)
+19. [Changelog](#changelog)
+20. [Third-Party Licenses](#third-party-licenses)
+21. [License](#license)
 
 ---
 
@@ -64,31 +74,57 @@ npx serve .
 
 ---
 
+## Requirements & Dependencies
+
+The engine itself is plain browser JavaScript: **no build step, no bundler, no npm install**. Everything is loaded with classic `<script>` tags.
+
+| Dependency | Version | File | Loaded by `index.html`? | Why it is there |
+|---|---|---|---|---|
+| **GSAP** (core) | `3.13.0` | `js/gsap.js` | ✅ Yes | **Required.** Every transition is a paused `gsap.timeline()`; `gsap.set()`, `gsap.killTweensOf()` and `gsap.utils.random()` are also used by the engine. |
+| **SplitType** | `0.3.4` | `js/splitText.min.js` | ❌ No | Legacy helper used only by `js/text-anim.js`. Despite the file name, this is [SplitType](https://github.com/lukePeavey/SplitType) by Luke Peavey, **not** GSAP's SplitText plugin. |
+| **jQuery** | `1.11.1` | `js/jquery.js` | ❌ No | Legacy helper used only by `js/text-anim.js`. |
+
+What the engine actually needs at runtime:
+
+- `gsap` available as a global (from `js/gsap.js` or a CDN).
+- `js/transitions/utils.js` (exposes `window.TransitionUtils`).
+- `js/transitions/create-transition.js` (exposes `window.PageTransitions`).
+- A modern browser with `clip-path` and CSS custom property support (see [Browser Support](#browser-support)).
+
+> **Note:** `js/text-anim.js` defines a `loadtext()` function that is never called by the demo. It also expects GSAP's **ScrollTrigger** plugin, SplitType and jQuery to be loaded. None of these are needed for the page transitions.
+
+---
+
 ## Project Structure
 
 ```
-Page transition/
+swap/
 ├── index.html                   # Main demo page + documentation lightbox
 ├── .gitignore
 ├── README.md
+├── swap-banner.jpg              # README banner image
+│
+├── img/                         # Logos, noise texture, background SVGs
 │
 ├── css/
 │   ├── reset.css                # Minimal CSS reset
 │   ├── main.css                 # All UI styles + layer system + doc lightbox
-│   └── page-transtion.css       # Stage-level transition layer base styles
+│   └── page-transtion.css       # Legacy stripe loader styles (not linked by index.html)
 │
 └── js/
     ├── main.js                  # Demo orchestrator: cards, state machine, UI
-    ├── noise.js                 # Canvas grain effect
-    ├── gsap.js                  # GSAP 3.13.0 (local fallback)
-    ├── jquery.js                # jQuery (legacy demo helpers)
-    ├── splitText.min.js         # GSAP SplitText plugin
-    ├── text-anim.js             # Text animation helpers
+    ├── noise.js                 # Canvas film-grain effect (24 fps)
+    ├── gsap.js                  # GSAP 3.13.0 (local copy)
+    ├── jquery.js                # jQuery 1.11.1 (legacy, not loaded by index.html)
+    ├── splitText.min.js         # SplitType 0.3.4 (legacy, not loaded by index.html)
+    ├── text-anim.js             # Legacy text animation helpers (not loaded by index.html)
     │
     └── transitions/
         ├── create-transition.js # ⭐ Core engine — all 100 transitions live here
         └── utils.js             # Shared DOM/GSAP utility helpers
 ```
+
+> The demo page loads scripts in this order: `gsap.js` → `noise.js` → `transitions/utils.js` → `transitions/create-transition.js` → `main.js`.
 
 ---
 
@@ -134,6 +170,8 @@ The engine exposes itself as a browser global — no bundler or ES modules neede
 <script src="js/transitions/create-transition.js"></script>
 ```
 
+> **Load order matters.** `create-transition.js` reads `window.TransitionUtils` as soon as it loads, so `utils.js` must come **before** it, and GSAP must come before both. Put the scripts at the end of `<body>` (as the demo does) or add `defer` to all of them so the stage exists when your code runs.
+
 ```js
 const { createTransition } = window.PageTransitions;
 const stage = document.querySelector("#preview-stage");
@@ -168,7 +206,16 @@ The factory function. Builds the GSAP timeline for the selected variant and retu
 
 #### Returns
 
-A controller object with 3 methods:
+A controller object with 3 methods and 1 read-only property:
+
+| Member | Type | Description |
+|---|---|---|
+| `play()` | `() => void` | Plays the timeline forward. |
+| `reverse()` | `() => void` | Plays the timeline backward. |
+| `kill()` | `() => void` | Kills the timeline and removes injected DOM. |
+| `isPlaying` | `boolean` (getter) | `true` while the timeline is actively animating (GSAP `tl.isActive()`); `false` when paused, finished, or killed. Always `false` in reduced-motion mode. |
+
+> `isPlaying` can still be `false` immediately after `play()` is called, because GSAP only starts the timeline on its next tick.
 
 ### Controller Methods
 
@@ -178,7 +225,7 @@ Plays the timeline **forward** from the current playhead position.
 
 - The transition layers animate **over** the viewport, covering the content.
 - During coverage, you can safely swap your route, update DOM, or load a new page.
-- Calling `play()` on a finished timeline restarts it from the beginning.
+- Calling `play()` on a timeline that has already finished playing forward does **nothing** (the playhead is already at the end). Call `reverse()` first, or create a new controller to replay it.
 
 ```js
 ctrl.play();
@@ -192,7 +239,7 @@ Plays the timeline **backward** from the current playhead position.
 
 - The transition layers retract, revealing the underlying content.
 - Fully interrupt-safe — can be called at any point during `play()`.
-- When reversing, the content text is automatically swapped back to its original state.
+- When reversing, the demo headline text is automatically swapped back to its original state (see [Behaviour Notes](#behaviour-notes)).
 
 ```js
 ctrl.reverse();
@@ -243,6 +290,20 @@ function toggle() {
   }
 }
 ```
+
+---
+
+### Behaviour Notes
+
+These details come straight from `create-transition.js` and `utils.js`:
+
+- **`id` must be a number.** The variant is selected with a strict `switch (id)`, so `{ id: "12" }` matches nothing. Convert strings first: `{ id: Number(value) }`.
+- **Unknown IDs fail silently.** An `id` outside `1–100` (or `0`, since the default only applies to `null`/`undefined`) produces an empty timeline: `play()` and `reverse()` do nothing and no error is thrown.
+- **`.layer-bg` and `.layer-mask` are mandatory.** If either is missing inside `container`, `createTransition()` throws `createTransition: .layer-bg or .layer-mask not found inside container.`
+- **Content is collected at creation time.** `createTransition()` grabs `.preview-content > *` and `.preview-tags span` inside the container when it is called. Elements added later are not animated, so swap your content **before** creating the controller.
+- **Every call resets the stage.** `createTransition()` kills any running tweens on the layers and content, then resets them to a neutral base state with `gsap.set()`.
+- **Demo text swap.** The `stdContent()` helper inserts a timeline callback that rewrites the text of the page's `.eyebrow`, `.title` and `.copy` elements (found with `document.querySelector`, i.e. anywhere in the document, only when all three exist). This is a demo of a "content swap" and you will usually want to remove it in production. See [Troubleshooting](#troubleshooting--faq).
+- **No callbacks or promises.** The controller does not expose `onComplete` events, promises, or the underlying timeline.
 
 ---
 
@@ -365,8 +426,8 @@ Every transition stage requires **4 stacked rendering layers** inside the contai
 |---|---|---|---|
 | `.layer-bg` | auto (DOM order) | `var(--bg)` | Base background. Most transitions animate `scale`, `xPercent`, `yPercent`, or `rotation` on this layer to create a parallax backdrop. |
 | `.layer-accent` | auto (DOM order) | `var(--primary-color)` at 85% opacity | A semi-transparent colour wash. Faded in via `accentFade()` helper to add brand colour depth over the bg. |
-| `.layer-overlay` | 2 | `var(--primary-color)` | Solid colour layer for full-cover panel-style transitions. Hidden by default (`opacity: 0`). |
-| `.layer-mask` | 5 | `var(--bg)` | The **primary** clip-path animation layer. Most iris/wipe/polygon transitions animate `clip-path` on this element. Starts off-screen (`inset(0 100% 0 0)`). |
+| `.layer-overlay` | 2 | `#222` | Solid colour layer. Currently only animated by T17 Overlay Wipe, which fades it in from `opacity: 0`. |
+| `.layer-mask` | 5 | `#000` | The **primary** clip-path animation layer. Most iris/wipe/polygon transitions animate `clip-path` on this element. Starts off-screen (`inset(0 100% 0 0)`). |
 
 ### Dynamic Stripe DOM
 
@@ -464,6 +525,102 @@ const TOTAL = 101; // was 100
 
 ---
 
+## Integration Example
+
+> **Example only.** This is not part of the engine. It is a minimal sketch of a click-to-navigate single-page app built on the real API (`createTransition`, `play`, `kill`). Adapt the selectors to your markup.
+
+```js
+const { createTransition } = window.PageTransitions;
+const stage   = document.querySelector("#preview-stage");
+const content = stage.querySelector(".preview-content");
+let ctrl = null;
+
+document.addEventListener("click", async (event) => {
+  const link = event.target.closest("a[data-transition]");
+  if (!link) return;
+  event.preventDefault();
+
+  // 1. Fetch the next page and pull out its content
+  const html = await fetch(link.href).then((res) => res.text());
+  const next = new DOMParser()
+    .parseFromString(html, "text/html")
+    .querySelector(".preview-content");
+  if (!next) return;
+
+  // 2. Kill the previous controller (removes injected stripes/grids)
+  if (ctrl) ctrl.kill();
+
+  // 3. Swap the content BEFORE creating the controller:
+  //    createTransition() collects `.preview-content > *` when it is called
+  //    and animates those elements in.
+  content.replaceChildren(...next.childNodes);
+
+  // 4. Create and play the transition
+  ctrl = createTransition(stage, { id: Number(link.dataset.transition) });
+  ctrl.play();
+
+  history.pushState({}, "", link.href);
+});
+```
+
+```html
+<a href="/about.html" data-transition="12">About</a>
+```
+
+Things to keep in mind:
+
+- Remove (or rewrite) the demo text-swap callback inside `stdContent()`, otherwise it will overwrite your `.eyebrow`, `.title` and `.copy` text.
+- Because the controller has no completion callback or promise, routers that expect a promise from their transition hooks (e.g. Barba.js, Swup) need a small change to the engine, such as returning the timeline or resolving a promise from `tl.eventCallback("onComplete", …)` inside `createTransition()`.
+- If you need to swap DOM at the exact moment the screen is fully covered, the place to hook in is the `tl.add(() => { … })` callback at the top of `stdContent()`.
+
+---
+
+## Accessibility
+
+### Reduced motion (built in)
+
+The engine **does** respect `prefers-reduced-motion: reduce`. When the user has it enabled, `createTransition()` skips the GSAP timeline entirely and returns a no-motion controller instead:
+
+| Method | Reduced-motion behaviour |
+|---|---|
+| `play()` | Instantly sets `.layer-mask` to `clip-path: inset(0 0 0 0)` (fully shown). No animation. |
+| `reverse()` | Instantly sets `.layer-mask` back to `clip-path: inset(0 100% 0 0)` (hidden). |
+| `kill()` | No-op (nothing was injected). |
+| `isPlaying` | Always `false`. |
+
+Notes:
+
+- The preference is read **each time `createTransition()` is called**, so a change in OS settings applies to the next transition.
+- In reduced-motion mode the demo's headline text swap does not run, and stripes/grids are never created.
+- `css/main.css` also turns off CSS transitions on the cards, carousel, menu button and fullscreen button under `prefers-reduced-motion: reduce`.
+- To test it, use your browser DevTools' rendering panel to emulate `prefers-reduced-motion: reduce`.
+
+### Demo UI
+
+- The transition label uses `aria-live="polite"` and `aria-atomic="true"`, so the selected transition is announced.
+- Each card is a `<button>` with an `aria-label` such as "Play transition 12: Scale Bloom".
+- The carousel toggle updates `aria-expanded`; the documentation panel is a `role="dialog"` with `aria-modal="true"` and toggles `aria-hidden`.
+- `Escape` closes overlays (see [Keyboard Shortcuts](#keyboard-shortcuts)).
+
+### Known gaps
+
+- The film-grain canvas (`js/noise.js`) keeps animating at 24 fps even with reduced motion enabled.
+- The carousel overlay's `aria-hidden="true"` is set in the HTML but is not updated when the carousel opens.
+- The documentation dialog does not trap or restore keyboard focus.
+
+**Suggestion (not in the code yet):** pause the grain for reduced-motion users by drawing one static frame instead of starting the loop at the bottom of `js/noise.js`:
+
+```js
+// Suggested change — replace the last line of js/noise.js
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  generateGrain();              // draw a single static frame
+} else {
+  requestAnimationFrame(loop);  // animated grain
+}
+```
+
+---
+
 ## UI Controls
 
 ### Transition Carousel (Right Side Button)
@@ -507,7 +664,9 @@ The file-stack icon button opens the in-app documentation lightbox — a tabbed 
 - **`will-change: transform, opacity, clip-path`** is set on all layer elements in CSS to pre-promote them to their own compositor layers.
 - **`contain: layout style paint`** and **`isolation: isolate`** are set on the stage container to create a strict paint boundary, preventing unnecessary repaints of surrounding content.
 - **`backface-visibility: hidden`** prevents blurry sub-pixel rendering on 3D transforms in Safari.
-- Transitions that use `filter: blur()` (e.g. T31 Cinematic Bars) are the most expensive. Use them sparingly on mobile.
+- Transitions that use `filter: blur()` are the most expensive: T31, T50, T59, T69, T80, T86, T94 and T100. Use them sparingly on mobile.
+- Grid-based variants inject many nodes at once (for example T74 Checkerboard creates an 8×8 grid of 64 cells, T52 Pixel Storm 48 cells). They are removed on `kill()`, so always kill the previous controller.
+- The demo's film-grain background (`js/noise.js`) redraws a full-viewport `ImageData` on the CPU 24 times per second. It is decorative only; remove the `<canvas id="noise-bg">` and the `noise.js` script if you do not need it.
 
 ---
 
@@ -521,7 +680,102 @@ The file-stack icon button opens the in-app documentation lightbox — a tabbed 
 | Safari < 15.4 | ⚠️ Polygon transitions degrade gracefully |
 | Mobile Chrome / Safari | ✅ Full (tested on iOS 16+) |
 
-> **Note:** The `oklch()` colour function used in `.layer-accent` requires Chrome 111+, Firefox 113+, and Safari 15.4+. On older browsers it will silently produce no colour on that layer — all other transitions remain unaffected.
+> **Note:** Layer colours use plain hex values and CSS custom properties (`.layer-accent` is `var(--primary-color)` at `opacity: 0.85`), so no modern colour functions are required.
+
+---
+
+## Deployment
+
+The project is 100% static, so it can be hosted anywhere that serves files.
+
+**GitHub Pages (how the live demo is hosted):** the site is published from the root (`/`) of the `main` branch at https://jimmylatreille.github.io/swap/. Every push to `main` triggers a new Pages build; there is nothing to compile.
+
+To set it up on a fork:
+
+1. Go to **Settings → Pages**.
+2. Under **Build and deployment**, choose **Deploy from a branch**.
+3. Select `main` and `/ (root)`, then save.
+
+**Any other static host** (Netlify, Vercel, Cloudflare Pages, S3, a plain web server): upload the repository as-is. Use no build command and set the publish directory to the repository root.
+
+> All paths in `index.html` are relative (`css/…`, `js/…`), so the demo also works from a sub-path like `/swap/`.
+
+---
+
+## Troubleshooting / FAQ
+
+**A coloured panel or stripes stay on screen after a transition finishes.**
+The exit tween probably does not move the element fully outside the viewport. Remember that `xPercent`/`yPercent` are relative to the element's **own** size, not the viewport. A stripe that is one-third of the screen tall needs much more than `yPercent: 110` to leave. Commit `207700c` fixed exactly this for T45, T56, T65, T73, T75, T77 and T96, for example:
+- T96 Glacier uses per-band distances `(3 - i) * 120`.
+- T45 Double Door Sweep exits with `yPercent: ±220`.
+- T56 Jelly Wipe overshoots to `xPercent: 135` so its skewed corners clear the screen.
+- T75 Black Hole now collapses to `scale: 0` instead of staying black.
+
+**Old stripes or grid cells pile up when I click quickly.**
+Call `kill()` on the previous controller before creating a new one (see the [state machine pattern](#state-machine-pattern-recommended)). `createTransition()` resets the layers, but only `kill()` removes the DOM injected by the previous controller.
+
+**`TypeError: Cannot read properties of undefined (reading 'collectNodes')`.**
+`utils.js` was not loaded, or was loaded after `create-transition.js`. Load the scripts in this order: GSAP → `utils.js` → `create-transition.js`.
+
+**`window.PageTransitions` is undefined / `gsap is not defined`.**
+Check the script order and paths, and make sure your code runs after the scripts have loaded (end of `<body>` or `defer`).
+
+**`createTransition: .layer-bg or .layer-mask not found inside container.`**
+The element you passed does not contain the layer divs. Check the markup in [Quick Start](#2-set-up-your-html-stage).
+
+**Nothing happens when I call `play()`.**
+- The `id` might be a string or out of range (see [Behaviour Notes](#behaviour-notes)).
+- The timeline might already be at the end. Call `reverse()` first or create a new controller.
+- Your OS might have reduced motion enabled, in which case only the mask snaps into place.
+
+**My page text gets replaced with "Seamless Page Load, Dynamic Content Swap".**
+That is the demo content swap in `stdContent()`. It targets the first `.eyebrow`, `.title` and `.copy` in the document. Remove that `tl.add()` block, or rename your classes.
+
+**Can I open `index.html` directly from disk (`file://`)?**
+Usually yes. The demo uses plain classic scripts with no modules or `fetch`. A local server (`npx serve .`, VS Code Live Server) is still recommended, as noted in `index.html`, and is required for the [Integration Example](#integration-example) because it uses `fetch`.
+
+---
+
+## Contributing
+
+Contributions are welcome. Please keep it dependency-free and build-free.
+
+1. Fork the repo and create a branch from `main` (e.g. `feat/transition-101`, `fix/t65-exit`).
+2. Run the demo locally with a static server (`npx serve .`).
+3. When you add or change a transition:
+   - Follow the [rules for bidirectional stability](#important-rules-for-bidirectional-stability).
+   - Make sure every cover element **fully leaves the viewport** on exit (see Troubleshooting).
+   - Test `play()`, `reverse()` mid-play, the same card clicked repeatedly, quickly switching between cards, and reduced-motion emulation.
+   - Check desktop and mobile viewport sizes; percentage transforms scale with element size.
+4. Keep the docs in sync: update `TOTAL` and `NAMES` in `js/main.js`, the [Transition Variants](#transition-variants) table in this README, and the documentation lightbox in `index.html`.
+5. Commit text files as normal UTF-8 text. Never commit base64-encoded file contents (this broke the live site once; see the changelog). Check with `git diff` before pushing.
+6. Open a pull request against `main` with a short description and, if possible, a screen recording of the transition.
+
+---
+
+## Changelog
+
+Derived from the git history (newest first).
+
+| Date | Change |
+|---|---|
+| 2026-10-01 | Fixed `README.md`, `index.html` and `create-transition.js`, which had been committed as raw base64 and broke the site (PR #1). |
+| 2026-10-01 | Live demo link added to the README; transition docs refreshed. |
+| 2026-10-01 | Fixed leftover cover panels on T45, T56, T65, T73, T75, T77 and T96 by making exit distances clear the viewport. |
+| 2026-10-01 | Added the Swap banner image to the README. |
+| 2026-10-01 | Added 20 new transitions (81–100); demo UI and docs updated for 100 transitions. |
+| 2026-10-01 | Fixed documentation inaccuracies and layer debug colours. |
+| 2026-10-01 | Added 30 new transitions (51–80); demo UI and docs updated for 80 transitions. |
+| 2026-08-28 | Bug fixes. |
+| 2026-04-30 | First commit. |
+
+---
+
+## Third-Party Licenses
+
+- **GSAP** (`js/gsap.js`) is owned by Webflow and is **not** covered by this project's MIT license. Since Webflow acquired GreenSock, GSAP and all of its plugins (including SplitText, ScrollTrigger and MorphSVG) are free to use, including in commercial projects, under the GSAP Standard License: https://gsap.com/standard-license. The main restriction is that you cannot use GSAP in no-code visual animation builders that compete with Webflow.
+- **jQuery 1.11.1** (`js/jquery.js`) is © the jQuery Foundation, see https://jquery.org/license (legacy file, not loaded by the demo).
+- **SplitType 0.3.4** (`js/splitText.min.js`) is by Luke Peavey, see https://github.com/lukePeavey/SplitType (legacy file, not loaded by the demo).
 
 ---
 
