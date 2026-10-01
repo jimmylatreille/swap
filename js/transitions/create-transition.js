@@ -20,6 +20,48 @@ function makeStripes(container, n, color = "#030409", direction = "row") {
   return { wrap, stripes };
 }
 
+// ── Grid helper (mosaic / pixel / checkerboard effects) ────────────────────
+function makeGrid(container, rows, cols, color = "#030409") {
+  const wrap = document.createElement("div");
+  Object.assign(wrap.style, {
+    position:"absolute", inset:"0", display:"grid",
+    gridTemplateRows:`repeat(${rows}, 1fr)`,
+    gridTemplateColumns:`repeat(${cols}, 1fr)`,
+    zIndex:"10", pointerEvents:"none", overflow:"hidden"
+  });
+  const cells = [];
+  for (let i = 0; i < rows * cols; i++) {
+    const c = document.createElement("div");
+    Object.assign(c.style, {
+      background: color,
+      transform:"translateZ(0)", backfaceVisibility:"hidden"
+    });
+    wrap.appendChild(c);
+    cells.push(c);
+  }
+  container.appendChild(wrap);
+  return { wrap, cells };
+}
+
+// ── Wave-front polygon helper ──────────────────────────────────────────────
+// Builds a polygon whose leading edge is a sine wave. `front` is the wave's
+// horizontal position as a fraction of the viewport (may exceed 0..1 to sit
+// fully off-screen). The point count is fixed, so fromTo() morphs stay
+// reverse-safe.
+// NOTE: values are rounded to integers — GSAP's complex-string interpolation
+// fails to tick-render long decimal polygons (it freezes then snaps), while
+// integer polygons interpolate perfectly. Visually identical at this scale.
+function wavePoly(front, amp = 9, teeth = 8) {
+  const pts = ["0% 0%"];
+  for (let i = 0; i <= teeth; i++) {
+    const y = Math.round((i / teeth) * 100);
+    const x = Math.round(front * 100 + Math.sin((i / teeth) * Math.PI * 2) * amp);
+    pts.push(`${x}% ${y}%`);
+  }
+  pts.push("0% 100%");
+  return `polygon(${pts.join(", ")})`;
+}
+
 // ── Timeline factory ───────────────────────────────────────────────────────
 function buildTimeline(id, nodes, container) {
   const { bg, accent, overlay, mask, contentItems, tags } = nodes;
@@ -529,6 +571,331 @@ function buildTimeline(id, nodes, container) {
       tl.fromTo(tags, { yPercent:-20, opacity:0 }, { yPercent:0, opacity:1, stagger:0.05, duration:0.6, ease:"back.out(1.5)" }, 1.6);
       break;
     }
+
+    // ── 51 · Tidal Wave ───────────────────────────────────────────────────
+    case 51:
+      tl.fromTo(mask, { clipPath: wavePoly(-0.18) }, { clipPath: wavePoly(1.18), duration:1.15, ease:"power3.inOut" }, 0)
+        .fromTo(bg, { xPercent:-6, scale:1.1 }, { xPercent:0, scale:1, duration:1.3, ease:"expo.out" }, 0.1);
+      accentFade(0.2); stdContent(0.4);
+      break;
+
+    // ── 52 · Pixel Storm ──────────────────────────────────────────────────
+    case 52: {
+      const { wrap, cells } = makeGrid(container, 6, 8);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(cells, { scale:0, opacity:0 }, { scale:1, opacity:1, duration:0.5, stagger:{ amount:0.6, from:"random" }, ease:"power3.out" }, 0)
+        .to(cells, { scale:0, opacity:0, duration:0.5, stagger:{ amount:0.5, from:"edges" }, ease:"power3.in" }, 0.9)
+        .fromTo(bg, { scale:1.15 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.2);
+      accentFade(0.9); stdContent(1.0);
+      break;
+    }
+
+    // ── 53 · Paper Fold ───────────────────────────────────────────────────
+    case 53:
+      tl.fromTo(mask, { clipPath:"inset(100% 0% 0% 0%)", skewX:8 }, { clipPath:"inset(0% 0% 0% 0%)", skewX:0, duration:1.0, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { yPercent:12, scale:1.08 }, { yPercent:0, scale:1, duration:1.2, ease:"expo.out" }, 0.1);
+      accentFade(0.2); stdContent(0.4);
+      break;
+
+    // ── 54 · Cyclone Iris ─────────────────────────────────────────────────
+    case 54:
+      gsap.set(mask, { transformOrigin:"50% 50%" });
+      tl.fromTo(mask, { clipPath:"circle(0% at 50% 50%)", rotation:-120 }, { clipPath:"circle(142% at 50% 50%)", rotation:0, duration:1.3, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { scale:1.25 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.1);
+      accentFade(0.3); stdContent(0.5);
+      break;
+
+    // ── 55 · Quadrant Bloom ──────────────────────────────────────────────
+    case 55: {
+      const { wrap, cells } = makeGrid(container, 2, 2);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(cells, { transformOrigin:(i) => ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][i] });
+      tl.fromTo(cells, { scale:0 }, { scale:1, duration:0.7, stagger:0.08, ease:"back.out(1.4)" }, 0)
+        .to(cells, { scale:0, duration:0.6, stagger:{ amount:0.3, from:"center" }, ease:"power4.in" }, 0.9)
+        .fromTo(bg, { scale:1.15 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.2);
+      accentFade(0.9); stdContent(1.0);
+      break;
+    }
+
+    // ── 56 · Jelly Wipe ───────────────────────────────────────────────────
+    case 56: {
+      const { wrap, stripes } = makeStripes(container, 1, "#9CEC5B", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(mask, { clipPath:"inset(0% 100% 0% 0%)" }, { clipPath:"inset(0% 0% 0% 0%)", duration:1.0, ease:"expo.inOut" }, 0)
+        .fromTo(stripes, { xPercent:-100, skewX:-16 }, { xPercent:0, skewX:0, duration:1.15, ease:"elastic.out(1,0.5)" }, 0.06)
+        .to(stripes, { xPercent:100, skewX:16, duration:0.7, ease:"power4.in" }, 1.05)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.3);
+      accentFade(0.3); stdContent(0.5);
+      break;
+    }
+
+    // ── 57 · Venetian Spin ────────────────────────────────────────────────
+    case 57: {
+      const { wrap, stripes } = makeStripes(container, 10, "#030409", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(wrap, { perspective: 900 });
+      tl.fromTo(stripes, { rotationY:90, opacity:0 }, { rotationY:0, opacity:1, duration:0.6, stagger:0.05, ease:"back.out(1.3)" }, 0)
+        .to(stripes, { rotationY:-90, opacity:0, duration:0.5, stagger:0.05, ease:"power3.in" }, 0.85)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.2, ease:"expo.out" }, 0.9);
+      accentFade(0.9); stdContent(1.1);
+      break;
+    }
+
+    // ── 58 · Domino Fall ──────────────────────────────────────────────────
+    case 58: {
+      const { wrap, stripes } = makeStripes(container, 12);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(wrap, { perspective: 800 });
+      gsap.set(stripes, { transformOrigin:"50% 100%" });
+      tl.fromTo(stripes, { rotationX:-90, opacity:0 }, { rotationX:0, opacity:1, duration:0.55, stagger:0.045, ease:"power3.out" }, 0)
+        .to(stripes, { rotationX:90, opacity:0, duration:0.5, stagger:0.045, ease:"power3.in" }, 0.85)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.2, ease:"expo.out" }, 0.9);
+      accentFade(0.9); stdContent(1.1);
+      break;
+    }
+
+    // ── 59 · Ink Drop ─────────────────────────────────────────────────────
+    case 59:
+      tl.fromTo(mask, { clipPath:"circle(0% at 50% 50%)", filter:"blur(14px)" }, { clipPath:"circle(142% at 50% 50%)", filter:"blur(0px)", duration:1.2, ease:"power3.inOut" }, 0)
+        .fromTo(bg, { scale:1.18 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.1);
+      accentFade(0.3); stdContent(0.5);
+      break;
+
+    // ── 60 · Shatter ─────────────────────────────────────────────────────
+    case 60: {
+      const { wrap, cells } = makeGrid(container, 4, 6);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(cells, { scale:0, rotation:(i) => (i % 2 ? 25 : -25) }, { scale:1, rotation:0, duration:0.6, stagger:{ amount:0.5, from:"center" }, ease:"back.out(1.5)" }, 0)
+        .to(cells, { scale:0, yPercent:(i) => (i % 2 ? 60 : -60), opacity:0, duration:0.6, stagger:{ amount:0.4, from:"edges" }, ease:"power3.in" }, 0.95)
+        .fromTo(bg, { scale:1.2 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(1.0); stdContent(1.1);
+      break;
+    }
+
+    // ── 61 · Liquid Pour ──────────────────────────────────────────────────
+    case 61: {
+      const { wrap, stripes } = makeStripes(container, 1, "#030409", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(stripes, { transformOrigin:"50% 0%" });
+      tl.fromTo(stripes, { scaleY:0 }, { scaleY:1, duration:0.9, ease:"elastic.out(1,0.55)" }, 0)
+        .to(stripes, { scaleY:0, transformOrigin:"50% 100%", duration:0.7, ease:"power4.inOut" }, 1.0)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.3);
+      accentFade(0.4); stdContent(0.6);
+      break;
+    }
+
+    // ── 62 · Zoom Tunnel ──────────────────────────────────────────────────
+    case 62:
+      tl.fromTo(mask, { clipPath:"circle(0% at 50% 50%)" }, { clipPath:"circle(142% at 50% 50%)", duration:1.5, ease:"power2.inOut" }, 0)
+        .fromTo(bg, { scale:1 }, { scale:1.4, duration:0.75, ease:"power3.in" }, 0)
+        .to(bg, { scale:1, duration:0.75, ease:"power3.out" }, 0.75);
+      accentFade(0.4); stdContent(0.6);
+      break;
+
+    // ── 63 · Flip Book ────────────────────────────────────────────────────
+    case 63: {
+      const { wrap, stripes } = makeStripes(container, 2);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(wrap, { perspective: 1200 });
+      gsap.set(stripes[0], { transformOrigin:"100% 50%" });
+      gsap.set(stripes[1], { transformOrigin:"0% 50%" });
+      tl.fromTo(stripes[0], { rotationY:-100, opacity:0 }, { rotationY:0, opacity:1, duration:0.8, ease:"power4.out" }, 0)
+        .fromTo(stripes[1], { rotationY:100, opacity:0 }, { rotationY:0, opacity:1, duration:0.8, ease:"power4.out" }, 0)
+        .to(stripes, { rotationY:(i) => (i === 0 ? 100 : -100), opacity:0, duration:0.7, ease:"power4.in" }, 1.0)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.4);
+      accentFade(1.0); stdContent(1.1);
+      break;
+    }
+
+    // ── 64 · Neon Slash ───────────────────────────────────────────────────
+    case 64:
+      tl.fromTo(mask, { clipPath:"polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%)", filter:"drop-shadow(0 0 0px rgba(156,236,91,0))" },
+                       { clipPath:"polygon(0% -10%, 100% -10%, 100% 110%, 0% 110%)", filter:"drop-shadow(0 0 26px rgba(156,236,91,0.9))", duration:1.0, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.1);
+      accentFade(0.3); stdContent(0.5);
+      break;
+
+    // ── 65 · Gravity Drop ─────────────────────────────────────────────────
+    case 65: {
+      const { wrap, stripes } = makeStripes(container, 8, "#030409", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(stripes, { yPercent:-120 }, { yPercent:0, duration:0.8, stagger:0.06, ease:"bounce.out" }, 0)
+        .to(stripes, { yPercent:120, duration:0.6, stagger:0.06, ease:"power4.in" }, 1.0)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(1.0); stdContent(1.1);
+      break;
+    }
+
+    // ── 66 · Split Horizon ────────────────────────────────────────────────
+    case 66:
+      tl.fromTo(mask, { clipPath:"polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%)" },
+                       { clipPath:"polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)", duration:1.0, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { scale:1.15 }, { scale:1, duration:1.2, ease:"expo.out" }, 0.1);
+      accentFade(0.2); stdContent(0.4);
+      break;
+
+    // ── 67 · Spiral In ────────────────────────────────────────────────────
+    case 67:
+      gsap.set(mask, { transformOrigin:"50% 50%" });
+      tl.fromTo(mask, { clipPath:"inset(50% 50% 50% 50%)", rotation:180, scale:0.2 },
+                       { clipPath:"inset(0% 0% 0% 0%)", rotation:0, scale:1, duration:1.3, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { scale:1.2 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.1);
+      accentFade(0.3); stdContent(0.5);
+      break;
+
+    // ── 68 · Mosaic Flip ──────────────────────────────────────────────────
+    case 68: {
+      const { wrap, cells } = makeGrid(container, 4, 6);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(wrap, { perspective: 1000 });
+      tl.fromTo(cells, { rotationY:90, opacity:0 }, { rotationY:0, opacity:1, duration:0.6, stagger:{ amount:0.5, from:"center" }, ease:"back.out(1.4)" }, 0)
+        .to(cells, { rotationY:-90, opacity:0, duration:0.5, stagger:{ amount:0.4, from:"edges" }, ease:"power3.in" }, 0.95)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(1.0); stdContent(1.1);
+      break;
+    }
+
+    // ── 69 · Smoke Veil ───────────────────────────────────────────────────
+    case 69:
+      tl.fromTo(mask, { clipPath:"inset(0% 0% 100% 0%)", filter:"blur(18px)" },
+                       { clipPath:"inset(0% 0% 0% 0%)", filter:"blur(0px)", duration:1.4, ease:"power2.inOut" }, 0)
+        .fromTo(bg, { yPercent:-8, scale:1.06 }, { yPercent:0, scale:1, duration:1.5, ease:"expo.out" }, 0);
+      accentFade(0.5); stdContent(0.7);
+      break;
+
+    // ── 70 · Rubber Band ──────────────────────────────────────────────────
+    case 70: {
+      const { wrap, stripes } = makeStripes(container, 1, "#030409", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(stripes, { transformOrigin:"0% 50%" });
+      tl.fromTo(stripes, { scaleX:0 }, { scaleX:1, duration:0.9, ease:"elastic.out(1,0.45)" }, 0)
+        .to(stripes, { scaleX:0, transformOrigin:"100% 50%", duration:0.7, ease:"power4.inOut" }, 1.0)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.3);
+      accentFade(0.5); stdContent(0.7);
+      break;
+    }
+
+    // ── 71 · Crossfade Zoom ───────────────────────────────────────────────
+    case 71:
+      tl.fromTo(mask, { clipPath:"inset(0% 0% 0% 0%)", opacity:0 }, { opacity:1, duration:0.9, ease:"power2.inOut" }, 0)
+        .fromTo(bg, { scale:1.3 }, { scale:1, duration:1.6, ease:"expo.out" }, 0);
+      accentFade(0.3); stdContent(0.5);
+      break;
+
+    // ── 72 · Twist Cascade ────────────────────────────────────────────────
+    case 72: {
+      const { wrap, stripes } = makeStripes(container, 7, "#030409", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(stripes, { xPercent:(i) => (i % 2 ? -120 : 120), skewX:(i) => (i % 2 ? 20 : -20) }, { xPercent:0, skewX:0, duration:0.7, stagger:0.06, ease:"expo.out" }, 0)
+        .to(stripes, { xPercent:(i) => (i % 2 ? 120 : -120), skewX:(i) => (i % 2 ? -20 : 20), duration:0.6, stagger:0.06, ease:"power4.in" }, 0.9)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.3);
+      accentFade(0.9); stdContent(1.0);
+      break;
+    }
+
+    // ── 73 · Pendulum ─────────────────────────────────────────────────────
+    case 73: {
+      const { wrap, stripes } = makeStripes(container, 1, "#030409", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(stripes, { transformOrigin:"50% 0%" });
+      tl.fromTo(stripes, { rotation:-95 }, { rotation:0, duration:1.0, ease:"power4.out" }, 0)
+        .to(stripes, { rotation:95, duration:0.8, ease:"power4.in" }, 1.1)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(0.5); stdContent(0.7);
+      break;
+    }
+
+    // ── 74 · Checkerboard ─────────────────────────────────────────────────
+    case 74: {
+      const { wrap, cells } = makeGrid(container, 8, 8);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(cells, { scale:0, opacity:0 }, { scale:1, opacity:1, duration:0.45, stagger:{ amount:0.7, grid:[8,8], from:"center" }, ease:"power2.out" }, 0)
+        .to(cells, { scale:0, opacity:0, duration:0.45, stagger:{ amount:0.6, grid:[8,8], from:"edges" }, ease:"power2.in" }, 1.0)
+        .fromTo(bg, { scale:1.15 }, { scale:1, duration:1.5, ease:"expo.out" }, 0.3);
+      accentFade(1.0); stdContent(1.1);
+      break;
+    }
+
+    // ── 75 · Black Hole ───────────────────────────────────────────────────
+    case 75: {
+      const { wrap, stripes } = makeStripes(container, 1, "#030409", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(stripes, { transformOrigin:"50% 50%" });
+      tl.fromTo(stripes, { scale:0, rotation:-200 }, { scale:1.6, rotation:0, duration:1.2, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { scale:1.3, rotation:5 }, { scale:1, rotation:0, duration:1.4, ease:"expo.out" }, 0.1);
+      accentFade(0.3); stdContent(0.5);
+      break;
+    }
+
+    // ── 76 · Slide Stack ──────────────────────────────────────────────────
+    case 76: {
+      const panels = ["#030409", "#9CEC5B", "#1a1d26"].map((color, k) => {
+        const p = document.createElement("div");
+        Object.assign(p.style, {
+          position:"absolute", left:"0", right:"0", top:`${k * 14}px`, bottom:`${-k * 14}px`,
+          background: color, zIndex:String(10 + k), pointerEvents:"none",
+          transform:"translateZ(0)", backfaceVisibility:"hidden"
+        });
+        container.appendChild(p);
+        return p;
+      });
+      cleanups.push(() => panels.forEach((p) => { if(p.parentNode) container.removeChild(p); }));
+      tl.fromTo(panels, { xPercent:-110 }, { xPercent:0, duration:0.7, stagger:0.12, ease:"expo.out" }, 0)
+        .to(panels, { xPercent:110, duration:0.7, stagger:0.12, ease:"expo.in" }, 1.05)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(1.05); stdContent(1.15);
+      break;
+    }
+
+    // ── 77 · Echo Trail ───────────────────────────────────────────────────
+    case 77: {
+      const { wrap, stripes } = makeStripes(container, 3, "#030409");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(stripes, { opacity:0.3 });
+      tl.fromTo(mask, { clipPath:"inset(0% 100% 0% 0%)" }, { clipPath:"inset(0% 0% 0% 0%)", duration:1.0, ease:"expo.inOut" }, 0)
+        .fromTo(stripes, { xPercent:-115 }, { xPercent:0, duration:1.0, stagger:0.1, ease:"expo.inOut" }, 0.1)
+        .to(stripes, { xPercent:115, duration:0.7, stagger:0.08, ease:"expo.in" }, 1.0)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(0.4); stdContent(0.6);
+      break;
+    }
+
+    // ── 78 · Diagonal Fold ────────────────────────────────────────────────
+    case 78:
+      tl.fromTo(mask, { clipPath:"polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)" },
+                       { clipPath:"polygon(0% 0%, 120% 0%, 120% 120%, 0% 120%)", duration:0.9, ease:"expo.inOut" }, 0)
+        .to(mask, { clipPath:"polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)", duration:0.5, ease:"power3.out" }, 0.9)
+        .fromTo(bg, { scale:1.15, rotation:-3 }, { scale:1, rotation:0, duration:1.4, ease:"expo.out" }, 0.1);
+      accentFade(0.4); stdContent(0.6);
+      break;
+
+    // ── 79 · Meteor Strike ────────────────────────────────────────────────
+    case 79: {
+      const { wrap, stripes } = makeStripes(container, 1, "#030409", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(stripes, { skewX:-18 });
+      tl.fromTo(stripes, { xPercent:130, yPercent:-130 }, { xPercent:9, yPercent:9, duration:0.7, ease:"expo.in" }, 0)
+        .to(stripes, { xPercent:0, yPercent:0, skewX:0, duration:0.3, ease:"power4.out" }, 0.7)
+        .to(stripes, { xPercent:-130, yPercent:-130, skewX:-18, duration:0.7, ease:"expo.in" }, 1.2)
+        .fromTo(bg, { scale:1.18, xPercent:3 }, { scale:1, xPercent:0, duration:1.5, ease:"expo.out" }, 0.2);
+      accentFade(0.5); stdContent(0.7);
+      break;
+    }
+
+    // ── 80 · Grand Overture ───────────────────────────────────────────────
+    case 80: {
+      const { wrap, stripes } = makeStripes(container, 12);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(wrap, { perspective: 1400 });
+      tl.fromTo(stripes, { scaleY:0, rotationX:-80, transformOrigin:"50% 50%" }, { scaleY:1, rotationX:0, duration:0.8, stagger:{ amount:0.55, from:"center" }, ease:"back.out(1.4)" }, 0)
+        .to(stripes, { scaleY:0, rotationX:80, duration:0.7, stagger:{ amount:0.45, from:"edges" }, ease:"power4.in" }, 1.2)
+        .fromTo(bg, { scale:1.5, filter:"blur(14px)" }, { scale:1, filter:"blur(0px)", duration:2.0, ease:"expo.out" }, 0.3);
+      accentFade(1.2);
+      tl.fromTo(contentItems, { yPercent:40, opacity:0 }, { yPercent:0, opacity:1, stagger:0.08, duration:0.9, ease:"expo.out" }, 1.4);
+      tl.fromTo(tags, { scale:0.8, opacity:0 }, { scale:1, opacity:1, stagger:0.05, duration:0.5, ease:"back.out(1.6)" }, 1.6);
+      break;
+    }
+
 
   }
 
