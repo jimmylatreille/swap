@@ -1,1 +1,530 @@
-CjxwIGFsaWduPSJjZW50ZXIiPgogIDxpbWcgc3JjPSJzd2FwLWJhbm5lci5qcGciIGFsdD0iU3dhcCDigJQgUGFnZSB0cmFuc2l0aW9ucyB1c2luZyBHU0FQIiB3aWR0aD0iNjQwIj4KPC9wPgoKPHAgYWxpZ249ImNlbnRlciI+CiAgPGEgaHJlZj0iaHR0cHM6Ly9qaW1teWxhdHJlaWxsZS5naXRodWIuaW8vc3dhcC8iPjxzdHJvbmc+8J+agCBMaXZlIERlbW88L3N0cm9uZz48L2E+CjwvcD4KCgojIEdTQVAgUGFnZSBUcmFuc2l0aW9uIEVuZ2luZQoKPiAqKjEwMCBBd3d3YXJkcy1ncmFkZSwgR1BVLWFjY2VsZXJhdGVkIGZ1bGwtdmlld3BvcnQgcGFnZSB0cmFuc2l0aW9ucyoqIOKAlCBidWlsdCB3aXRoIHB1cmUgSmF2YVNjcmlwdCBhbmQgR1NBUCAzLiBPbmUgZGVwZW5kZW5jeSAoR1NBUCkuIEZ1bGx5IGJpZGlyZWN0aW9uYWwuIEludGVycnVwdC1zYWZlLgoKLS0tCgojIyBUYWJsZSBvZiBDb250ZW50cwoKMS4gW0RlbW9dKCNkZW1vKQoyLiBbRmVhdHVyZXNdKCNmZWF0dXJlcykKMy4gW1Byb2plY3QgU3RydWN0dXJlXSgjcHJvamVjdC1zdHJ1Y3R1cmUpCjQuIFtRdWljayBTdGFydF0oI3F1aWNrLXN0YXJ0KQo1LiBbQVBJIFJlZmVyZW5jZV0oI2FwaS1yZWZlcmVuY2UpCiAgIC0gW2NyZWF0ZVRyYW5zaXRpb24oKV0oI2NyZWF0ZXRyYW5zaXRpb24pCiAgIC0gW0NvbnRyb2xsZXIgTWV0aG9kc10oI2NvbnRyb2xsZXItbWV0aG9kcykKNi4gW1RyYW5zaXRpb24gVmFyaWFudHNdKCN0cmFuc2l0aW9uLXZhcmlhbnRzKQo3LiBbVGhlIExheWVyIFN5c3RlbV0oI3RoZS1sYXllci1zeXN0ZW0pCiAgIC0gW0NTUyBMYXllcnNdKCNjc3MtbGF5ZXJzKQogICAtIFtEeW5hbWljIFN0cmlwZSBET01dKCNkeW5hbWljLXN0cmlwZS1kb20pCjguIFtDdXN0b21pc2F0aW9uXSgjY3VzdG9taXNhdGlvbikKICAgLSBbQ29sb3VycyAmIFRoZW1pbmddKCNjb2xvdXJzLS10aGVtaW5nKQogICAtIFtBZGRpbmcgTmV3IFRyYW5zaXRpb25zXSgjYWRkaW5nLW5ldy10cmFuc2l0aW9ucykKOS4gW1VJIENvbnRyb2xzXSgjdWktY29udHJvbHMpCjEwLiBbS2V5Ym9hcmQgU2hvcnRjdXRzXSgja2V5Ym9hcmQtc2hvcnRjdXRzKQoxMS4gW1BlcmZvcm1hbmNlIE5vdGVzXSgjcGVyZm9ybWFuY2Utbm90ZXMpCjEyLiBbQnJvd3NlciBTdXBwb3J0XSgjYnJvd3Nlci1zdXBwb3J0KQoKLS0tCgojIyBEZW1vCgoqKkxpdmUgZGVtbzoqKiBodHRwczovL2ppbW15bGF0cmVpbGxlLmdpdGh1Yi5pby9zd2FwLwoKT3IgcnVuIGl0IGxvY2FsbHkgd2l0aCBhbnkgc3RhdGljIGZpbGUgc2VydmVyIChlLmcuIFZTIENvZGUgTGl2ZSBTZXJ2ZXIsIGBucHggc2VydmUgLmApOgoKYGBgYmFzaApucHggc2VydmUgLgojIOKGkiBodHRwOi8vbG9jYWxob3N0OjMwMDAKYGBgCgotLS0KCiMjIEZlYXR1cmVzCgp8IEZlYXR1cmUgfCBEZXRhaWwgfAp8LS0tfC0tLXwKfCAqKjEwMCB1bmlxdWUgdmFyaWFudHMqKiB8IEV2ZXJ5IGNvbmNlaXZhYmxlIHRyYW5zaXRpb24gc3R5bGU6IHdpcGVzLCBpcmlzZXMsIHN0cmlwZXMsIDNEIGZsaXBzLCBnbGl0Y2gsIHBvbHlnb24gbW9ycGhzLCBlbGFzdGljIHBoeXNpY3MgfAp8ICoqR1BVLWFjY2VsZXJhdGVkKiogfCBgZm9yY2UzRDogdHJ1ZWAgb24gZXZlcnkgdGltZWxpbmUuIFVzZXMgQ1NTIGB0cmFuc2Zvcm1gLCBgY2xpcC1wYXRoYCwgYW5kIGBmaWx0ZXJgIOKAlCBub3RoaW5nIHRoYXQgdHJpZ2dlcnMgbGF5b3V0IHwKfCAqKkJpZGlyZWN0aW9uYWwqKiB8IEV2ZXJ5IHRyYW5zaXRpb24gcGxheXMgcGVyZmVjdGx5IGluIGJvdGggZGlyZWN0aW9uczogYHBsYXkoKWAgYW5kIGByZXZlcnNlKClgIHwKfCAqKkludGVycnVwdC1zYWZlKiogfCBDYWxsIGByZXZlcnNlKClgIG1pZC1gcGxheSgpYCDigJQgdGhlIGFuaW1hdGlvbiByZXZlcnNlcyBzbW9vdGhseSBmcm9tIHdoZXJldmVyIHRoZSBwbGF5aGVhZCBpcyB8CnwgKipNZW1vcnktc2FmZSoqIHwgQWxsIGR5bmFtaWNhbGx5IGluamVjdGVkIERPTSBub2RlcyBhcmUgdHJhY2tlZCBpbiBhIGBjbGVhbnVwc1tdYCBhcnJheSBhbmQgcmVtb3ZlZCBvbiBga2lsbCgpYCB8CnwgKipTaW5nbGUgZGVwZW5kZW5jeSoqIHwgT25seSBHU0FQIDMgKGxvYWRlZCBmcm9tIENETiBvciBidW5kbGVkIGxvY2FsbHkpIHwKfCAqKkFjY2Vzc2libGUqKiB8IExpdmUgcmVnaW9uIGxhYmVscywgYGFyaWEtaGlkZGVuYCBtYW5hZ2VtZW50LCBrZXlib2FyZCBuYXZpZ2F0aW9uLCByZWR1Y2VkLW1vdGlvbiBhd2FyZSB8CgotLS0KCiMjIFByb2plY3QgU3RydWN0dXJlCgpgYGAKUGFnZSB0cmFuc2l0aW9uLwrilJzilIDilIAgaW5kZXguaHRtbCAgICAgICAgICAgICAgICAgICAjIE1haW4gZGVtbyBwYWdlICsgZG9jdW1lbnRhdGlvbiBsaWdodGJveArilJzilIDilIAgLmdpdGlnbm9yZQrilJzilIDilIAgUkVBRE1FLm1kCuKUggrilJzilIDilIAgY3NzLwrilIIgICDilJzilIDilIAgcmVzZXQuY3NzICAgICAgICAgICAgICAgICMgTWluaW1hbCBDU1MgcmVzZXQK4pSCICAg4pSc4pSA4pSAIG1haW4uY3NzICAgICAgICAgICAgICAgICAjIEFsbCBVSSBzdHlsZXMgKyBsYXllciBzeXN0ZW0gKyBkb2MgbGlnaHRib3gK4pSCICAg4pSU4pSA4pSAIHBhZ2UtdHJhbnN0aW9uLmNzcyAgICAgICAjIFN0YWdlLWxldmVsIHRyYW5zaXRpb24gbGF5ZXIgYmFzZSBzdHlsZXMK4pSCCuKUlOKUgOKUgCBqcy8KICAgIOKUnOKUgOKUgCBtYWluLmpzICAgICAgICAgICAgICAgICAgIyBEZW1vIG9yY2hlc3RyYXRvcjogY2FyZHMsIHN0YXRlIG1hY2hpbmUsIFVJCiAgICDilJzilIDilIAgbm9pc2UuanMgICAgICAgICAgICAgICAgICMgQ2FudmFzIGdyYWluIGVmZmVjdAogICAg4pSc4pSA4pSAIGdzYXAuanMgICAgICAgICAgICAgICAgICAjIEdTQVAgMy4xMy4wIChsb2NhbCBmYWxsYmFjaykKICAgIOKUnOKUgOKUgCBqcXVlcnkuanMgICAgICAgICAgICAgICAgIyBqUXVlcnkgKGxlZ2FjeSBkZW1vIGhlbHBlcnMpCiAgICDilJzilIDilIAgc3BsaXRUZXh0Lm1pbi5qcyAgICAgICAgICMgR1NBUCBTcGxpdFRleHQgcGx1Z2luCiAgICDilJzilIDilIAgdGV4dC1hbmltLmpzICAgICAgICAgICAgICMgVGV4dCBhbmltYXRpb24gaGVscGVycwogICAg4pSCCiAgICDilJTilIDilIAgdHJhbnNpdGlvbnMvCiAgICAgICAg4pSc4pSA4pSAIGNyZWF0ZS10cmFuc2l0aW9uLmpzICMg4q2QIENvcmUgZW5naW5lIOKAlCBhbGwgMTAwIHRyYW5zaXRpb25zIGxpdmUgaGVyZQogICAgICAgIOKUlOKUgOKUgCB1dGlscy5qcyAgICAgICAgICAgICAjIFNoYXJlZCBET00vR1NBUCB1dGlsaXR5IGhlbHBlcnMKYGBgCgotLS0KCiMjIFF1aWNrIFN0YXJ0CgojIyMgMS4gSW5jbHVkZSBHU0FQCgpFaXRoZXIgdmlhIENETiAoYXMgaW4gdGhlIGRlbW8pOgoKYGBgaHRtbAo8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9nc2FwQDMuMTMuMC9kaXN0L2dzYXAubWluLmpzIj48L3NjcmlwdD4KYGBgCgpPciB1c2UgdGhlIGxvY2FsIGNvcHk6CgpgYGBodG1sCjxzY3JpcHQgc3JjPSJqcy9nc2FwLmpzIj48L3NjcmlwdD4KYGBgCgojIyMgMi4gU2V0IHVwIHlvdXIgSFRNTCBzdGFnZQoKVGhlIGVuZ2luZSBleHBlY3RzICoqNCBzdGFja2VkIGxheWVyIGRpdnMqKiBpbnNpZGUgdGhlIGNvbnRhaW5lciBpdCB0YXJnZXRzOgoKYGBgaHRtbAo8c2VjdGlvbiBpZD0icHJldmlldy1zdGFnZSIgY2xhc3M9InByZXZpZXctc3RhZ2UiPgogIDxkaXYgY2xhc3M9InRyYW5zaXRpb24tbGF5ZXIgbGF5ZXItYmciPjwvZGl2PgogIDxkaXYgY2xhc3M9InRyYW5zaXRpb24tbGF5ZXIgbGF5ZXItYWNjZW50Ij48L2Rpdj4KICA8ZGl2IGNsYXNzPSJ0cmFuc2l0aW9uLWxheWVyIGxheWVyLW92ZXJsYXkiPjwvZGl2PgogIDxkaXYgY2xhc3M9InRyYW5zaXRpb24tbGF5ZXIgbGF5ZXItbWFzayI+PC9kaXY+CgogIDwhLS0gWW91ciBwYWdlIGNvbnRlbnQgZ29lcyBoZXJlIC0tPgogIDxkaXYgY2xhc3M9InByZXZpZXctY29udGVudCI+Li4uPC9kaXY+Cjwvc2VjdGlvbj4KYGBgCgojIyMgMy4gTG9hZCB0aGUgc2NyaXB0cyBhbmQgY2FsbAoKVGhlIGVuZ2luZSBleHBvc2VzIGl0c2VsZiBhcyBhIGJyb3dzZXIgZ2xvYmFsIOKAlCBubyBidW5kbGVyIG9yIEVTIG1vZHVsZXMgbmVlZGVkOgoKYGBgaHRtbAo8c2NyaXB0IHNyYz0ianMvZ3NhcC5qcyI+PC9zY3JpcHQ+CjxzY3JpcHQgc3JjPSJqcy90cmFuc2l0aW9ucy91dGlscy5qcyI+PC9zY3JpcHQ+CjxzY3JpcHQgc3JjPSJqcy90cmFuc2l0aW9ucy9jcmVhdGUtdHJhbnNpdGlvbi5qcyI+PC9zY3JpcHQ+CmBgYAoKYGBganMKY29uc3QgeyBjcmVhdGVUcmFuc2l0aW9uIH0gPSB3aW5kb3cuUGFnZVRyYW5zaXRpb25zOwpjb25zdCBzdGFnZSA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoIiNwcmV2aWV3LXN0YWdlIik7CgovLyBDcmVhdGUgYSBjb250cm9sbGVyIGZvciB0cmFuc2l0aW9uICMxMiAoU2NhbGUgQmxvb20pCmNvbnN0IGN0cmwgPSBjcmVhdGVUcmFuc2l0aW9uKHN0YWdlLCB7IGlkOiAxMiB9KTsKCi8vIFBsYXkgZm9yd2FyZCDigJQgY292ZXJzIHRoZSBzY3JlZW4KY3RybC5wbGF5KCk7CgovLyBSZXZlcnNlIOKAlCB1bmNvdmVycyB0aGUgc2NyZWVuCmN0cmwucmV2ZXJzZSgpOwoKLy8gQ2xlYW51cCDigJQgcmVtb3ZlcyBhbGwgaW5qZWN0ZWQgRE9NLCBraWxscyBHU0FQIHRpbWVsaW5lCmN0cmwua2lsbCgpOwpgYGAKCi0tLQoKIyMgQVBJIFJlZmVyZW5jZQoKIyMjIGBjcmVhdGVUcmFuc2l0aW9uKGNvbnRhaW5lciwgb3B0aW9ucylgCgpUaGUgZmFjdG9yeSBmdW5jdGlvbi4gQnVpbGRzIHRoZSBHU0FQIHRpbWVsaW5lIGZvciB0aGUgc2VsZWN0ZWQgdmFyaWFudCBhbmQgcmV0dXJucyBhIGNvbnRyb2xsZXIgb2JqZWN0LgoKIyMjIyBQYXJhbWV0ZXJzCgp8IFBhcmFtZXRlciB8IFR5cGUgfCBSZXF1aXJlZCB8IERlc2NyaXB0aW9uIHwKfC0tLXwtLS18LS0tfC0tLXwKfCBgY29udGFpbmVyYCB8IGBIVE1MRWxlbWVudGAgfCDinIUgfCBUaGUgZWxlbWVudCB0aGF0IGhvc3RzIHRoZSA0IHRyYW5zaXRpb24gbGF5ZXJzLiBVc3VhbGx5IHRoZSBmdWxsLXNjcmVlbiBzdGFnZS4gfAp8IGBvcHRpb25zLmlkYCB8IGBOdW1iZXJgIHwg4p2MIChkZWZhdWx0cyB0byBgMWApIHwgVHJhbnNpdGlvbiBpbmRleCBgMeKAkzEwMGAuIFNlbGVjdHMgdGhlIGFuaW1hdGlvbiB2YXJpYW50LiBTZWUgW1RyYW5zaXRpb24gVmFyaWFudHNdKCN0cmFuc2l0aW9uLXZhcmlhbnRzKS4gfAoKIyMjIyBSZXR1cm5zCgpBIGNvbnRyb2xsZXIgb2JqZWN0IHdpdGggMyBtZXRob2RzOgoKIyMjIENvbnRyb2xsZXIgTWV0aG9kcwoKIyMjIyBgY3RybC5wbGF5KClgCgpQbGF5cyB0aGUgdGltZWxpbmUgKipmb3J3YXJkKiogZnJvbSB0aGUgY3VycmVudCBwbGF5aGVhZCBwb3NpdGlvbi4KCi0gVGhlIHRyYW5zaXRpb24gbGF5ZXJzIGFuaW1hdGUgKipvdmVyKiogdGhlIHZpZXdwb3J0LCBjb3ZlcmluZyB0aGUgY29udGVudC4KLSBEdXJpbmcgY292ZXJhZ2UsIHlvdSBjYW4gc2FmZWx5IHN3YXAgeW91ciByb3V0ZSwgdXBkYXRlIERPTSwgb3IgbG9hZCBhIG5ldyBwYWdlLgotIENhbGxpbmcgYHBsYXkoKWAgb24gYSBmaW5pc2hlZCB0aW1lbGluZSByZXN0YXJ0cyBpdCBmcm9tIHRoZSBiZWdpbm5pbmcuCgpgYGBqcwpjdHJsLnBsYXkoKTsKYGBgCgotLS0KCiMjIyMgYGN0cmwucmV2ZXJzZSgpYAoKUGxheXMgdGhlIHRpbWVsaW5lICoqYmFja3dhcmQqKiBmcm9tIHRoZSBjdXJyZW50IHBsYXloZWFkIHBvc2l0aW9uLgoKLSBUaGUgdHJhbnNpdGlvbiBsYXllcnMgcmV0cmFjdCwgcmV2ZWFsaW5nIHRoZSB1bmRlcmx5aW5nIGNvbnRlbnQuCi0gRnVsbHkgaW50ZXJydXB0LXNhZmUg4oCUIGNhbiBiZSBjYWxsZWQgYXQgYW55IHBvaW50IGR1cmluZyBgcGxheSgpYC4KLSBXaGVuIHJldmVyc2luZywgdGhlIGNvbnRlbnQgdGV4dCBpcyBhdXRvbWF0aWNhbGx5IHN3YXBwZWQgYmFjayB0byBpdHMgb3JpZ2luYWwgc3RhdGUuCgpgYGBqcwpjdHJsLnJldmVyc2UoKTsKYGBgCgotLS0KCiMjIyMgYGN0cmwua2lsbCgpYAoKS2lsbHMgdGhlIEdTQVAgdGltZWxpbmUgYW5kIHJ1bnMgYWxsIGNsZWFudXAgY2FsbGJhY2tzLgoKLSBSZW1vdmVzIGFsbCBkeW5hbWljYWxseSBpbmplY3RlZCBET00gbm9kZXMgKHN0cmlwZSBvdmVybGF5cywgd3JhcHBlcnMpLgotIExlYXZlcyB0aGUgbGF5ZXIgZWxlbWVudHMgaW4gdGhlaXIgbGFzdCByZW5kZXJlZCBzdGF0ZSDigJQgdGhlIG5leHQgYGNyZWF0ZVRyYW5zaXRpb24oKWAgY2FsbCByZXNldHMgdGhlbSB2aWEgaXRzIGludGVybmFsIGJhc2Utc3RhdGUgc2V0dXAuCi0gU2hvdWxkIGJlIGNhbGxlZCBiZWZvcmUgY3JlYXRpbmcgYSBuZXcgdHJhbnNpdGlvbiB0byBwcmV2ZW50IG1lbW9yeSBsZWFrcy4KCmBgYGpzCmN0cmwua2lsbCgpOwpgYGAKCi0tLQoKIyMjIFN0YXRlIE1hY2hpbmUgUGF0dGVybiAoUmVjb21tZW5kZWQpCgpUaGUgZGVtbyB1c2VzIHRoaXMgcGF0dGVybiBpbnRlcm5hbGx5IGZvciByb2J1c3QgdHJhbnNpdGlvbiBtYW5hZ2VtZW50OgoKYGBganMKbGV0IGFjdGl2ZUN0cmwgPSBudWxsOwpsZXQgYWN0aXZlRGlyICA9ICJwbGF5IjsKCmZ1bmN0aW9uIHJ1blRyYW5zaXRpb24oaWQpIHsKICAvLyBLaWxsIHRoZSBwcmV2aW91cyB0cmFuc2l0aW9uIGFuZCBjbGVhbiB1cAogIGlmIChhY3RpdmVDdHJsKSBhY3RpdmVDdHJsLmtpbGwoKTsKCiAgLy8gQ3JlYXRlIGEgZnJlc2ggY29udHJvbGxlcgogIGFjdGl2ZUN0cmwgPSBjcmVhdGVUcmFuc2l0aW9uKHN0YWdlLCB7IGlkIH0pOwogIGFjdGl2ZURpciAgPSAicGxheSI7CiAgYWN0aXZlQ3RybC5wbGF5KCk7Cn0KCmZ1bmN0aW9uIHRvZ2dsZSgpIHsKICBpZiAoIWFjdGl2ZUN0cmwpIHJldHVybjsKICBpZiAoYWN0aXZlRGlyID09PSAicGxheSIpIHsKICAgIGFjdGl2ZUN0cmwucmV2ZXJzZSgpOwogICAgYWN0aXZlRGlyID0gInJldmVyc2UiOwogIH0gZWxzZSB7CiAgICBhY3RpdmVDdHJsLnBsYXkoKTsKICAgIGFjdGl2ZURpciA9ICJwbGF5IjsKICB9Cn0KYGBgCgotLS0KCiMjIFRyYW5zaXRpb24gVmFyaWFudHMKClBhc3MgdGhlIGBpZGAgdG8gYGNyZWF0ZVRyYW5zaXRpb24oKWAgdG8gc2VsZWN0IGEgdmFyaWFudC4KCnwgSUQgfCBOYW1lIHwgVGVjaG5pcXVlIHwKfC0tLXwtLS18LS0tfAp8IDAxIHwgRHJpZnQgSW4gfCBgY2xpcC1wYXRoYCBpbnNldCB3aXBlIGZyb20gbGVmdCArIGJnIHBhcmFsbGF4IHNsaWRlIHwKfCAwMiB8IFJpc2UgVXAgfCBgY2xpcC1wYXRoYCBpbnNldCB3aXBlIGZyb20gYm90dG9tIHwKfCAwMyB8IFNsaWRlIExlZnQgfCBGdWxsIGB0cmFuc2xhdGVYYCBwYW5lbCBzbGlkZSB8CnwgMDQgfCBEcm9wIERvd24gfCBgY2xpcC1wYXRoYCBpbnNldCB3aXBlIGZyb20gdG9wIHwKfCAwNSB8IFVuc2h1dHRlciB8IGBzY2FsZVhgIHNodXR0ZXIgcmV2ZWFsICsgb3BhY2l0eSB8CnwgMDYgfCBJcmlzIEV4cGFuZCB8IGBjbGlwLXBhdGggY2lyY2xlKClgIGV4cGFuZCBmcm9tIGNlbnRlciB8CnwgMDcgfCBTcGxpdCBDZW50ZXIgfCBEdWFsIGBjbGlwLXBhdGhgIGhhbHZlcyBzcGxpdHRpbmcgYXBhcnQgfAp8IDA4IHwgQmxpbmQgRXhwYW5kIHwgOCB2ZXJ0aWNhbCBzdHJpcGVzIHN0YWdnZXIgaW4gZnJvbSBib3R0b20gfAp8IDA5IHwgRmxpY2tlciBXaXBlIHwgYGNsaXAtcGF0aGAgaW5zZXQgd2l0aCBvcGFjaXR5IGZsaWNrZXIgb24gZW50cnkgfAp8IDEwIHwgUHVsbCBUaHJvdWdoIHwgYHNjYWxlWGAgKyBgeVBlcmNlbnRgIGNvbWJpbmVkIHBhbmVsIHwKfCAxMSB8IENvcm5lciBJcmlzIHwgYGNsaXAtcGF0aCBjaXJjbGUoKWAgZXhwYW5kIGZyb20gYm90dG9tLWxlZnQgY29ybmVyIHwKfCAxMiB8IFNjYWxlIEJsb29tIHwgYGNsaXAtcGF0aCBjaXJjbGUoKWAgKyBiZyBzY2FsZSBibG9vbSB8CnwgMTMgfCBQb2x5IFJldmVhbCB8IGBwb2x5Z29uKClgIGNsaXAtcGF0aCBtb3JwaCDigJQgZGlhbW9uZCB0byBmdWxsIHwKfCAxNCB8IEJvdHRvbSBMaWZ0IHwgRnVsbCBgeVBlcmNlbnRgIHBhbmVsIGxpZnQgZnJvbSBib3R0b20gfAp8IDE1IHwgQ3VydGFpbiBEb3duIHwgYHlQZXJjZW50YCBjdXJ0YWluIGRyb3AgZnJvbSB0b3AgfAp8IDE2IHwgVG9wLVJpZ2h0IElyaXMgfCBgY2xpcC1wYXRoIGNpcmNsZSgpYCBleHBhbmQgZnJvbSB0b3AtcmlnaHQgfAp8IDE3IHwgT3ZlcmxheSBXaXBlIHwgYHhQZXJjZW50YCBmdWxsLXNjcmVlbiBwYW5lbCBzd2VlcCB8CnwgMTggfCBUb3AgU2xpY2UgfCBgY2xpcC1wYXRoYCBpbnNldCBob3Jpem9udGFsIHNsaWNlIHwKfCAxOSB8IFNjYWxlIE1hc2sgfCBDb21iaW5lZCBgc2NhbGVgICsgYGNsaXAtcGF0aCBpbnNldCgpYCB8CnwgMjAgfCBGbGFzaCBTd2VlcCB8IE9wYWNpdHkgZmxhc2ggKyBgeFBlcmNlbnRgIHN3ZWVwIHwKfCAyMSB8IERpYWdvbmFsIFNsYXNoIHwgU2tld2VkIGBwb2x5Z29uKClgIGRpYWdvbmFsIHdpcGUgfAp8IDIyIHwgVHdpbiBDdXJ0YWluIHwgRHVhbCBgeVBlcmNlbnRgIGN1cnRhaW4gaGFsdmVzIHwKfCAyMyB8IFJpcHBsZSBCdXJzdCB8IGBjbGlwLXBhdGggY2lyY2xlKClgIGV4cGFuZGluZyByaXBwbGUgd2F2ZSB8CnwgMjQgfCBQYWdlIEN1cmwgfCAzRCBgcm90YXRlWWAgcGVyc3BlY3RpdmUgcGFnZSBjdXJsIHwKfCAyNSB8IERlcHRoIFB1c2ggfCBgdHJhbnNsYXRlWmAgKyBgc2NhbGVgIGRlcHRoIHB1c2ggaWxsdXNpb24gfAp8IDI2IHwgQ2FzY2FkZSBEcm9wIHwgMTItc3RyaXBlIGFsdGVybmF0aW5nIGB5UGVyY2VudGAgY2FzY2FkZSB8CnwgMjcgfCBHbGl0Y2ggU2xhbSB8IGB4UGVyY2VudGAgKyBvcGFjaXR5IGdsaXRjaCB3aXRoIGBzdGVwcygpYCBlYXNpbmcgfAp8IDI4IHwgUHJpc20gU2xpZGUgfCA4IGhvcml6b250YWwgc3RyaXBlcyBzdGFnZ2VyZWQgfAp8IDI5IHwgRWxhc3RpYyBHYXRlIHwgRHVhbCBgc2NhbGVYYCBnYXRlcyB3aXRoIGBlbGFzdGljLm91dGAgfAp8IDMwIHwgR3JhbmQgRmluYWxlIHwgMTItc3RyaXBlIGFsdGVybmF0aW5nIGRpcmVjdGlvbiBib3VuY2UgfAp8IDMxIHwgQ2luZW1hdGljIEJhcnMgfCAyIGJhcnMgZnJvbSB0b3AvYm90dG9tICsgYmFja2dyb3VuZCBgYmx1cigpYCB8CnwgMzIgfCBIZXhhZ29uIEV4cGFuZCB8IDYtcG9pbnQgYHBvbHlnb24oKWAgbW9ycGggdG8gZnVsbCBzY3JlZW4gfAp8IDMzIHwgVmVuZXRpYW4gQmxpbmRzIHwgMTQgc3RyaXBlcyB3aXRoIDNEIGByb3RhdGlvblhgIGZsaXAgKHBlcnNwZWN0aXZlKSB8CnwgMzQgfCBEaWFnb25hbCBTdGFnZ2VyIHwgNiBzdHJpcGVzIHJvdGF0ZWQgNDXCsCBzdGFnZ2VyIGFjcm9zcyB8CnwgMzUgfCBDcm9zcyBTcGxpdCB8IDEyLXBvaW50IGNyb3NzIGBwb2x5Z29uKClgIGV4cGFuZCB0byBmdWxsIHNjcmVlbiB8CnwgMzYgfCBTaHV0dGVyIFR3aXN0IHwgOCBzdHJpcGVzIGBza2V3WGAgKyBgeVBlcmNlbnRgIHN0YWdnZXIgfAp8IDM3IHwgRGlhbW9uZCBTd2VlcCB8IDQtcG9pbnQgZGlhbW9uZCBgcG9seWdvbigpYCB3aXBlIHwKfCAzOCB8IEFjY29yZGlvbiBGb2xkIHwgQWx0ZXJuYXRpbmctb3JpZ2luIGBzY2FsZVlgIGFjY29yZGlvbiBmb2xkIHwKfCAzOSB8IENlbnRlciBQaW5jaCB8IGBpbnNldCgpYCBjbGlwLXBhdGggaG9yaXpvbnRhbCBjZW50cmUgcGluY2ggfAp8IDQwIHwgT3JiaXRhbCBTd2VlcCB8IGByb3RhdGlvblpgICsgYHNjYWxlYCBzcGlyYWwgZW50cmFuY2UgfAp8IDQxIHwgR2xpdGNoIFNsaWNlIHwgNSBzdHJpcGVzIGB4UGVyY2VudGAgd2l0aCBgc3RlcHMoNClgIGVhc2luZyB8CnwgNDIgfCBUcmlhbmdsZSBVbmZvbGQgfCBUcmlhbmdsZSBgcG9seWdvbigpYCBtb3JwaCByZXZlYWwgfAp8IDQzIHwgRWxhc3RpYyBEcm9wIHwgYGluc2V0KClgIGNsaXAtcGF0aCB3aXRoIGBib3VuY2Uub3V0YCBwaHlzaWNzIHwKfCA0NCB8IFRoZSBWb2lkIHwgYGluc2V0KClgICsgcm90YXRpb24gKyBzY2FsZSDigJQgc3Vja2VkIGludG8gdm9pZCB8CnwgNDUgfCBEb3VibGUgRG9vciBTd2VlcCB8IDIgcGFuZWxzIGB4UGVyY2VudGAgdGhlbiBgeVBlcmNlbnRgIGV4aXQgfAp8IDQ2IHwgUmlwcGxlIE9mZnNldCB8IDEwIHN0cmlwZXMgZXhwYW5kaW5nIGZyb20gY2VudGVyIG91dHdhcmQgfAp8IDQ3IHwgU2tld2VkIEJsb2NrcyB8IDYgc3RyaXBlcyBgeVBlcmNlbnRgICsgYHNrZXdZYCBzdGFnZ2VyIHwKfCA0OCB8IElyaXMgQmxpbmsgfCBDaXJjbGUgYmxpbmsgKGNsb3NlL29wZW4pICsgYGJvdW5jZS5vdXRgIHJldmVhbCB8CnwgNDkgfCBTYXd0b290aCBXaXBlIHwgOS1wb2ludCBqYWdnZWQgcG9seWdvbiB3aXBlIGFjcm9zcyBzY3JlZW4gfAp8IDUwIHwgVGhlIE1hc3RlcnBpZWNlIHwgM0QgYmcgZGVwdGggcHVzaCArIDEwLXN0cmlwZSAzRCBzaHV0dGVyIHwKfCA1MSB8IFRpZGFsIFdhdmUgfCBzaW5lLXdhdmUgYHBvbHlnb24oKWAgc3dlZXAgYWNyb3NzIHwKfCA1MiB8IFBpeGVsIFN0b3JtIHwgNsOXOCBncmlkICg0OCBjZWxscykgcmFuZG9tLXN0YWdnZXIgaW4vb3V0IHwKfCA1MyB8IFBhcGVyIEZvbGQgfCBgaW5zZXRgIGZvbGQgZnJvbSBib3R0b20gKyBza2V3IHwKfCA1NCB8IEN5Y2xvbmUgSXJpcyB8IHNwaW5uaW5nIGBjaXJjbGUoKWAgaXJpcyByZXZlYWwgfAp8IDU1IHwgUXVhZHJhbnQgQmxvb20gfCA0IHF1YWRyYW50cyBibG9vbSBmcm9tIG91dGVyIGNvcm5lcnMgfAp8IDU2IHwgSmVsbHkgV2lwZSB8IGBpbnNldGAgd2lwZSArIGVsYXN0aWMgYWNjZW50IGplbGx5IHBhbmVsIHwKfCA1NyB8IFZlbmV0aWFuIFNwaW4gfCAxMCBob3Jpem9udGFsIHN0cmlwZXMgM0QgYHJvdGF0aW9uWWAgZmxpcCB8CnwgNTggfCBEb21pbm8gRmFsbCB8IDEyIHZlcnRpY2FsIHN0cmlwZXMgYHJvdGF0aW9uWGAgZG9taW5vIHRvcHBsZSB8CnwgNTkgfCBJbmsgRHJvcCB8IGBjaXJjbGUoKWAgaXJpcyArIGBibHVyKClgIGluayBibGVlZCB8CnwgNjAgfCBTaGF0dGVyIHwgNMOXNiBncmlkIHNjYXR0ZXIgaW4sIGZseS1vdXQgfAp8IDYxIHwgTGlxdWlkIFBvdXIgfCBmdWxsIHBhbmVsIGBzY2FsZVlgIGVsYXN0aWMgcG91ciB8CnwgNjIgfCBab29tIFR1bm5lbCB8IGBjaXJjbGUoKWAgaXJpcyArIGJnIHNjYWxlIHB1bHNlIHwKfCA2MyB8IEZsaXAgQm9vayB8IDIgcGFuZWxzIDNEIGByb3RhdGlvbllgIGJvb2sgb3BlbiB8CnwgNjQgfCBOZW9uIFNsYXNoIHwgZ2xvd2luZyBiYW5kIGV4cGFuZHMgdG8gZnVsbCBjb3ZlciB8CnwgNjUgfCBHcmF2aXR5IERyb3AgfCA4IHN0cmlwZXMgYGJvdW5jZS5vdXRgIGRyb3AgfAp8IDY2IHwgU3BsaXQgSG9yaXpvbiB8IGhvcml6b250YWwgYHBvbHlnb24oKWAgc3BsaXQgZnJvbSBtaWRkbGUgfAp8IDY3IHwgU3BpcmFsIEluIHwgYGluc2V0YCArIHJvdGF0aW9uICsgc2NhbGUgc3BpcmFsIHwKfCA2OCB8IE1vc2FpYyBGbGlwIHwgNMOXNiBncmlkIDNEIGByb3RhdGlvbllgIGZsaXAgfAp8IDY5IHwgU21va2UgVmVpbCB8IGBpbnNldGAgd2lwZSArIGBibHVyKClgIGRyaWZ0IHwKfCA3MCB8IFJ1YmJlciBCYW5kIHwgZnVsbCBwYW5lbCBgc2NhbGVYYCBlbGFzdGljIHNuYXAgfAp8IDcxIHwgQ3Jvc3NmYWRlIFpvb20gfCBvcGFjaXR5IGNyb3NzZmFkZSArIHNsb3cgem9vbSB8CnwgNzIgfCBUd2lzdCBDYXNjYWRlIHwgNyBzdHJpcGVzIGFsdGVybmF0aW5nIGBza2V3WGAgY2FzY2FkZSB8CnwgNzMgfCBQZW5kdWx1bSB8IG5hcnJvdyBibGFkZSBwZW5kdWx1bSBzd2luZyBmcm9tIHRvcCB8CnwgNzQgfCBDaGVja2VyYm9hcmQgfCA4w5c4IGdyaWQgY2VudGVyL2VkZ2VzIHN0YWdnZXIgfAp8IDc1IHwgQmxhY2sgSG9sZSB8IHNwaW5uaW5nIHBhbmVsIHNjYWxlIDAg4oaSIGNvdmVyIOKGkiBldmFwb3JhdGVzIHwKfCA3NiB8IFNsaWRlIFN0YWNrIHwgMyBvZmZzZXQgc3RhY2tlZCBzbGlkaW5nIHBhbmVscyB8CnwgNzcgfCBFY2hvIFRyYWlsIHwgYGluc2V0YCB3aXBlICsgZ2hvc3Qgc3RyaXBlIGVjaG9lcyB8CnwgNzggfCBEaWFnb25hbCBGb2xkIHwgNC1wb2ludCBgcG9seWdvbigpYCBjb3JuZXIgZm9sZCB8CnwgNzkgfCBNZXRlb3IgU3RyaWtlIHwgc2tld2VkIHBhbmVsIGRpYWdvbmFsIHNsYW0gfAp8IDgwIHwgR3JhbmQgT3ZlcnR1cmUgfCAxMi1zdHJpcGUgM0QgY2FzY2FkZSArIGJnIGJsdXIgZGVwdGggfAp8IDgxIHwgQXVyb3JhIFZlaWwgfCA0IGF1cm9yYSBiYW5kcyBzd2VlcCArIHdpcGUgfAp8IDgyIHwgT3JpZ2FtaSBGb2xkIHwgOCBzdHJpcGVzIGFsdGVybmF0aW5nIDNEIGZvbGQgfAp8IDgzIHwgV2F0ZXJmYWxsIHwgMTAgc3RyaXBlcyBwb3VyIGRvd24gfAp8IDg0IHwgS2FsZWlkb3Njb3BlIHwgM8OXMyBncmlkIHJvdGF0ZSBpbi9vdXQgfAp8IDg1IHwgUGFwZXIgU2hyZWRkZXIgfCAxNiB0aGluIHN0cmlwZXMgc2hyZWQgZmFsbCB8CnwgODYgfCBMaWdodCBMZWFrIHwgYmx1cnJlZCBhY2NlbnQgc3dlZXAgfAp8IDg3IHwgVmVuZXRpYW4gSG9yaXpvbiB8IDggaG9yaXpvbnRhbCBzdHJpcGVzIDNEIGByb3RhdGlvblhgIGZsaXAgfAp8IDg4IHwgQnViYmxlIFJpc2UgfCA1w5c1IGJ1YmJsZSBjZWxscyBmbG9hdCB1cCB8CnwgODkgfCBEaWFtb25kIFN0b3JtIHwgcm90YXRpbmcgZGlhbW9uZCBgcG9seWdvbigpYCBleHBhbmQgfAp8IDkwIHwgRWNobyBab29tIHwgYGluc2V0YCB6b29tICsgYmcgcHVsc2UgZWNobyB8CnwgOTEgfCBMYXNlciBHcmlkIHwgMyBnbG93aW5nIGxhc2VyIGxpbmVzIHN3ZWVwIHwKfCA5MiB8IEZvbGQgT3V0IHwgMiBoYWx2ZXMgM0QgZm9sZCBhd2F5IHwKfCA5MyB8IEluayBTcGxhc2ggfCA2w5c2IGNlbGxzIHJhbmRvbS1yb3RhdGlvbiBzcGxhc2ggfAp8IDk0IHwgVGltZSBXYXJwIHwgc2tldyArIHN0cmV0Y2ggYGJsdXIoKWAgd2FycCB8CnwgOTUgfCBTdGF0aWMgQnVyc3QgfCBgc3RlcHMoKWAgZ2xpdGNoIHdpcGUgKyBzaGFrZSB8CnwgOTYgfCBHbGFjaWVyIHwgMyBzbG93IGhlYXZ5IHBhbmVscyB8CnwgOTcgfCBQcmlzbSBCdXJzdCB8IDEwIHN0cmlwZXMgY2VudGVyLWJ1cnN0IGBzY2FsZVlgIHwKfCA5OCB8IE5pZ2h0IERyaXZlIHwgZmFzdCBob3Jpem9udGFsIHN0cmVhayB8CnwgOTkgfCBCbG9vbSBSaW5ncyB8IGV4cGFuZGluZyBuZW9uIHJpbmdzICsgaXJpcyB8CnwgMTAwIHwgQXBvdGhlb3NpcyB8IDE2LXN0cmlwZSAzRCArIHNwaXJhbCArIGJsdXIgZGVwdGggfAoKLS0tCgojIyBUaGUgTGF5ZXIgU3lzdGVtCgpFdmVyeSB0cmFuc2l0aW9uIHN0YWdlIHJlcXVpcmVzICoqNCBzdGFja2VkIHJlbmRlcmluZyBsYXllcnMqKiBpbnNpZGUgdGhlIGNvbnRhaW5lci4gVGhleSBhcmUgcmVmZXJlbmNlZCBpbnNpZGUgdGhlIGVuZ2luZSB2aWEgYG5vZGVzLmJnYCwgYG5vZGVzLmFjY2VudGAsIGBub2Rlcy5vdmVybGF5YCwgYW5kIGBub2Rlcy5tYXNrYC4KCiMjIyBDU1MgTGF5ZXJzCgp8IENsYXNzIHwgei1pbmRleCB8IERlZmF1bHQgY29sb3VyIHwgUm9sZSB8CnwtLS18LS0tfC0tLXwtLS18CnwgYC5sYXllci1iZ2AgfCBhdXRvIChET00gb3JkZXIpIHwgYHZhcigtLWJnKWAgfCBCYXNlIGJhY2tncm91bmQuIE1vc3QgdHJhbnNpdGlvbnMgYW5pbWF0ZSBgc2NhbGVgLCBgeFBlcmNlbnRgLCBgeVBlcmNlbnRgLCBvciBgcm90YXRpb25gIG9uIHRoaXMgbGF5ZXIgdG8gY3JlYXRlIGEgcGFyYWxsYXggYmFja2Ryb3AuIHwKfCBgLmxheWVyLWFjY2VudGAgfCBhdXRvIChET00gb3JkZXIpIHwgYHZhcigtLXByaW1hcnktY29sb3IpYCBhdCA4NSUgb3BhY2l0eSB8IEEgc2VtaS10cmFuc3BhcmVudCBjb2xvdXIgd2FzaC4gRmFkZWQgaW4gdmlhIGBhY2NlbnRGYWRlKClgIGhlbHBlciB0byBhZGQgYnJhbmQgY29sb3VyIGRlcHRoIG92ZXIgdGhlIGJnLiB8CnwgYC5sYXllci1vdmVybGF5YCB8IDIgfCBgdmFyKC0tcHJpbWFyeS1jb2xvcilgIHwgU29saWQgY29sb3VyIGxheWVyIGZvciBmdWxsLWNvdmVyIHBhbmVsLXN0eWxlIHRyYW5zaXRpb25zLiBIaWRkZW4gYnkgZGVmYXVsdCAoYG9wYWNpdHk6IDBgKS4gfAp8IGAubGF5ZXItbWFza2AgfCA1IHwgYHZhcigtLWJnKWAgfCBUaGUgKipwcmltYXJ5KiogY2xpcC1wYXRoIGFuaW1hdGlvbiBsYXllci4gTW9zdCBpcmlzL3dpcGUvcG9seWdvbiB0cmFuc2l0aW9ucyBhbmltYXRlIGBjbGlwLXBhdGhgIG9uIHRoaXMgZWxlbWVudC4gU3RhcnRzIG9mZi1zY3JlZW4gKGBpbnNldCgwIDEwMCUgMCAwKWApLiB8CgojIyMgRHluYW1pYyBTdHJpcGUgRE9NCgpNYW55IHRyYW5zaXRpb25zIGluamVjdCBhZGRpdGlvbmFsIERPTSBub2RlcyBhdCBydW50aW1lLiBUaGlzIGlzIGhhbmRsZWQgaW50ZXJuYWxseSBieSB0aGUgYG1ha2VTdHJpcGVzKClgIGZhY3Rvcnk6CgpgYGBqcwovLyBJbnRlcm5hbCBmdW5jdGlvbiBzaWduYXR1cmU6Cm1ha2VTdHJpcGVzKGNvbnRhaW5lciwgY291bnQsIGNvbG9yID0gIiMwMzA0MDkiLCBkaXJlY3Rpb24gPSAicm93IikKYGBgCgp8IFBhcmFtZXRlciB8IFR5cGUgfCBEZWZhdWx0IHwgRGVzY3JpcHRpb24gfAp8LS0tfC0tLXwtLS18LS0tfAp8IGBjb250YWluZXJgIHwgYEhUTUxFbGVtZW50YCB8IOKAlCB8IFBhcmVudCBlbGVtZW50IHRvIGluamVjdCB0aGUgc3RyaXBlIHdyYXBwZXIgaW50by4gfAp8IGBjb3VudGAgfCBgTnVtYmVyYCB8IOKAlCB8IE51bWJlciBvZiBzdHJpcGUgZGl2cyB0byBnZW5lcmF0ZS4gfAp8IGBjb2xvcmAgfCBgU3RyaW5nYCB8IGAiIzAzMDQwOSJgIHwgQmFja2dyb3VuZCBjb2xvdXIgb2YgZWFjaCBzdHJpcGUuIHwKfCBgZGlyZWN0aW9uYCB8IGBTdHJpbmdgIHwgYCJyb3ciYCB8IGAicm93ImAg4oaSIHZlcnRpY2FsIHN0cmlwZXMgc2lkZS1ieS1zaWRlLiBgImNvbHVtbiJgIOKGkiBob3Jpem9udGFsIHN0cmlwZXMgc3RhY2tlZC4gfAoKQWxsIGluamVjdGVkIHdyYXBwZXJzIGFuZCBzdHJpcGVzIGFyZSBwdXNoZWQgaW50byB0aGUgaW50ZXJuYWwgYGNsZWFudXBzW11gIGFycmF5LiBUaGV5IGFyZSByZW1vdmVkIGZyb20gdGhlIERPTSBhdXRvbWF0aWNhbGx5IHdoZW4gYGtpbGwoKWAgaXMgY2FsbGVkLgoKLS0tCgojIyBDdXN0b21pc2F0aW9uCgojIyMgQ29sb3VycyAmIFRoZW1pbmcKCkFsbCB2aXN1YWwgY29sb3VycyBhcmUgZHJpdmVuIGJ5IENTUyBjdXN0b20gcHJvcGVydGllcy4gRWRpdCB0aGUgYDpyb290YCBibG9jayBpbiBgY3NzL21haW4uY3NzYDoKCmBgYGNzcwo6cm9vdCB7CiAgLS1wcmltYXJ5LWNvbG9yOiAjOUNFQzVCOyAgLyogTWFpbiBhY2NlbnQg4oCUIHVzZWQgZm9yIG92ZXJsYXkgbGF5ZXJzIGFuZCBVSSBoaWdobGlnaHRzICovCiAgLS1iZzogICAgICAgICAgICAjMTQxNDE0OyAgLyogRGFyayBiYWNrZ3JvdW5kIOKAlCB1c2VkIGZvciBiZyBhbmQgbWFzayBsYXllcnMgICAgICAgICAgICovCiAgLS1hY2NlbnQ6ICAgICAgICAjNmI3ZGZmOyAgLyogVUkgYWNjZW50IGNvbG91ciDigJQgYnV0dG9ucywgYWN0aXZlIHN0YXRlcyAgICAgICAgICAgICAgICovCiAgLS1hY2NlbnQtMjogICAgICAjZmY1ZjkyOyAgLyogU2Vjb25kYXJ5IFVJIGFjY2VudCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAqLwogIC0tdGV4dDogICAgICAgICAgI2Y4ZjlmZjsgIC8qIFByaW1hcnkgdGV4dCBjb2xvdXIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgKi8KICAtLW11dGVkOiAgICAgICAgICM4ODg4ODg7ICAvKiBTZWNvbmRhcnkgLyBzdWJkdWVkIHRleHQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICovCn0KYGBgCgojIyMgQWRkaW5nIE5ldyBUcmFuc2l0aW9ucwoKMS4gT3BlbiBganMvdHJhbnNpdGlvbnMvY3JlYXRlLXRyYW5zaXRpb24uanNgLgoyLiBJbnNpZGUgYGJ1aWxkVGltZWxpbmUoKWAsIGZpbmQgdGhlIGBzd2l0Y2goaWQpYCBzdGF0ZW1lbnQuCjMuIEFkZCBhIG5ldyBgY2FzZSBOOmAgYmxvY2sgZm9sbG93aW5nIHRoZSBleGlzdGluZyBwYXR0ZXJuOgoKYGBganMKLy8g4pSA4pSAIDEwMSDCtyBNeSBDdXN0b20gVHJhbnNpdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKY2FzZSAxMDE6IHsKICAvLyBPcHRpb25hbDogY3JlYXRlIHN0cmlwZSBET00KICBjb25zdCB7IHdyYXAsIHN0cmlwZXMgfSA9IG1ha2VTdHJpcGVzKGNvbnRhaW5lciwgOCk7CiAgY2xlYW51cHMucHVzaCgoKSA9PiB7IGlmKHdyYXAucGFyZW50Tm9kZSkgY29udGFpbmVyLnJlbW92ZUNoaWxkKHdyYXApOyB9KTsKCiAgLy8gQW5pbWF0ZSEgVXNlIGFueSBHU0FQIHByb3BlcnRpZXMuCiAgdGwuZnJvbVRvKHN0cmlwZXMsIHsgeVBlcmNlbnQ6IC0xMTAgfSwgeyB5UGVyY2VudDogMCwgZHVyYXRpb246IDAuNiwgc3RhZ2dlcjogMC4wNSwgZWFzZTogImV4cG8ub3V0IiB9LCAwKQogICAgLnRvKHN0cmlwZXMsIHsgeVBlcmNlbnQ6IDExMCwgZHVyYXRpb246IDAuNiwgc3RhZ2dlcjogMC4wNSwgZWFzZTogInBvd2VyNC5pbiIgfSwgMC44KQogICAgLmZyb21UbyhiZywgeyBzY2FsZTogMS4xIH0sIHsgc2NhbGU6IDEsIGR1cmF0aW9uOiAxLjIsIGVhc2U6ICJleHBvLm91dCIgfSwgMC45KTsKCiAgLy8gRmFkZSBpbiBhY2NlbnQgY29sb3VyCiAgYWNjZW50RmFkZSgwLjkpOwoKICAvLyBGYWRlIGluIGNvbnRlbnQgdGV4dAogIHN0ZENvbnRlbnQoMS4xKTsKICBicmVhazsKfQpgYGAKCjQuIEluY3JlbWVudCBgVE9UQUxgIGluIGBqcy9tYWluLmpzYDoKCmBgYGpzCmNvbnN0IFRPVEFMID0gMTAxOyAvLyB3YXMgMTAwCmBgYAoKNS4gQWRkIHRoZSBuYW1lIHRvIHRoZSBgTkFNRVNgIGFycmF5OgoKYGBganMKIk15IEN1c3RvbSBUcmFuc2l0aW9uIiwgLy8gMTAxCmBgYAoKIyMjIyBLZXkgaGVscGVycyBhdmFpbGFibGUgaW5zaWRlIGBidWlsZFRpbWVsaW5lKClgCgp8IEhlbHBlciB8IFNpZ25hdHVyZSB8IERlc2NyaXB0aW9uIHwKfC0tLXwtLS18LS0tfAp8IGBhY2NlbnRGYWRlYCB8IGAoc3RhcnRUaW1lID0gMCkgPT4gdm9pZGAgfCBGYWRlcyBpbiB0aGUgYC5sYXllci1hY2NlbnRgIGVsZW1lbnQgZnJvbSBgb3BhY2l0eTogMGAgdG8gYDAuNzhgLiB8CnwgYHN0ZENvbnRlbnRgIHwgYChzdGFydFRpbWUgPSAwLjIyKSA9PiB2b2lkYCB8IFN0YWdnZXJzIGluIGBjb250ZW50SXRlbXNgIGFuZCBgdGFnc2Agd2l0aCBhIHByZW1pdW0gYGV4cG8ub3V0YCArIGBiYWNrLm91dGAgZWFzaW5nLiBBbHNvIHRyaWdnZXJzIHRoZSB0ZXh0IHN3YXAgbWlkLXRyYW5zaXRpb24uIHwKfCBgbWFrZVN0cmlwZXNgIHwgYChjb250YWluZXIsIGNvdW50LCBjb2xvciwgZGlyZWN0aW9uKSA9PiB7IHdyYXAsIHN0cmlwZXMgfWAgfCBHZW5lcmF0ZXMgYSBmbGV4IHN0cmlwZSBvdmVybGF5IGFuZCByZXR1cm5zIEdTQVAtdGFyZ2V0YWJsZSBlbGVtZW50cy4gYGRpcmVjdGlvbmA6IGAicm93ImAg4oaSIHZlcnRpY2FsIHN0cmlwZXMgc2lkZS1ieS1zaWRlLCBgImNvbHVtbiJgIOKGkiBob3Jpem9udGFsIHN0cmlwZXMgc3RhY2tlZC4gfAp8IGBtYWtlR3JpZGAgfCBgKGNvbnRhaW5lciwgcm93cywgY29scywgY29sb3IpID0+IHsgd3JhcCwgY2VsbHMgfWAgfCBHZW5lcmF0ZXMgYSBgcm93cyDDlyBjb2xzYCBncmlkIG92ZXJsYXkgKGNlbGxzIGluIHJvdy1tYWpvciBvcmRlcikgYW5kIHJldHVybnMgR1NBUC10YXJnZXRhYmxlIGVsZW1lbnRzLiB8CnwgYHdhdmVQb2x5YCB8IGAoZnJvbnQsIGFtcCA9IDksIHRlZXRoID0gOCkgPT4gInBvbHlnb24oLi4uKSJgIHwgQnVpbGRzIGEgc2luZS13YXZlIGBwb2x5Z29uKClgIHN0cmluZyBmb3IgbGlxdWlkIHdhdmUgd2lwZXMuIENvb3JkaW5hdGVzIGFyZSByb3VuZGVkIHRvIGludGVnZXJzIHNvIEdTQVAgY2FuIGludGVycG9sYXRlIHRoZW0gc21vb3RobHkuIHwKCiMjIyMgSW1wb3J0YW50IHJ1bGVzIGZvciBiaWRpcmVjdGlvbmFsIHN0YWJpbGl0eQoKLSDinIUgKipBbHdheXMgdXNlIGAlYCB1bml0cyoqIGluIGBjbGlwLXBhdGhgIHZhbHVlcyDigJQgbmV2ZXIgbWl4IGBweGAgYW5kIGAlYAotIOKchSAqKk1hdGNoIHBvaW50IGNvdW50cyoqIOKAlCBwb2x5Z29uIHN0cmluZ3MgaW4gYGZyb21UbygpYCBtdXN0IGhhdmUgdGhlIHNhbWUgbnVtYmVyIG9mIHBvaW50cwotIOKchSAqKlVzZSBgZnJvbVRvKClgKiogaW5zdGVhZCBvZiBjaGFpbmVkIGBmcm9tKClgIOKGkiBgdG8oKWAgZm9yIHJlbGlhYmxlIHJldmVyc2UKLSDinIUgKipQdXNoIHRvIGBjbGVhbnVwc1tdYCoqIGZvciBhbnkgRE9NIHlvdSBpbmplY3QKLSDinIUgKipTZXQgaW5pdGlhbCBzdGF0ZXMgd2l0aCBgZ3NhcC5zZXQoKWAgYmVmb3JlIGJ1aWxkaW5nIHRoZSB0aW1lbGluZSoqIOKAlCBuZXZlciBhZnRlciB0d2VlbnMgYXJlIGFkZGVkLCBvciByZXZlcnNlIHdpbGwgYnJlYWsKCi0tLQoKIyMgVUkgQ29udHJvbHMKCiMjIyBUcmFuc2l0aW9uIENhcm91c2VsIChSaWdodCBTaWRlIEJ1dHRvbikKClRoZSBwaWxsLXNoYXBlZCAqKiJTZWxlY3QgYSB0cmFuc2l0aW9uIioqIGJ1dHRvbiBvbiB0aGUgcmlnaHQgc2lkZSBvZiB0aGUgc2NyZWVuIG9wZW5zIGEgaG9yaXpvbnRhbCBjYXJvdXNlbCBvdmVybGF5IHNob3dpbmcgYWxsIDEwMCB0cmFuc2l0aW9ucyBhcyBzY3JvbGxhYmxlIGNhcmRzLgoKLSAqKlNlbGVjdDoqKiBDbGljayBhbnkgY2FyZCDihpIgaW1tZWRpYXRlbHkgcGxheXMgdGhhdCB0cmFuc2l0aW9uCi0gKipUb2dnbGU6KiogQ2xpY2sgdGhlIGFjdGl2ZSBjYXJkIGFnYWluIOKGkiByZXZlcnNlcyB0aGUgYW5pbWF0aW9uCi0gKipDbG9zZToqKiBDbGljayB0aGUgYmFja2Ryb3Agb3IgcHJlc3MgYEVzY2FwZWAKCiMjIyBUcmFuc2l0aW9uIExhYmVsIChCb3R0b20gTGVmdCkKCkRpc3BsYXlzIHRoZSBjdXJyZW50bHkgYWN0aXZlIHRyYW5zaXRpb24gSUQgYW5kIG5hbWUsIHdpdGggdHdvIGNvbnRyb2wgYnV0dG9uczoKCnwgQnV0dG9uIHwgQWN0aW9uIHwKfC0tLXwtLS18CnwgKipQbGF5KiogfCBQbGF5cyB0aGUgYWN0aXZlIHRyYW5zaXRpb24gZm9yd2FyZCBmcm9tIGl0cyBjdXJyZW50IHBsYXloZWFkIHBvc2l0aW9uIHwKfCAqKlJldmVyc2UqKiB8IFBsYXlzIHRoZSBhY3RpdmUgdHJhbnNpdGlvbiBiYWNrd2FyZCBmcm9tIGl0cyBjdXJyZW50IHBsYXloZWFkIHBvc2l0aW9uIHwKCiMjIyBGdWxsc2NyZWVuIChUb3AgUmlnaHQpCgpUaGUgZm91ci1hcnJvdyBpY29uIGJ1dHRvbiB0b2dnbGVzIHRoZSBicm93c2VyJ3MgbmF0aXZlIEZ1bGxzY3JlZW4gQVBJLiBJZGVhbCBmb3IgY2xpZW50IHByZXNlbnRhdGlvbnMuCgojIyMgRG9jdW1lbnRhdGlvbiAoQm90dG9tIFJpZ2h0KQoKVGhlIGZpbGUtc3RhY2sgaWNvbiBidXR0b24gb3BlbnMgdGhlIGluLWFwcCBkb2N1bWVudGF0aW9uIGxpZ2h0Ym94IOKAlCBhIHRhYmJlZCByZWZlcmVuY2UgcGFuZWwgd2l0aCBPdmVydmlldywgQVBJLCBUcmFuc2l0aW9ucywgTGF5ZXIgU3lzdGVtLCBhbmQgVUkgQ29udHJvbHMgc2VjdGlvbnMuCgotLS0KCiMjIEtleWJvYXJkIFNob3J0Y3V0cwoKfCBLZXkgfCBBY3Rpb24gfAp8LS0tfC0tLXwKfCBgRXNjYXBlYCB8IENsb3NlcyBkb2N1bWVudGF0aW9uIGxpZ2h0Ym94IOKGkiB0aGVuIGNhcm91c2VsIG92ZXJsYXkg4oaSIHRoZW4gZXhpdHMgZnVsbHNjcmVlbiAocHJpb3JpdHkgb3JkZXIpIHwKCi0tLQoKIyMgUGVyZm9ybWFuY2UgTm90ZXMKCi0gKipgZm9yY2UzRDogdHJ1ZWAqKiBpcyBpbmplY3RlZCBpbnRvIHRoZSBHU0FQIHRpbWVsaW5lIGBkZWZhdWx0c2Agb2JqZWN0LCBmb3JjaW5nIGFsbCBhbmltYXRpb25zIHRvIHRoZSBHUFUgY29tcG9zaXRvciB0aHJlYWQuCi0gKipgd2lsbC1jaGFuZ2U6IHRyYW5zZm9ybSwgb3BhY2l0eSwgY2xpcC1wYXRoYCoqIGlzIHNldCBvbiBhbGwgbGF5ZXIgZWxlbWVudHMgaW4gQ1NTIHRvIHByZS1wcm9tb3RlIHRoZW0gdG8gdGhlaXIgb3duIGNvbXBvc2l0b3IgbGF5ZXJzLgotICoqYGNvbnRhaW46IGxheW91dCBzdHlsZSBwYWludGAqKiBhbmQgKipgaXNvbGF0aW9uOiBpc29sYXRlYCoqIGFyZSBzZXQgb24gdGhlIHN0YWdlIGNvbnRhaW5lciB0byBjcmVhdGUgYSBzdHJpY3QgcGFpbnQgYm91bmRhcnksIHByZXZlbnRpbmcgdW5uZWNlc3NhcnkgcmVwYWludHMgb2Ygc3Vycm91bmRpbmcgY29udGVudC4KLSAqKmBiYWNrZmFjZS12aXNpYmlsaXR5OiBoaWRkZW5gKiogcHJldmVudHMgYmx1cnJ5IHN1Yi1waXhlbCByZW5kZXJpbmcgb24gM0QgdHJhbnNmb3JtcyBpbiBTYWZhcmkuCi0gVHJhbnNpdGlvbnMgdGhhdCB1c2UgYGZpbHRlcjogYmx1cigpYCAoZS5nLiBUMzEgQ2luZW1hdGljIEJhcnMpIGFyZSB0aGUgbW9zdCBleHBlbnNpdmUuIFVzZSB0aGVtIHNwYXJpbmdseSBvbiBtb2JpbGUuCgotLS0KCiMjIEJyb3dzZXIgU3VwcG9ydAoKfCBCcm93c2VyIHwgU3VwcG9ydCB8CnwtLS18LS0tfAp8IENocm9tZSAvIEVkZ2UgOTArIHwg4pyFIEZ1bGwgfAp8IEZpcmVmb3ggODkrIHwg4pyFIEZ1bGwgfAp8IFNhZmFyaSAxNS40KyB8IOKchSBGdWxsIChgY2xpcC1wYXRoYCBwb2x5Z29uIHJlcXVpcmVzIDE1LjQrKSB8CnwgU2FmYXJpIDwgMTUuNCB8IOKaoO+4jyBQb2x5Z29uIHRyYW5zaXRpb25zIGRlZ3JhZGUgZ3JhY2VmdWxseSB8CnwgTW9iaWxlIENocm9tZSAvIFNhZmFyaSB8IOKchSBGdWxsICh0ZXN0ZWQgb24gaU9TIDE2KykgfAoKPiAqKk5vdGU6KiogVGhlIGBva2xjaCgpYCBjb2xvdXIgZnVuY3Rpb24gdXNlZCBpbiBgLmxheWVyLWFjY2VudGAgcmVxdWlyZXMgQ2hyb21lIDExMSssIEZpcmVmb3ggMTEzKywgYW5kIFNhZmFyaSAxNS40Ky4gT24gb2xkZXIgYnJvd3NlcnMgaXQgd2lsbCBzaWxlbnRseSBwcm9kdWNlIG5vIGNvbG91ciBvbiB0aGF0IGxheWVyIOKAlCBhbGwgb3RoZXIgdHJhbnNpdGlvbnMgcmVtYWluIHVuYWZmZWN0ZWQuCgotLS0KCiMjIExpY2Vuc2UKCk1JVCDigJQgZnJlZSB0byB1c2UsIG1vZGlmeSwgYW5kIGRpc3RyaWJ1dGUuCg==
+
+<p align="center">
+  <img src="swap-banner.jpg" alt="Swap — Page transitions using GSAP" width="640">
+</p>
+
+<p align="center">
+  <a href="https://jimmylatreille.github.io/swap/"><strong>🚀 Live Demo</strong></a>
+</p>
+
+
+# GSAP Page Transition Engine
+
+> **100 Awwwards-grade, GPU-accelerated full-viewport page transitions** — built with pure JavaScript and GSAP 3. One dependency (GSAP). Fully bidirectional. Interrupt-safe.
+
+---
+
+## Table of Contents
+
+1. [Demo](#demo)
+2. [Features](#features)
+3. [Project Structure](#project-structure)
+4. [Quick Start](#quick-start)
+5. [API Reference](#api-reference)
+   - [createTransition()](#createtransition)
+   - [Controller Methods](#controller-methods)
+6. [Transition Variants](#transition-variants)
+7. [The Layer System](#the-layer-system)
+   - [CSS Layers](#css-layers)
+   - [Dynamic Stripe DOM](#dynamic-stripe-dom)
+8. [Customisation](#customisation)
+   - [Colours & Theming](#colours--theming)
+   - [Adding New Transitions](#adding-new-transitions)
+9. [UI Controls](#ui-controls)
+10. [Keyboard Shortcuts](#keyboard-shortcuts)
+11. [Performance Notes](#performance-notes)
+12. [Browser Support](#browser-support)
+
+---
+
+## Demo
+
+**Live demo:** https://jimmylatreille.github.io/swap/
+
+Or run it locally with any static file server (e.g. VS Code Live Server, `npx serve .`):
+
+```bash
+npx serve .
+# → http://localhost:3000
+```
+
+---
+
+## Features
+
+| Feature | Detail |
+|---|---|
+| **100 unique variants** | Every conceivable transition style: wipes, irises, stripes, 3D flips, glitch, polygon morphs, elastic physics |
+| **GPU-accelerated** | `force3D: true` on every timeline. Uses CSS `transform`, `clip-path`, and `filter` — nothing that triggers layout |
+| **Bidirectional** | Every transition plays perfectly in both directions: `play()` and `reverse()` |
+| **Interrupt-safe** | Call `reverse()` mid-`play()` — the animation reverses smoothly from wherever the playhead is |
+| **Memory-safe** | All dynamically injected DOM nodes are tracked in a `cleanups[]` array and removed on `kill()` |
+| **Single dependency** | Only GSAP 3 (loaded from CDN or bundled locally) |
+| **Accessible** | Live region labels, `aria-hidden` management, keyboard navigation, reduced-motion aware |
+
+---
+
+## Project Structure
+
+```
+Page transition/
+├── index.html                   # Main demo page + documentation lightbox
+├── .gitignore
+├── README.md
+│
+├── css/
+│   ├── reset.css                # Minimal CSS reset
+│   ├── main.css                 # All UI styles + layer system + doc lightbox
+│   └── page-transtion.css       # Stage-level transition layer base styles
+│
+└── js/
+    ├── main.js                  # Demo orchestrator: cards, state machine, UI
+    ├── noise.js                 # Canvas grain effect
+    ├── gsap.js                  # GSAP 3.13.0 (local fallback)
+    ├── jquery.js                # jQuery (legacy demo helpers)
+    ├── splitText.min.js         # GSAP SplitText plugin
+    ├── text-anim.js             # Text animation helpers
+    │
+    └── transitions/
+        ├── create-transition.js # ⭐ Core engine — all 100 transitions live here
+        └── utils.js             # Shared DOM/GSAP utility helpers
+```
+
+---
+
+## Quick Start
+
+### 1. Include GSAP
+
+Either via CDN (as in the demo):
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+```
+
+Or use the local copy:
+
+```html
+<script src="js/gsap.js"></script>
+```
+
+### 2. Set up your HTML stage
+
+The engine expects **4 stacked layer divs** inside the container it targets:
+
+```html
+<section id="preview-stage" class="preview-stage">
+  <div class="transition-layer layer-bg"></div>
+  <div class="transition-layer layer-accent"></div>
+  <div class="transition-layer layer-overlay"></div>
+  <div class="transition-layer layer-mask"></div>
+
+  <!-- Your page content goes here -->
+  <div class="preview-content">...</div>
+</section>
+```
+
+### 3. Load the scripts and call
+
+The engine exposes itself as a browser global — no bundler or ES modules needed:
+
+```html
+<script src="js/gsap.js"></script>
+<script src="js/transitions/utils.js"></script>
+<script src="js/transitions/create-transition.js"></script>
+```
+
+```js
+const { createTransition } = window.PageTransitions;
+const stage = document.querySelector("#preview-stage");
+
+// Create a controller for transition #12 (Scale Bloom)
+const ctrl = createTransition(stage, { id: 12 });
+
+// Play forward — covers the screen
+ctrl.play();
+
+// Reverse — uncovers the screen
+ctrl.reverse();
+
+// Cleanup — removes all injected DOM, kills GSAP timeline
+ctrl.kill();
+```
+
+---
+
+## API Reference
+
+### `createTransition(container, options)`
+
+The factory function. Builds the GSAP timeline for the selected variant and returns a controller object.
+
+#### Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `container` | `HTMLElement` | ✅ | The element that hosts the 4 transition layers. Usually the full-screen stage. |
+| `options.id` | `Number` | ❌ (defaults to `1`) | Transition index `1–100`. Selects the animation variant. See [Transition Variants](#transition-variants). |
+
+#### Returns
+
+A controller object with 3 methods:
+
+### Controller Methods
+
+#### `ctrl.play()`
+
+Plays the timeline **forward** from the current playhead position.
+
+- The transition layers animate **over** the viewport, covering the content.
+- During coverage, you can safely swap your route, update DOM, or load a new page.
+- Calling `play()` on a finished timeline restarts it from the beginning.
+
+```js
+ctrl.play();
+```
+
+---
+
+#### `ctrl.reverse()`
+
+Plays the timeline **backward** from the current playhead position.
+
+- The transition layers retract, revealing the underlying content.
+- Fully interrupt-safe — can be called at any point during `play()`.
+- When reversing, the content text is automatically swapped back to its original state.
+
+```js
+ctrl.reverse();
+```
+
+---
+
+#### `ctrl.kill()`
+
+Kills the GSAP timeline and runs all cleanup callbacks.
+
+- Removes all dynamically injected DOM nodes (stripe overlays, wrappers).
+- Leaves the layer elements in their last rendered state — the next `createTransition()` call resets them via its internal base-state setup.
+- Should be called before creating a new transition to prevent memory leaks.
+
+```js
+ctrl.kill();
+```
+
+---
+
+### State Machine Pattern (Recommended)
+
+The demo uses this pattern internally for robust transition management:
+
+```js
+let activeCtrl = null;
+let activeDir  = "play";
+
+function runTransition(id) {
+  // Kill the previous transition and clean up
+  if (activeCtrl) activeCtrl.kill();
+
+  // Create a fresh controller
+  activeCtrl = createTransition(stage, { id });
+  activeDir  = "play";
+  activeCtrl.play();
+}
+
+function toggle() {
+  if (!activeCtrl) return;
+  if (activeDir === "play") {
+    activeCtrl.reverse();
+    activeDir = "reverse";
+  } else {
+    activeCtrl.play();
+    activeDir = "play";
+  }
+}
+```
+
+---
+
+## Transition Variants
+
+Pass the `id` to `createTransition()` to select a variant.
+
+| ID | Name | Technique |
+|---|---|---|
+| 01 | Drift In | `clip-path` inset wipe from left + bg parallax slide |
+| 02 | Rise Up | `clip-path` inset wipe from bottom |
+| 03 | Slide Left | Full `translateX` panel slide |
+| 04 | Drop Down | `clip-path` inset wipe from top |
+| 05 | Unshutter | `scaleX` shutter reveal + opacity |
+| 06 | Iris Expand | `clip-path circle()` expand from center |
+| 07 | Split Center | Dual `clip-path` halves splitting apart |
+| 08 | Blind Expand | 8 vertical stripes stagger in from bottom |
+| 09 | Flicker Wipe | `clip-path` inset with opacity flicker on entry |
+| 10 | Pull Through | `scaleX` + `yPercent` combined panel |
+| 11 | Corner Iris | `clip-path circle()` expand from bottom-left corner |
+| 12 | Scale Bloom | `clip-path circle()` + bg scale bloom |
+| 13 | Poly Reveal | `polygon()` clip-path morph — diamond to full |
+| 14 | Bottom Lift | Full `yPercent` panel lift from bottom |
+| 15 | Curtain Down | `yPercent` curtain drop from top |
+| 16 | Top-Right Iris | `clip-path circle()` expand from top-right |
+| 17 | Overlay Wipe | `xPercent` full-screen panel sweep |
+| 18 | Top Slice | `clip-path` inset horizontal slice |
+| 19 | Scale Mask | Combined `scale` + `clip-path inset()` |
+| 20 | Flash Sweep | Opacity flash + `xPercent` sweep |
+| 21 | Diagonal Slash | Skewed `polygon()` diagonal wipe |
+| 22 | Twin Curtain | Dual `yPercent` curtain halves |
+| 23 | Ripple Burst | `clip-path circle()` expanding ripple wave |
+| 24 | Page Curl | 3D `rotateY` perspective page curl |
+| 25 | Depth Push | `translateZ` + `scale` depth push illusion |
+| 26 | Cascade Drop | 12-stripe alternating `yPercent` cascade |
+| 27 | Glitch Slam | `xPercent` + opacity glitch with `steps()` easing |
+| 28 | Prism Slide | 8 horizontal stripes staggered |
+| 29 | Elastic Gate | Dual `scaleX` gates with `elastic.out` |
+| 30 | Grand Finale | 12-stripe alternating direction bounce |
+| 31 | Cinematic Bars | 2 bars from top/bottom + background `blur()` |
+| 32 | Hexagon Expand | 6-point `polygon()` morph to full screen |
+| 33 | Venetian Blinds | 14 stripes with 3D `rotationX` flip (perspective) |
+| 34 | Diagonal Stagger | 6 stripes rotated 45° stagger across |
+| 35 | Cross Split | 12-point cross `polygon()` expand to full screen |
+| 36 | Shutter Twist | 8 stripes `skewX` + `yPercent` stagger |
+| 37 | Diamond Sweep | 4-point diamond `polygon()` wipe |
+| 38 | Accordion Fold | Alternating-origin `scaleY` accordion fold |
+| 39 | Center Pinch | `inset()` clip-path horizontal centre pinch |
+| 40 | Orbital Sweep | `rotationZ` + `scale` spiral entrance |
+| 41 | Glitch Slice | 5 stripes `xPercent` with `steps(4)` easing |
+| 42 | Triangle Unfold | Triangle `polygon()` morph reveal |
+| 43 | Elastic Drop | `inset()` clip-path with `bounce.out` physics |
+| 44 | The Void | `inset()` + rotation + scale — sucked into void |
+| 45 | Double Door Sweep | 2 panels `xPercent` then `yPercent` exit |
+| 46 | Ripple Offset | 10 stripes expanding from center outward |
+| 47 | Skewed Blocks | 6 stripes `yPercent` + `skewY` stagger |
+| 48 | Iris Blink | Circle blink (close/open) + `bounce.out` reveal |
+| 49 | Sawtooth Wipe | 9-point jagged polygon wipe across screen |
+| 50 | The Masterpiece | 3D bg depth push + 10-stripe 3D shutter |
+| 51 | Tidal Wave | sine-wave `polygon()` sweep across |
+| 52 | Pixel Storm | 6×8 grid (48 cells) random-stagger in/out |
+| 53 | Paper Fold | `inset` fold from bottom + skew |
+| 54 | Cyclone Iris | spinning `circle()` iris reveal |
+| 55 | Quadrant Bloom | 4 quadrants bloom from outer corners |
+| 56 | Jelly Wipe | `inset` wipe + elastic accent jelly panel |
+| 57 | Venetian Spin | 10 horizontal stripes 3D `rotationY` flip |
+| 58 | Domino Fall | 12 vertical stripes `rotationX` domino topple |
+| 59 | Ink Drop | `circle()` iris + `blur()` ink bleed |
+| 60 | Shatter | 4×6 grid scatter in, fly-out |
+| 61 | Liquid Pour | full panel `scaleY` elastic pour |
+| 62 | Zoom Tunnel | `circle()` iris + bg scale pulse |
+| 63 | Flip Book | 2 panels 3D `rotationY` book open |
+| 64 | Neon Slash | glowing band expands to full cover |
+| 65 | Gravity Drop | 8 stripes `bounce.out` drop |
+| 66 | Split Horizon | horizontal `polygon()` split from middle |
+| 67 | Spiral In | `inset` + rotation + scale spiral |
+| 68 | Mosaic Flip | 4×6 grid 3D `rotationY` flip |
+| 69 | Smoke Veil | `inset` wipe + `blur()` drift |
+| 70 | Rubber Band | full panel `scaleX` elastic snap |
+| 71 | Crossfade Zoom | opacity crossfade + slow zoom |
+| 72 | Twist Cascade | 7 stripes alternating `skewX` cascade |
+| 73 | Pendulum | narrow blade pendulum swing from top |
+| 74 | Checkerboard | 8×8 grid center/edges stagger |
+| 75 | Black Hole | spinning panel scale 0 → cover → evaporates |
+| 76 | Slide Stack | 3 offset stacked sliding panels |
+| 77 | Echo Trail | `inset` wipe + ghost stripe echoes |
+| 78 | Diagonal Fold | 4-point `polygon()` corner fold |
+| 79 | Meteor Strike | skewed panel diagonal slam |
+| 80 | Grand Overture | 12-stripe 3D cascade + bg blur depth |
+| 81 | Aurora Veil | 4 aurora bands sweep + wipe |
+| 82 | Origami Fold | 8 stripes alternating 3D fold |
+| 83 | Waterfall | 10 stripes pour down |
+| 84 | Kaleidoscope | 3×3 grid rotate in/out |
+| 85 | Paper Shredder | 16 thin stripes shred fall |
+| 86 | Light Leak | blurred accent sweep |
+| 87 | Venetian Horizon | 8 horizontal stripes 3D `rotationX` flip |
+| 88 | Bubble Rise | 5×5 bubble cells float up |
+| 89 | Diamond Storm | rotating diamond `polygon()` expand |
+| 90 | Echo Zoom | `inset` zoom + bg pulse echo |
+| 91 | Laser Grid | 3 glowing laser lines sweep |
+| 92 | Fold Out | 2 halves 3D fold away |
+| 93 | Ink Splash | 6×6 cells random-rotation splash |
+| 94 | Time Warp | skew + stretch `blur()` warp |
+| 95 | Static Burst | `steps()` glitch wipe + shake |
+| 96 | Glacier | 3 slow heavy panels |
+| 97 | Prism Burst | 10 stripes center-burst `scaleY` |
+| 98 | Night Drive | fast horizontal streak |
+| 99 | Bloom Rings | expanding neon rings + iris |
+| 100 | Apotheosis | 16-stripe 3D + spiral + blur depth |
+
+---
+
+## The Layer System
+
+Every transition stage requires **4 stacked rendering layers** inside the container. They are referenced inside the engine via `nodes.bg`, `nodes.accent`, `nodes.overlay`, and `nodes.mask`.
+
+### CSS Layers
+
+| Class | z-index | Default colour | Role |
+|---|---|---|---|
+| `.layer-bg` | auto (DOM order) | `var(--bg)` | Base background. Most transitions animate `scale`, `xPercent`, `yPercent`, or `rotation` on this layer to create a parallax backdrop. |
+| `.layer-accent` | auto (DOM order) | `var(--primary-color)` at 85% opacity | A semi-transparent colour wash. Faded in via `accentFade()` helper to add brand colour depth over the bg. |
+| `.layer-overlay` | 2 | `var(--primary-color)` | Solid colour layer for full-cover panel-style transitions. Hidden by default (`opacity: 0`). |
+| `.layer-mask` | 5 | `var(--bg)` | The **primary** clip-path animation layer. Most iris/wipe/polygon transitions animate `clip-path` on this element. Starts off-screen (`inset(0 100% 0 0)`). |
+
+### Dynamic Stripe DOM
+
+Many transitions inject additional DOM nodes at runtime. This is handled internally by the `makeStripes()` factory:
+
+```js
+// Internal function signature:
+makeStripes(container, count, color = "#030409", direction = "row")
+```
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `container` | `HTMLElement` | — | Parent element to inject the stripe wrapper into. |
+| `count` | `Number` | — | Number of stripe divs to generate. |
+| `color` | `String` | `"#030409"` | Background colour of each stripe. |
+| `direction` | `String` | `"row"` | `"row"` → vertical stripes side-by-side. `"column"` → horizontal stripes stacked. |
+
+All injected wrappers and stripes are pushed into the internal `cleanups[]` array. They are removed from the DOM automatically when `kill()` is called.
+
+---
+
+## Customisation
+
+### Colours & Theming
+
+All visual colours are driven by CSS custom properties. Edit the `:root` block in `css/main.css`:
+
+```css
+:root {
+  --primary-color: #9CEC5B;  /* Main accent — used for overlay layers and UI highlights */
+  --bg:            #141414;  /* Dark background — used for bg and mask layers           */
+  --accent:        #6b7dff;  /* UI accent colour — buttons, active states               */
+  --accent-2:      #ff5f92;  /* Secondary UI accent                                     */
+  --text:          #f8f9ff;  /* Primary text colour                                     */
+  --muted:         #888888;  /* Secondary / subdued text                                */
+}
+```
+
+### Adding New Transitions
+
+1. Open `js/transitions/create-transition.js`.
+2. Inside `buildTimeline()`, find the `switch(id)` statement.
+3. Add a new `case N:` block following the existing pattern:
+
+```js
+// ── 101 · My Custom Transition ────────────────────────────
+case 101: {
+  // Optional: create stripe DOM
+  const { wrap, stripes } = makeStripes(container, 8);
+  cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+
+  // Animate! Use any GSAP properties.
+  tl.fromTo(stripes, { yPercent: -110 }, { yPercent: 0, duration: 0.6, stagger: 0.05, ease: "expo.out" }, 0)
+    .to(stripes, { yPercent: 110, duration: 0.6, stagger: 0.05, ease: "power4.in" }, 0.8)
+    .fromTo(bg, { scale: 1.1 }, { scale: 1, duration: 1.2, ease: "expo.out" }, 0.9);
+
+  // Fade in accent colour
+  accentFade(0.9);
+
+  // Fade in content text
+  stdContent(1.1);
+  break;
+}
+```
+
+4. Increment `TOTAL` in `js/main.js`:
+
+```js
+const TOTAL = 101; // was 100
+```
+
+5. Add the name to the `NAMES` array:
+
+```js
+"My Custom Transition", // 101
+```
+
+#### Key helpers available inside `buildTimeline()`
+
+| Helper | Signature | Description |
+|---|---|---|
+| `accentFade` | `(startTime = 0) => void` | Fades in the `.layer-accent` element from `opacity: 0` to `0.78`. |
+| `stdContent` | `(startTime = 0.22) => void` | Staggers in `contentItems` and `tags` with a premium `expo.out` + `back.out` easing. Also triggers the text swap mid-transition. |
+| `makeStripes` | `(container, count, color, direction) => { wrap, stripes }` | Generates a flex stripe overlay and returns GSAP-targetable elements. `direction`: `"row"` → vertical stripes side-by-side, `"column"` → horizontal stripes stacked. |
+| `makeGrid` | `(container, rows, cols, color) => { wrap, cells }` | Generates a `rows × cols` grid overlay (cells in row-major order) and returns GSAP-targetable elements. |
+| `wavePoly` | `(front, amp = 9, teeth = 8) => "polygon(...)"` | Builds a sine-wave `polygon()` string for liquid wave wipes. Coordinates are rounded to integers so GSAP can interpolate them smoothly. |
+
+#### Important rules for bidirectional stability
+
+- ✅ **Always use `%` units** in `clip-path` values — never mix `px` and `%`
+- ✅ **Match point counts** — polygon strings in `fromTo()` must have the same number of points
+- ✅ **Use `fromTo()`** instead of chained `from()` → `to()` for reliable reverse
+- ✅ **Push to `cleanups[]`** for any DOM you inject
+- ✅ **Set initial states with `gsap.set()` before building the timeline** — never after tweens are added, or reverse will break
+
+---
+
+## UI Controls
+
+### Transition Carousel (Right Side Button)
+
+The pill-shaped **"Select a transition"** button on the right side of the screen opens a horizontal carousel overlay showing all 100 transitions as scrollable cards.
+
+- **Select:** Click any card → immediately plays that transition
+- **Toggle:** Click the active card again → reverses the animation
+- **Close:** Click the backdrop or press `Escape`
+
+### Transition Label (Bottom Left)
+
+Displays the currently active transition ID and name, with two control buttons:
+
+| Button | Action |
+|---|---|
+| **Play** | Plays the active transition forward from its current playhead position |
+| **Reverse** | Plays the active transition backward from its current playhead position |
+
+### Fullscreen (Top Right)
+
+The four-arrow icon button toggles the browser's native Fullscreen API. Ideal for client presentations.
+
+### Documentation (Bottom Right)
+
+The file-stack icon button opens the in-app documentation lightbox — a tabbed reference panel with Overview, API, Transitions, Layer System, and UI Controls sections.
+
+---
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `Escape` | Closes documentation lightbox → then carousel overlay → then exits fullscreen (priority order) |
+
+---
+
+## Performance Notes
+
+- **`force3D: true`** is injected into the GSAP timeline `defaults` object, forcing all animations to the GPU compositor thread.
+- **`will-change: transform, opacity, clip-path`** is set on all layer elements in CSS to pre-promote them to their own compositor layers.
+- **`contain: layout style paint`** and **`isolation: isolate`** are set on the stage container to create a strict paint boundary, preventing unnecessary repaints of surrounding content.
+- **`backface-visibility: hidden`** prevents blurry sub-pixel rendering on 3D transforms in Safari.
+- Transitions that use `filter: blur()` (e.g. T31 Cinematic Bars) are the most expensive. Use them sparingly on mobile.
+
+---
+
+## Browser Support
+
+| Browser | Support |
+|---|---|
+| Chrome / Edge 90+ | ✅ Full |
+| Firefox 89+ | ✅ Full |
+| Safari 15.4+ | ✅ Full (`clip-path` polygon requires 15.4+) |
+| Safari < 15.4 | ⚠️ Polygon transitions degrade gracefully |
+| Mobile Chrome / Safari | ✅ Full (tested on iOS 16+) |
+
+> **Note:** The `oklch()` colour function used in `.layer-accent` requires Chrome 111+, Firefox 113+, and Safari 15.4+. On older browsers it will silently produce no colour on that layer — all other transitions remain unaffected.
+
+---
+
+## License
+
+MIT — free to use, modify, and distribute.
