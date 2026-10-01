@@ -103,11 +103,11 @@ code {
 }
 
 .layer-bg {
-  background: red;
+  background: var(--bg);
 }
 
 .layer-accent {
-  background: green;
+  background: var(--primary-color);
   opacity: 0.85;
 }
 

@@ -14,7 +14,7 @@
 
 # GSAP Page Transition Engine
 
-> **80 Awwwards-grade, GPU-accelerated full-viewport page transitions** — built with pure JavaScript and GSAP 3. Zero dependencies. Fully bidirectional. Interrupt-safe.
+> **80 Awwwards-grade, GPU-accelerated full-viewport page transitions** — built with pure JavaScript and GSAP 3. One dependency (GSAP). Fully bidirectional. Interrupt-safe.
 
 ---
 
@@ -61,7 +61,7 @@ npx serve .
 | **Bidirectional** | Every transition plays perfectly in both directions: `play()` and `reverse()` |
 | **Interrupt-safe** | Call `reverse()` mid-`play()` — the animation reverses smoothly from wherever the playhead is |
 | **Memory-safe** | All dynamically injected DOM nodes are tracked in a `cleanups[]` array and removed on `kill()` |
-| **Zero dependencies** | Only requires GSAP 3 (loaded from CDN or bundled locally) |
+| **Single dependency** | Only GSAP 3 (loaded from CDN or bundled locally) |
 | **Accessible** | Live region labels, `aria-hidden` management, keyboard navigation, reduced-motion aware |
 
 ---
@@ -82,7 +82,8 @@ Page transition/
 └── js/
     ├── main.js                  # Demo orchestrator: cards, state machine, UI
     ├── noise.js                 # Canvas grain effect
-    ├── gsap.js                  # GSAP 3.12.5 (local fallback)
+    ├── gsap.js                  # GSAP 3.13.0 (local fallback)
+    ├── jquery.js                # jQuery (legacy demo helpers)
     ├── splitText.min.js         # GSAP SplitText plugin
     ├── text-anim.js             # Text animation helpers
     │
@@ -100,7 +101,7 @@ Page transition/
 Either via CDN (as in the demo):
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 ```
 
 Or use the local copy:
@@ -125,11 +126,18 @@ The engine expects **4 stacked layer divs** inside the container it targets:
 </section>
 ```
 
-### 3. Import and call
+### 3. Load the scripts and call
+
+The engine exposes itself as a browser global — no bundler or ES modules needed:
+
+```html
+<script src="js/gsap.js"></script>
+<script src="js/transitions/utils.js"></script>
+<script src="js/transitions/create-transition.js"></script>
+```
 
 ```js
-import { createTransition } from "./js/transitions/create-transition.js";
-
+const { createTransition } = window.PageTransitions;
 const stage = document.querySelector("#preview-stage");
 
 // Create a controller for transition #12 (Scale Bloom)
@@ -158,7 +166,7 @@ The factory function. Builds the GSAP timeline for the selected variant and retu
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `container` | `HTMLElement` | ✅ | The element that hosts the 4 transition layers. Usually the full-screen stage. |
-| `options.id` | `Number` | ✅ | Transition index `1–80`. Selects the animation variant. See [Transition Variants](#transition-variants). |
+| `options.id` | `Number` | ❌ (defaults to `1`) | Transition index `1–80`. Selects the animation variant. See [Transition Variants](#transition-variants). |
 
 #### Returns
 
@@ -199,7 +207,7 @@ ctrl.reverse();
 Kills the GSAP timeline and runs all cleanup callbacks.
 
 - Removes all dynamically injected DOM nodes (stripe overlays, wrappers).
-- Resets all inline GSAP styles on the layer elements.
+- Leaves the layer elements in their last rendered state — the next `createTransition()` call resets them via its internal base-state setup.
 - Should be called before creating a new transition to prevent memory leaks.
 
 ```js
@@ -297,7 +305,7 @@ Pass the `id` to `createTransition()` to select a variant.
 | 49 | Sawtooth Wipe | 9-point jagged polygon wipe across screen |
 | 50 | The Masterpiece | 3D bg depth push + 10-stripe 3D shutter |
 | 51 | Tidal Wave | sine-wave `polygon()` sweep across |
-| 52 | Pixel Storm | 8×6 grid cells random-stagger in/out |
+| 52 | Pixel Storm | 6×8 grid (48 cells) random-stagger in/out |
 | 53 | Paper Fold | `inset` fold from bottom + skew |
 | 54 | Cyclone Iris | spinning `circle()` iris reveal |
 | 55 | Quadrant Bloom | 4 quadrants bloom from outer corners |
@@ -337,8 +345,8 @@ Every transition stage requires **4 stacked rendering layers** inside the contai
 
 | Class | z-index | Default colour | Role |
 |---|---|---|---|
-| `.layer-bg` | 0 | `var(--bg)` | Base background. Most transitions animate `scale`, `xPercent`, `yPercent`, or `rotation` on this layer to create a parallax backdrop. |
-| `.layer-accent` | 1 | `var(--primary-color)` at 85% opacity | A semi-transparent colour wash. Faded in via `accentFade()` helper to add brand colour depth over the bg. |
+| `.layer-bg` | auto (DOM order) | `var(--bg)` | Base background. Most transitions animate `scale`, `xPercent`, `yPercent`, or `rotation` on this layer to create a parallax backdrop. |
+| `.layer-accent` | auto (DOM order) | `var(--primary-color)` at 85% opacity | A semi-transparent colour wash. Faded in via `accentFade()` helper to add brand colour depth over the bg. |
 | `.layer-overlay` | 2 | `var(--primary-color)` | Solid colour layer for full-cover panel-style transitions. Hidden by default (`opacity: 0`). |
 | `.layer-mask` | 5 | `var(--bg)` | The **primary** clip-path animation layer. Most iris/wipe/polygon transitions animate `clip-path` on this element. Starts off-screen (`inset(0 100% 0 0)`). |
 
@@ -424,7 +432,9 @@ const TOTAL = 81; // was 80
 |---|---|---|
 | `accentFade` | `(startTime = 0) => void` | Fades in the `.layer-accent` element from `opacity: 0` to `0.78`. |
 | `stdContent` | `(startTime = 0.22) => void` | Staggers in `contentItems` and `tags` with a premium `expo.out` + `back.out` easing. Also triggers the text swap mid-transition. |
-| `makeStripes` | `(container, count, color, direction) => { wrap, stripes }` | Generates a flex stripe overlay and returns GSAP-targetable elements. |
+| `makeStripes` | `(container, count, color, direction) => { wrap, stripes }` | Generates a flex stripe overlay and returns GSAP-targetable elements. `direction`: `"row"` → vertical stripes side-by-side, `"column"` → horizontal stripes stacked. |
+| `makeGrid` | `(container, rows, cols, color) => { wrap, cells }` | Generates a `rows × cols` grid overlay (cells in row-major order) and returns GSAP-targetable elements. |
+| `wavePoly` | `(front, amp = 9, teeth = 8) => "polygon(...)"` | Builds a sine-wave `polygon()` string for liquid wave wipes. Coordinates are rounded to integers so GSAP can interpolate them smoothly. |
 
 #### Important rules for bidirectional stability
 
@@ -432,7 +442,7 @@ const TOTAL = 81; // was 80
 - ✅ **Match point counts** — polygon strings in `fromTo()` must have the same number of points
 - ✅ **Use `fromTo()`** instead of chained `from()` → `to()` for reliable reverse
 - ✅ **Push to `cleanups[]`** for any DOM you inject
-- ✅ **Don't use `gsap.set()` after the timeline is created** — it bypasses the timeline and breaks reverse
+- ✅ **Set initial states with `gsap.set()` before building the timeline** — never after tweens are added, or reverse will break
 
 ---
 

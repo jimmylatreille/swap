@@ -133,7 +133,7 @@
         <!-- ── OVERVIEW ─── -->
         <section class="doc-section is-active" id="doc-overview">
           <h3>What is this?</h3>
-          <p>A <strong>zero-dependency</strong> page transition engine built on <strong>GSAP 3.12.5</strong>. It renders <strong>80 unique full-viewport animations</strong> — each one a GPU-accelerated, bidirectionally-stable timeline that can be played, reversed, and killed at any point.</p>
+          <p>A <strong>single-dependency</strong> page transition engine built on <strong>GSAP 3.13.0</strong>. It renders <strong>80 unique full-viewport animations</strong> — each one a GPU-accelerated, bidirectionally-stable timeline that can be played, reversed, and killed at any point.</p>
 
           <div class="doc-card-grid">
             <div class="doc-stat-card">
@@ -155,10 +155,16 @@
           </div>
 
           <h3>Quick Start</h3>
-          <p>Import the module and call <code>createTransition</code> with the stage container and an options object:</p>
+          <p>Load the scripts and call <code>createTransition</code> with the stage container and an options object. The engine exposes itself as a browser global — no bundler or ES modules needed:</p>
+          <div class="doc-code-block">
+            <div class="doc-code-label">HTML</div>
+            <pre><code>&lt;script src="js/gsap.js"&gt;&lt;/script&gt;
+&lt;script src="js/transitions/utils.js"&gt;&lt;/script&gt;
+&lt;script src="js/transitions/create-transition.js"&gt;&lt;/script&gt;</code></pre>
+          </div>
           <div class="doc-code-block">
             <div class="doc-code-label">JavaScript</div>
-            <pre><code>import { createTransition } from "./js/transitions/create-transition.js";
+            <pre><code>const { createTransition } = window.PageTransitions;
 
 // 1. Create a controller for transition #12 (Scale Bloom)
 const ctrl = createTransition(document.querySelector("#stage"), { id: 12 });
@@ -192,7 +198,7 @@ ctrl.kill();</code></pre>
             <thead><tr><th>Param</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td><code>container</code></td><td>HTMLElement</td><td>Yes</td><td>The element that hosts the transition layers. Usually the full-screen preview stage.</td></tr>
-              <tr><td><code>options.id</code></td><td>Number</td><td>Yes</td><td>Transition index from 1–80. Selects the animation variant.</td></tr>
+              <tr><td><code>options.id</code></td><td>Number</td><td>No (defaults to 1)</td><td>Transition index from 1–80. Selects the animation variant.</td></tr>
             </tbody>
           </table>
 
@@ -323,8 +329,8 @@ setTimeout(() => ctrl.reverse(), 500);</code></pre>
           <table class="doc-table">
             <thead><tr><th>Layer Class</th><th>z-index</th><th>Role</th><th>CSS Variable</th></tr></thead>
             <tbody>
-              <tr><td><code>.layer-bg</code></td><td>0</td><td>Base background. Always fills the stage. Most transitions animate the <em>background image</em> (scale, xPercent) behind this layer.</td><td><code>--bg</code></td></tr>
-              <tr><td><code>.layer-accent</code></td><td>1</td><td>A semi-transparent colour wash. Fades in via <code>accentFade()</code> to add colour depth and brand identity.</td><td><code>--primary-color</code></td></tr>
+              <tr><td><code>.layer-bg</code></td><td>auto (DOM order)</td><td>Base background. Always fills the stage. Most transitions animate the <em>background image</em> (scale, xPercent) behind this layer.</td><td><code>--bg</code></td></tr>
+              <tr><td><code>.layer-accent</code></td><td>auto (DOM order)</td><td>A semi-transparent colour wash. Fades in via <code>accentFade()</code> to add colour depth and brand identity.</td><td><code>--primary-color</code></td></tr>
               <tr><td><code>.layer-overlay</code></td><td>2</td><td>Solid colour used by specific full-cover transitions (e.g. Panel slides). Hidden by default.</td><td><code>--primary-color</code></td></tr>
               <tr><td><code>.layer-mask</code></td><td>5</td><td>The primary clip-path animation layer. Most wipes and iris transitions animate <code>clip-path</code> on this element. Starts clipped to <code>inset(0 100% 0 0)</code> (hidden).</td><td><code>--bg</code></td></tr>
             </tbody>
