@@ -14,7 +14,7 @@
 
 # GSAP Page Transition Engine
 
-> **80 Awwwards-grade, GPU-accelerated full-viewport page transitions** — built with pure JavaScript and GSAP 3. One dependency (GSAP). Fully bidirectional. Interrupt-safe.
+> **100 Awwwards-grade, GPU-accelerated full-viewport page transitions** — built with pure JavaScript and GSAP 3. One dependency (GSAP). Fully bidirectional. Interrupt-safe.
 
 ---
 
@@ -56,7 +56,7 @@ npx serve .
 
 | Feature | Detail |
 |---|---|
-| **80 unique variants** | Every conceivable transition style: wipes, irises, stripes, 3D flips, glitch, polygon morphs, elastic physics |
+| **100 unique variants** | Every conceivable transition style: wipes, irises, stripes, 3D flips, glitch, polygon morphs, elastic physics |
 | **GPU-accelerated** | `force3D: true` on every timeline. Uses CSS `transform`, `clip-path`, and `filter` — nothing that triggers layout |
 | **Bidirectional** | Every transition plays perfectly in both directions: `play()` and `reverse()` |
 | **Interrupt-safe** | Call `reverse()` mid-`play()` — the animation reverses smoothly from wherever the playhead is |
@@ -88,7 +88,7 @@ Page transition/
     ├── text-anim.js             # Text animation helpers
     │
     └── transitions/
-        ├── create-transition.js # ⭐ Core engine — all 80 transitions live here
+        ├── create-transition.js # ⭐ Core engine — all 100 transitions live here
         └── utils.js             # Shared DOM/GSAP utility helpers
 ```
 
@@ -166,7 +166,7 @@ The factory function. Builds the GSAP timeline for the selected variant and retu
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `container` | `HTMLElement` | ✅ | The element that hosts the 4 transition layers. Usually the full-screen stage. |
-| `options.id` | `Number` | ❌ (defaults to `1`) | Transition index `1–80`. Selects the animation variant. See [Transition Variants](#transition-variants). |
+| `options.id` | `Number` | ❌ (defaults to `1`) | Transition index `1–100`. Selects the animation variant. See [Transition Variants](#transition-variants). |
 
 #### Returns
 
@@ -334,6 +334,26 @@ Pass the `id` to `createTransition()` to select a variant.
 | 78 | Diagonal Fold | 4-point `polygon()` corner fold |
 | 79 | Meteor Strike | skewed panel diagonal slam |
 | 80 | Grand Overture | 12-stripe 3D cascade + bg blur depth |
+| 81 | Aurora Veil | 4 aurora bands sweep + wipe |
+| 82 | Origami Fold | 8 stripes alternating 3D fold |
+| 83 | Waterfall | 10 stripes pour down |
+| 84 | Kaleidoscope | 3×3 grid rotate in/out |
+| 85 | Paper Shredder | 16 thin stripes shred fall |
+| 86 | Light Leak | blurred accent sweep |
+| 87 | Venetian Horizon | 8 horizontal stripes 3D `rotationX` flip |
+| 88 | Bubble Rise | 5×5 bubble cells float up |
+| 89 | Diamond Storm | rotating diamond `polygon()` expand |
+| 90 | Echo Zoom | `inset` zoom + bg pulse echo |
+| 91 | Laser Grid | 3 glowing laser lines sweep |
+| 92 | Fold Out | 2 halves 3D fold away |
+| 93 | Ink Splash | 6×6 cells random-rotation splash |
+| 94 | Time Warp | skew + stretch `blur()` warp |
+| 95 | Static Burst | `steps()` glitch wipe + shake |
+| 96 | Glacier | 3 slow heavy panels |
+| 97 | Prism Burst | 10 stripes center-burst `scaleY` |
+| 98 | Night Drive | fast horizontal streak |
+| 99 | Bloom Rings | expanding neon rings + iris |
+| 100 | Apotheosis | 16-stripe 3D + spiral + blur depth |
 
 ---
 
@@ -394,8 +414,8 @@ All visual colours are driven by CSS custom properties. Edit the `:root` block i
 3. Add a new `case N:` block following the existing pattern:
 
 ```js
-// ── 81 · My Custom Transition ─────────────────────────────
-case 81: {
+// ── 101 · My Custom Transition ────────────────────────────
+case 101: {
   // Optional: create stripe DOM
   const { wrap, stripes } = makeStripes(container, 8);
   cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
@@ -417,13 +437,13 @@ case 81: {
 4. Increment `TOTAL` in `js/main.js`:
 
 ```js
-const TOTAL = 81; // was 80
+const TOTAL = 101; // was 100
 ```
 
 5. Add the name to the `NAMES` array:
 
 ```js
-"My Custom Transition", // 81
+"My Custom Transition", // 101
 ```
 
 #### Key helpers available inside `buildTimeline()`
@@ -450,7 +470,7 @@ const TOTAL = 81; // was 80
 
 ### Transition Carousel (Right Side Button)
 
-The pill-shaped **"Select a transition"** button on the right side of the screen opens a horizontal carousel overlay showing all 80 transitions as scrollable cards.
+The pill-shaped **"Select a transition"** button on the right side of the screen opens a horizontal carousel overlay showing all 100 transitions as scrollable cards.
 
 - **Select:** Click any card → immediately plays that transition
 - **Toggle:** Click the active card again → reverses the animation

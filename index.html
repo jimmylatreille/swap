@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GSAP Page Transition Demo — 80 Variants</title>
-  <meta name="description" content="80 Awwwards-level page transitions built with GSAP. Modular, interrupt-safe, fullscreen-ready. Zero frameworks.">
+  <title>GSAP Page Transition Demo — 100 Variants</title>
+  <meta name="description" content="100 Awwwards-level page transitions built with GSAP. Modular, interrupt-safe, fullscreen-ready. Zero frameworks.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
         <p class="copy">Every card triggers a unique transition with a consistent API: <code>play</code>, <code>reverse</code>, <code>kill</code>.</p>
         <div class="preview-tags">
           <span>Full Page</span>
-          <span>80 Variants</span>
+          <span>100 Variants</span>
           <span>Zero Jank</span>
           <span>A11y Aware</span>
         </div>
@@ -110,7 +110,7 @@
         <div class="doc-header-meta">
           <span class="doc-badge">v2.0</span>
           <h2 class="doc-title">GSAP Transition Engine</h2>
-          <p class="doc-subtitle">Complete plugin reference — 80 Awwwards-grade transitions</p>
+          <p class="doc-subtitle">Complete plugin reference — 100 Awwwards-grade transitions</p>
         </div>
         <button class="doc-close" id="doc-close" aria-label="Close documentation">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -133,11 +133,11 @@
         <!-- ── OVERVIEW ─── -->
         <section class="doc-section is-active" id="doc-overview">
           <h3>What is this?</h3>
-          <p>A <strong>single-dependency</strong> page transition engine built on <strong>GSAP 3.13.0</strong>. It renders <strong>80 unique full-viewport animations</strong> — each one a GPU-accelerated, bidirectionally-stable timeline that can be played, reversed, and killed at any point.</p>
+          <p>A <strong>single-dependency</strong> page transition engine built on <strong>GSAP 3.13.0</strong>. It renders <strong>100 unique full-viewport animations</strong> — each one a GPU-accelerated, bidirectionally-stable timeline that can be played, reversed, and killed at any point.</p>
 
           <div class="doc-card-grid">
             <div class="doc-stat-card">
-              <span class="doc-stat-num">80</span>
+              <span class="doc-stat-num">100</span>
               <span class="doc-stat-label">Transition Variants</span>
             </div>
             <div class="doc-stat-card">
@@ -198,7 +198,7 @@ ctrl.kill();</code></pre>
             <thead><tr><th>Param</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td><code>container</code></td><td>HTMLElement</td><td>Yes</td><td>The element that hosts the transition layers. Usually the full-screen preview stage.</td></tr>
-              <tr><td><code>options.id</code></td><td>Number</td><td>No (defaults to 1)</td><td>Transition index from 1–80. Selects the animation variant.</td></tr>
+              <tr><td><code>options.id</code></td><td>Number</td><td>No (defaults to 1)</td><td>Transition index from 1–100. Selects the animation variant.</td></tr>
             </tbody>
           </table>
 
@@ -231,7 +231,7 @@ setTimeout(() => ctrl.reverse(), 500);</code></pre>
 
         <!-- ── TRANSITIONS ─── -->
         <section class="doc-section" id="doc-transitions">
-          <h3>All 80 Transition Variants</h3>
+          <h3>All 100 Transition Variants</h3>
           <p>Each variant has a unique visual signature. The <code>id</code> is what you pass to <code>createTransition</code>.</p>
 
           <div class="doc-transition-grid">
@@ -318,6 +318,26 @@ setTimeout(() => ctrl.reverse(), 500);</code></pre>
             <div class="doc-t-row"><span>78</span><span>Diagonal Fold</span><span>4-point polygon fold</span></div>
             <div class="doc-t-row"><span>79</span><span>Meteor Strike</span><span>skewed diagonal slam</span></div>
             <div class="doc-t-row"><span>80</span><span>Grand Overture</span><span>12-stripe 3D + blur depth</span></div>
+            <div class="doc-t-row"><span>81</span><span>Aurora Veil</span><span>aurora bands + wipe</span></div>
+            <div class="doc-t-row"><span>82</span><span>Origami Fold</span><span>alternating 3D fold</span></div>
+            <div class="doc-t-row"><span>83</span><span>Waterfall</span><span>stripes pour down</span></div>
+            <div class="doc-t-row"><span>84</span><span>Kaleidoscope</span><span>3×3 rotate in/out</span></div>
+            <div class="doc-t-row"><span>85</span><span>Paper Shredder</span><span>16 thin stripes fall</span></div>
+            <div class="doc-t-row"><span>86</span><span>Light Leak</span><span>blurred accent sweep</span></div>
+            <div class="doc-t-row"><span>87</span><span>Venetian Horizon</span><span>horizontal 3D flip</span></div>
+            <div class="doc-t-row"><span>88</span><span>Bubble Rise</span><span>bubble cells float up</span></div>
+            <div class="doc-t-row"><span>89</span><span>Diamond Storm</span><span>diamond polygon expand</span></div>
+            <div class="doc-t-row"><span>90</span><span>Echo Zoom</span><span>inset zoom + pulse</span></div>
+            <div class="doc-t-row"><span>91</span><span>Laser Grid</span><span>glowing lines sweep</span></div>
+            <div class="doc-t-row"><span>92</span><span>Fold Out</span><span>2 halves 3D fold</span></div>
+            <div class="doc-t-row"><span>93</span><span>Ink Splash</span><span>random-rotation splash</span></div>
+            <div class="doc-t-row"><span>94</span><span>Time Warp</span><span>skew + blur warp</span></div>
+            <div class="doc-t-row"><span>95</span><span>Static Burst</span><span>steps() glitch wipe</span></div>
+            <div class="doc-t-row"><span>96</span><span>Glacier</span><span>slow heavy panels</span></div>
+            <div class="doc-t-row"><span>97</span><span>Prism Burst</span><span>center-burst scaleY</span></div>
+            <div class="doc-t-row"><span>98</span><span>Night Drive</span><span>horizontal streak</span></div>
+            <div class="doc-t-row"><span>99</span><span>Bloom Rings</span><span>neon rings + iris</span></div>
+            <div class="doc-t-row"><span>100</span><span>Apotheosis</span><span>16-stripe 3D + spiral</span></div>
           </div>
         </section>
 
@@ -366,7 +386,7 @@ setTimeout(() => ctrl.reverse(), 500);</code></pre>
           <h3>UI Controls</h3>
 
           <h4>Select a Transition Button</h4>
-          <p>The circular button on the <strong>right side of the screen</strong> opens the transition carousel overlay. It shows all 80 transitions as scrollable cards.</p>
+          <p>The circular button on the <strong>right side of the screen</strong> opens the transition carousel overlay. It shows all 100 transitions as scrollable cards.</p>
           <ul class="doc-list">
             <li>Click a card to select and immediately <strong>play</strong> that transition.</li>
             <li>Click the same active card again to <strong>reverse</strong> the animation.</li>

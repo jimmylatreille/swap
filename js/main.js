@@ -6,7 +6,7 @@ const transitionEngineMain = window.PageTransitions;
 const transitionFactoryMain = transitionEngineMain && transitionEngineMain.createTransition;
 
 // ── Constants ────────────────────────────────────────────────
-const TOTAL = 80;
+const TOTAL = 100;
 
 /** Human-readable name shown in the label for each transition */
 const NAMES = [
@@ -90,6 +90,26 @@ const NAMES = [
   "Diagonal Fold",     // 78
   "Meteor Strike",     // 79
   "Grand Overture",    // 80
+  "Aurora Veil",       // 81
+  "Origami Fold",      // 82
+  "Waterfall",         // 83
+  "Kaleidoscope",      // 84
+  "Paper Shredder",    // 85
+  "Light Leak",        // 86
+  "Venetian Horizon",  // 87
+  "Bubble Rise",       // 88
+  "Diamond Storm",     // 89
+  "Echo Zoom",         // 90
+  "Laser Grid",        // 91
+  "Fold Out",          // 92
+  "Ink Splash",        // 93
+  "Time Warp",         // 94
+  "Static Burst",      // 95
+  "Glacier",           // 96
+  "Prism Burst",       // 97
+  "Night Drive",       // 98
+  "Bloom Rings",       // 99
+  "Apotheosis",        // 100
 ];
 
 // ── DOM refs ─────────────────────────────────────────────────
