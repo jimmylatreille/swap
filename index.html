@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GSAP Page Transition Demo — 50 Variants</title>
-  <meta name="description" content="50 Awwwards-level page transitions built with GSAP. Modular, interrupt-safe, fullscreen-ready. Zero frameworks.">
+  <title>GSAP Page Transition Demo — 80 Variants</title>
+  <meta name="description" content="80 Awwwards-level page transitions built with GSAP. Modular, interrupt-safe, fullscreen-ready. Zero frameworks.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
         <p class="copy">Every card triggers a unique transition with a consistent API: <code>play</code>, <code>reverse</code>, <code>kill</code>.</p>
         <div class="preview-tags">
           <span>Full Page</span>
-          <span>50 Variants</span>
+          <span>80 Variants</span>
           <span>Zero Jank</span>
           <span>A11y Aware</span>
         </div>
@@ -110,7 +110,7 @@
         <div class="doc-header-meta">
           <span class="doc-badge">v2.0</span>
           <h2 class="doc-title">GSAP Transition Engine</h2>
-          <p class="doc-subtitle">Complete plugin reference — 50 Awwwards-grade transitions</p>
+          <p class="doc-subtitle">Complete plugin reference — 80 Awwwards-grade transitions</p>
         </div>
         <button class="doc-close" id="doc-close" aria-label="Close documentation">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -133,11 +133,11 @@
         <!-- ── OVERVIEW ─── -->
         <section class="doc-section is-active" id="doc-overview">
           <h3>What is this?</h3>
-          <p>A <strong>zero-dependency</strong> page transition engine built on <strong>GSAP 3.12.5</strong>. It renders <strong>50 unique full-viewport animations</strong> — each one a GPU-accelerated, bidirectionally-stable timeline that can be played, reversed, and killed at any point.</p>
+          <p>A <strong>zero-dependency</strong> page transition engine built on <strong>GSAP 3.12.5</strong>. It renders <strong>80 unique full-viewport animations</strong> — each one a GPU-accelerated, bidirectionally-stable timeline that can be played, reversed, and killed at any point.</p>
 
           <div class="doc-card-grid">
             <div class="doc-stat-card">
-              <span class="doc-stat-num">50</span>
+              <span class="doc-stat-num">80</span>
               <span class="doc-stat-label">Transition Variants</span>
             </div>
             <div class="doc-stat-card">
@@ -192,7 +192,7 @@ ctrl.kill();</code></pre>
             <thead><tr><th>Param</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td><code>container</code></td><td>HTMLElement</td><td>Yes</td><td>The element that hosts the transition layers. Usually the full-screen preview stage.</td></tr>
-              <tr><td><code>options.id</code></td><td>Number</td><td>Yes</td><td>Transition index from 1–50. Selects the animation variant.</td></tr>
+              <tr><td><code>options.id</code></td><td>Number</td><td>Yes</td><td>Transition index from 1–80. Selects the animation variant.</td></tr>
             </tbody>
           </table>
 
@@ -225,7 +225,7 @@ setTimeout(() => ctrl.reverse(), 500);</code></pre>
 
         <!-- ── TRANSITIONS ─── -->
         <section class="doc-section" id="doc-transitions">
-          <h3>All 50 Transition Variants</h3>
+          <h3>All 80 Transition Variants</h3>
           <p>Each variant has a unique visual signature. The <code>id</code> is what you pass to <code>createTransition</code>.</p>
 
           <div class="doc-transition-grid">
@@ -282,6 +282,36 @@ setTimeout(() => ctrl.reverse(), 500);</code></pre>
             <div class="doc-t-row"><span>48</span><span>Iris Blink</span><span>circle blink + bounce reveal</span></div>
             <div class="doc-t-row"><span>49</span><span>Sawtooth Wipe</span><span>9-point polygon jagged wipe</span></div>
             <div class="doc-t-row"><span>50</span><span>The Masterpiece</span><span>3D bg push + 10-stripe shutter</span></div>
+            <div class="doc-t-row"><span>51</span><span>Tidal Wave</span><span>sine-wave polygon() sweep</span></div>
+            <div class="doc-t-row"><span>52</span><span>Pixel Storm</span><span>8×6 grid random-stagger</span></div>
+            <div class="doc-t-row"><span>53</span><span>Paper Fold</span><span>inset fold + skew</span></div>
+            <div class="doc-t-row"><span>54</span><span>Cyclone Iris</span><span>spinning circle() iris</span></div>
+            <div class="doc-t-row"><span>55</span><span>Quadrant Bloom</span><span>4 quadrants from corners</span></div>
+            <div class="doc-t-row"><span>56</span><span>Jelly Wipe</span><span>inset wipe + elastic panel</span></div>
+            <div class="doc-t-row"><span>57</span><span>Venetian Spin</span><span>10 stripes 3D rotationY</span></div>
+            <div class="doc-t-row"><span>58</span><span>Domino Fall</span><span>12 stripes rotationX topple</span></div>
+            <div class="doc-t-row"><span>59</span><span>Ink Drop</span><span>circle() iris + blur</span></div>
+            <div class="doc-t-row"><span>60</span><span>Shatter</span><span>4×6 grid scatter</span></div>
+            <div class="doc-t-row"><span>61</span><span>Liquid Pour</span><span>scaleY elastic pour</span></div>
+            <div class="doc-t-row"><span>62</span><span>Zoom Tunnel</span><span>circle() iris + scale pulse</span></div>
+            <div class="doc-t-row"><span>63</span><span>Flip Book</span><span>2 panels rotationY open</span></div>
+            <div class="doc-t-row"><span>64</span><span>Neon Slash</span><span>glowing band expand</span></div>
+            <div class="doc-t-row"><span>65</span><span>Gravity Drop</span><span>8 stripes bounce.out</span></div>
+            <div class="doc-t-row"><span>66</span><span>Split Horizon</span><span>horizontal polygon split</span></div>
+            <div class="doc-t-row"><span>67</span><span>Spiral In</span><span>inset + rotation + scale</span></div>
+            <div class="doc-t-row"><span>68</span><span>Mosaic Flip</span><span>4×6 grid rotationY flip</span></div>
+            <div class="doc-t-row"><span>69</span><span>Smoke Veil</span><span>inset wipe + blur drift</span></div>
+            <div class="doc-t-row"><span>70</span><span>Rubber Band</span><span>scaleX elastic snap</span></div>
+            <div class="doc-t-row"><span>71</span><span>Crossfade Zoom</span><span>opacity fade + slow zoom</span></div>
+            <div class="doc-t-row"><span>72</span><span>Twist Cascade</span><span>7 stripes skewX cascade</span></div>
+            <div class="doc-t-row"><span>73</span><span>Pendulum</span><span>panel rotation swing</span></div>
+            <div class="doc-t-row"><span>74</span><span>Checkerboard</span><span>8×8 grid stagger</span></div>
+            <div class="doc-t-row"><span>75</span><span>Black Hole</span><span>spinning panel scale-in</span></div>
+            <div class="doc-t-row"><span>76</span><span>Slide Stack</span><span>3 stacked sliding panels</span></div>
+            <div class="doc-t-row"><span>77</span><span>Echo Trail</span><span>wipe + ghost echoes</span></div>
+            <div class="doc-t-row"><span>78</span><span>Diagonal Fold</span><span>4-point polygon fold</span></div>
+            <div class="doc-t-row"><span>79</span><span>Meteor Strike</span><span>skewed diagonal slam</span></div>
+            <div class="doc-t-row"><span>80</span><span>Grand Overture</span><span>12-stripe 3D + blur depth</span></div>
           </div>
         </section>
 
@@ -330,7 +360,7 @@ setTimeout(() => ctrl.reverse(), 500);</code></pre>
           <h3>UI Controls</h3>
 
           <h4>Select a Transition Button</h4>
-          <p>The circular button on the <strong>right side of the screen</strong> opens the transition carousel overlay. It shows all 50 transitions as scrollable cards.</p>
+          <p>The circular button on the <strong>right side of the screen</strong> opens the transition carousel overlay. It shows all 80 transitions as scrollable cards.</p>
           <ul class="doc-list">
             <li>Click a card to select and immediately <strong>play</strong> that transition.</li>
             <li>Click the same active card again to <strong>reverse</strong> the animation.</li>

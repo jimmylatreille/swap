@@ -6,7 +6,7 @@ const transitionEngineMain = window.PageTransitions;
 const transitionFactoryMain = transitionEngineMain && transitionEngineMain.createTransition;
 
 // ── Constants ────────────────────────────────────────────────
-const TOTAL = 50;
+const TOTAL = 80;
 
 /** Human-readable name shown in the label for each transition */
 const NAMES = [
@@ -60,6 +60,36 @@ const NAMES = [
   "Iris Blink",        // 48
   "Sawtooth Wipe",     // 49
   "The Masterpiece",   // 50
+  "Tidal Wave",        // 51
+  "Pixel Storm",       // 52
+  "Paper Fold",        // 53
+  "Cyclone Iris",      // 54
+  "Quadrant Bloom",    // 55
+  "Jelly Wipe",        // 56
+  "Venetian Spin",     // 57
+  "Domino Fall",       // 58
+  "Ink Drop",          // 59
+  "Shatter",           // 60
+  "Liquid Pour",       // 61
+  "Zoom Tunnel",       // 62
+  "Flip Book",         // 63
+  "Neon Slash",        // 64
+  "Gravity Drop",      // 65
+  "Split Horizon",     // 66
+  "Spiral In",         // 67
+  "Mosaic Flip",       // 68
+  "Smoke Veil",        // 69
+  "Rubber Band",       // 70
+  "Crossfade Zoom",    // 71
+  "Twist Cascade",     // 72
+  "Pendulum",          // 73
+  "Checkerboard",      // 74
+  "Black Hole",        // 75
+  "Slide Stack",       // 76
+  "Echo Trail",        // 77
+  "Diagonal Fold",     // 78
+  "Meteor Strike",     // 79
+  "Grand Overture",    // 80
 ];
 
 // ── DOM refs ─────────────────────────────────────────────────
