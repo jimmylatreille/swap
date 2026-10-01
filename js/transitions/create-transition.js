@@ -896,6 +896,258 @@ function buildTimeline(id, nodes, container) {
       break;
     }
 
+    // ── 81 · Aurora Veil ──────────────────────────────────────────────────
+    case 81: {
+      const { wrap, stripes } = makeStripes(container, 4, "#9CEC5B", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(mask, { clipPath:"inset(0% 100% 0% 0%)" }, { clipPath:"inset(0% 0% 0% 0%)", duration:1.0, ease:"expo.inOut" }, 0)
+        .fromTo(stripes, { xPercent:-120, skewX:-12, opacity:0 }, { xPercent:0, skewX:0, opacity:0.55, duration:0.9, stagger:0.1, ease:"expo.out" }, 0.05)
+        .to(stripes, { xPercent:120, skewX:12, opacity:0, duration:0.8, stagger:0.1, ease:"expo.in" }, 1.0)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.5, ease:"expo.out" }, 0.2);
+      accentFade(0.3); stdContent(0.5);
+      break;
+    }
+
+    // ── 82 · Origami Fold ─────────────────────────────────────────────────
+    case 82: {
+      const { wrap, stripes } = makeStripes(container, 8);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(wrap, { perspective: 1000 });
+      gsap.set(stripes, { transformOrigin:(i) => (i % 2 ? "50% 0%" : "50% 100%") });
+      tl.fromTo(stripes, { rotationX:(i) => (i % 2 ? -90 : 90), opacity:0 }, { rotationX:0, opacity:1, duration:0.6, stagger:0.05, ease:"power3.out" }, 0)
+        .to(stripes, { rotationX:(i) => (i % 2 ? 90 : -90), opacity:0, duration:0.55, stagger:0.05, ease:"power3.in" }, 0.9)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.3);
+      accentFade(0.9); stdContent(1.0);
+      break;
+    }
+
+    // ── 83 · Waterfall ────────────────────────────────────────────────────
+    case 83: {
+      const { wrap, stripes } = makeStripes(container, 10);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(stripes, { transformOrigin:"50% 0%" });
+      tl.fromTo(stripes, { scaleY:0 }, { scaleY:1, duration:0.7, stagger:0.06, ease:"power3.out" }, 0)
+        .to(stripes, { yPercent:110, duration:0.7, stagger:0.06, ease:"power3.in" }, 0.95)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(0.9); stdContent(1.1);
+      break;
+    }
+
+    // ── 84 · Kaleidoscope ─────────────────────────────────────────────────
+    case 84: {
+      const { wrap, cells } = makeGrid(container, 3, 3);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(cells, { scale:0, rotation:90 }, { scale:1, rotation:0, duration:0.6, stagger:{ amount:0.5, from:"center" }, ease:"back.out(1.6)" }, 0)
+        .to(cells, { scale:0, rotation:-90, duration:0.55, stagger:{ amount:0.45, from:"edges" }, ease:"power3.in" }, 0.95)
+        .fromTo(bg, { scale:1.15 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(1.0); stdContent(1.1);
+      break;
+    }
+
+    // ── 85 · Paper Shredder ────────────────────────────────────────────────
+    case 85: {
+      const { wrap, stripes } = makeStripes(container, 16);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(stripes, { yPercent:-110, x:(i) => ((i % 3) - 1) * 14 }, { yPercent:0, x:0, duration:0.6, stagger:{ amount:0.5, from:"random" }, ease:"power3.out" }, 0)
+        .to(stripes, { yPercent:110, x:(i) => (i % 2 ? 20 : -20), duration:0.6, stagger:{ amount:0.4, from:"random" }, ease:"power3.in" }, 0.9)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.3);
+      accentFade(0.9); stdContent(1.0);
+      break;
+    }
+
+    // ── 86 · Light Leak ───────────────────────────────────────────────────
+    case 86:
+      tl.fromTo(accent, { xPercent:-60, scale:1.6, filter:"blur(30px)", opacity:0 }, { xPercent:60, opacity:0.85, duration:1.1, ease:"power2.inOut" }, 0)
+        .fromTo(mask, { clipPath:"inset(0% 100% 0% 0%)" }, { clipPath:"inset(0% 0% 0% 0%)", duration:1.0, ease:"expo.inOut" }, 0.1)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.2);
+      stdContent(0.5);
+      break;
+
+    // ── 87 · Venetian Horizon ──────────────────────────────────────────────
+    case 87: {
+      const { wrap, stripes } = makeStripes(container, 8, "#030409", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(wrap, { perspective: 900 });
+      tl.fromTo(stripes, { rotationX:90, opacity:0 }, { rotationX:0, opacity:1, duration:0.6, stagger:0.05, ease:"back.out(1.3)" }, 0)
+        .to(stripes, { rotationX:-90, opacity:0, duration:0.5, stagger:0.05, ease:"power3.in" }, 0.85)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.2, ease:"expo.out" }, 0.9);
+      accentFade(0.9); stdContent(1.1);
+      break;
+    }
+
+    // ── 88 · Bubble Rise ──────────────────────────────────────────────────
+    case 88: {
+      const { wrap, cells } = makeGrid(container, 5, 5);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(cells, { borderRadius:"50%" });
+      tl.fromTo(cells, { scale:0 }, { scale:1, duration:0.5, stagger:{ amount:0.6, from:"random" }, ease:"back.out(2)" }, 0)
+        .to(cells, { yPercent:-40, scale:0.2, opacity:0, duration:0.7, stagger:{ amount:0.5, from:"random" }, ease:"power2.in" }, 0.9)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(1.0); stdContent(1.1);
+      break;
+    }
+
+    // ── 89 · Diamond Storm ────────────────────────────────────────────────
+    case 89:
+      gsap.set(mask, { transformOrigin:"50% 50%" });
+      tl.fromTo(mask, { clipPath:"polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)", rotation:45 },
+                       { clipPath:"polygon(50% -60%, 160% 50%, 50% 160%, -60% 50%)", rotation:0, duration:1.2, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { scale:1.2, rotation:-6 }, { scale:1, rotation:0, duration:1.4, ease:"expo.out" }, 0.1);
+      accentFade(0.3); stdContent(0.5);
+      break;
+
+    // ── 90 · Echo Zoom ────────────────────────────────────────────────────
+    case 90:
+      tl.fromTo(mask, { clipPath:"inset(40% 40% 40% 40%)" }, { clipPath:"inset(0% 0% 0% 0%)", duration:1.2, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { scale:1 }, { scale:1.18, duration:0.35, ease:"power2.in" }, 0)
+        .to(bg, { scale:1.05, duration:0.25, ease:"power2.out" }, 0.35)
+        .to(bg, { scale:1.18, duration:0.25, ease:"power2.in" }, 0.6)
+        .to(bg, { scale:1, duration:0.5, ease:"expo.out" }, 0.85);
+      accentFade(0.3); stdContent(0.5);
+      break;
+
+    // ── 91 · Laser Grid ───────────────────────────────────────────────────
+    case 91: {
+      const lines = [20, 50, 80].map((top) => {
+        const l = document.createElement("div");
+        Object.assign(l.style, {
+          position:"absolute", left:"0", right:"0", top:top + "%", height:"3px",
+          background:"#9CEC5B", boxShadow:"0 0 18px 4px rgba(156,236,91,0.8)",
+          zIndex:"10", pointerEvents:"none",
+        });
+        container.appendChild(l);
+        return l;
+      });
+      cleanups.push(() => lines.forEach((l) => { if(l.parentNode) container.removeChild(l); }));
+      tl.fromTo(mask, { clipPath:"inset(0% 100% 0% 0%)" }, { clipPath:"inset(0% 0% 0% 0%)", duration:1.0, ease:"expo.inOut" }, 0)
+        .fromTo(lines, { xPercent:-110 }, { xPercent:0, duration:0.8, stagger:0.12, ease:"expo.out" }, 0.1)
+        .to(lines, { xPercent:110, duration:0.6, stagger:0.1, ease:"expo.in" }, 1.0)
+        .fromTo(bg, { scale:1.1 }, { scale:1, duration:1.3, ease:"expo.out" }, 0.3);
+      accentFade(0.4); stdContent(0.6);
+      break;
+    }
+
+    // ── 92 · Fold Out ─────────────────────────────────────────────────────
+    case 92: {
+      const wrap = document.createElement("div");
+      Object.assign(wrap.style, { position:"absolute", inset:"0", zIndex:"10", pointerEvents:"none", perspective:"1000px", overflow:"hidden" });
+      container.appendChild(wrap);
+      const halves = [0, 1].map((k) => {
+        const h = document.createElement("div");
+        Object.assign(h.style, {
+          position:"absolute", left:"0", right:"0",
+          top: k === 0 ? "0" : "50%", height:"50%",
+          background:"#030409",
+          transform:"translateZ(0)", backfaceVisibility:"hidden",
+        });
+        wrap.appendChild(h);
+        return h;
+      });
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(halves[0], { transformOrigin:"50% 0%" });
+      gsap.set(halves[1], { transformOrigin:"50% 100%" });
+      tl.fromTo(halves, { scaleY:0 }, { scaleY:1, duration:0.7, ease:"expo.out" }, 0)
+        .to(halves[0], { rotationX:75, opacity:0, duration:0.7, ease:"power3.in" }, 0.95)
+        .to(halves[1], { rotationX:-75, opacity:0, duration:0.7, ease:"power3.in" }, 0.95)
+        .fromTo(bg, { scale:1.15 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(0.9); stdContent(1.1);
+      break;
+    }
+
+    // ── 93 · Ink Splash ───────────────────────────────────────────────────
+    case 93: {
+      const { wrap, cells } = makeGrid(container, 6, 6);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(cells, { scale:0, rotation:() => gsap.utils.random(-90, 90) }, { scale:1, rotation:0, duration:0.55, stagger:{ amount:0.6, from:"random" }, ease:"back.out(1.5)" }, 0)
+        .to(cells, { scale:0, rotation:() => gsap.utils.random(-120, 120), opacity:0, duration:0.5, stagger:{ amount:0.5, from:"random" }, ease:"power3.in" }, 0.95)
+        .fromTo(bg, { scale:1.15 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(1.0); stdContent(1.1);
+      break;
+    }
+
+    // ── 94 · Time Warp ────────────────────────────────────────────────────
+    case 94:
+      tl.fromTo(mask, { clipPath:"inset(0% 45% 0% 45%)", skewX:25 }, { clipPath:"inset(0% 0% 0% 0%)", skewX:0, duration:1.1, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { scaleX:1.4, scaleY:0.9, filter:"blur(6px)" }, { scaleX:1, scaleY:1, filter:"blur(0px)", duration:1.3, ease:"expo.out" }, 0.1);
+      accentFade(0.3); stdContent(0.5);
+      break;
+
+    // ── 95 · Static Burst ─────────────────────────────────────────────────
+    case 95:
+      tl.fromTo(mask, { clipPath:"inset(0% 100% 0% 0%)" }, { clipPath:"inset(0% 0% 0% 0%)", duration:0.9, ease:"steps(7)" }, 0)
+        .fromTo(bg, { x:0 }, { x:24, duration:0.09, repeat:9, yoyo:true, ease:"steps(1)" }, 0)
+        .fromTo(bg, { scale:1.05 }, { scale:1, duration:1.0, ease:"expo.out" }, 0.9);
+      accentFade(0.4); stdContent(0.6);
+      break;
+
+    // ── 96 · Glacier ──────────────────────────────────────────────────────
+    case 96: {
+      const { wrap, stripes } = makeStripes(container, 3, "#1a1d26", "column");
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      tl.fromTo(stripes, { yPercent:-110 }, { yPercent:0, duration:1.4, stagger:0.25, ease:"power4.inOut" }, 0)
+        .to(stripes, { yPercent:110, duration:1.2, stagger:0.2, ease:"power4.inOut" }, 1.8)
+        .fromTo(bg, { scale:1.08 }, { scale:1, duration:2.4, ease:"expo.out" }, 0.4);
+      accentFade(1.6); stdContent(1.8);
+      break;
+    }
+
+    // ── 97 · Prism Burst ──────────────────────────────────────────────────
+    case 97: {
+      const { wrap, stripes } = makeStripes(container, 10);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(stripes, { transformOrigin:"50% 50%" });
+      tl.fromTo(stripes, { scaleY:0 }, { scaleY:1, duration:0.7, stagger:{ amount:0.5, from:"center" }, ease:"expo.out" }, 0)
+        .to(stripes, { scaleY:0, duration:0.6, stagger:{ amount:0.4, from:"edges" }, ease:"power3.in" }, 1.0)
+        .fromTo(bg, { scale:1.12 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.3);
+      accentFade(1.0); stdContent(1.1);
+      break;
+    }
+
+    // ── 98 · Night Drive ──────────────────────────────────────────────────
+    case 98:
+      tl.fromTo(mask, { clipPath:"inset(0% 100% 0% 0%)" }, { clipPath:"inset(0% 0% 0% 0%)", duration:0.9, ease:"expo.inOut" }, 0)
+        .fromTo(bg, { xPercent:-14, scale:1.1, skewX:-8 }, { xPercent:0, scale:1, skewX:0, duration:1.4, ease:"expo.out" }, 0.05);
+      accentFade(0.2); stdContent(0.4);
+      break;
+
+    // ── 99 · Bloom Rings ──────────────────────────────────────────────────
+    case 99: {
+      const rings = [30, 90, 150].map((size) => {
+        const r = document.createElement("div");
+        Object.assign(r.style, {
+          position:"absolute", left:"50%", top:"50%",
+          width:size + "vmin", height:size + "vmin",
+          marginLeft:(-size / 2) + "vmin", marginTop:(-size / 2) + "vmin",
+          border:"3px solid #9CEC5B", borderRadius:"50%",
+          zIndex:"10", pointerEvents:"none",
+        });
+        container.appendChild(r);
+        return r;
+      });
+      cleanups.push(() => rings.forEach((r) => { if(r.parentNode) container.removeChild(r); }));
+      tl.fromTo(rings, { scale:0, opacity:1 }, { scale:4, opacity:0, duration:1.2, stagger:0.18, ease:"expo.out" }, 0)
+        .fromTo(mask, { clipPath:"circle(0% at 50% 50%)" }, { clipPath:"circle(142% at 50% 50%)", duration:1.1, ease:"expo.inOut" }, 0.15)
+        .fromTo(bg, { scale:1.15 }, { scale:1, duration:1.4, ease:"expo.out" }, 0.2);
+      accentFade(0.3); stdContent(0.5);
+      break;
+    }
+
+    // ── 100 · Apotheosis ──────────────────────────────────────────────────
+    case 100: {
+      const { wrap, stripes } = makeStripes(container, 16);
+      cleanups.push(() => { if(wrap.parentNode) container.removeChild(wrap); });
+      gsap.set(wrap, { perspective: 1400 });
+      gsap.set(mask, { transformOrigin:"50% 50%" });
+      tl.fromTo(stripes, { scaleY:0, rotationX:-70 }, { scaleY:1, rotationX:0, duration:0.8, stagger:{ amount:0.6, from:"center" }, ease:"back.out(1.3)" }, 0)
+        .fromTo(mask, { clipPath:"inset(50% 50% 50% 50%)", rotation:120 }, { clipPath:"inset(0% 0% 0% 0%)", rotation:0, duration:1.4, ease:"expo.inOut" }, 0.5)
+        .to(stripes, { scaleY:0, rotationX:70, duration:0.7, stagger:{ amount:0.5, from:"edges" }, ease:"power4.in" }, 1.3)
+        .fromTo(bg, { scale:1.4, filter:"blur(12px)" }, { scale:1, filter:"blur(0px)", duration:2.0, ease:"expo.out" }, 0.4);
+      accentFade(1.3);
+      tl.fromTo(contentItems, { yPercent:40, opacity:0 }, { yPercent:0, opacity:1, stagger:0.08, duration:0.9, ease:"expo.out" }, 1.5);
+      tl.fromTo(tags, { scale:0.8, opacity:0 }, { scale:1, opacity:1, stagger:0.05, duration:0.5, ease:"back.out(1.6)" }, 1.7);
+      break;
+    }
+
 
   }
 
